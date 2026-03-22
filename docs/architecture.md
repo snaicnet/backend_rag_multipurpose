@@ -11,6 +11,64 @@ The project is a backend-only RAG chatbot service with these runtime dependencie
 - Provider adapters for OpenAI, Gemini, and Ollama
 - JWT bearer authentication and hashed API keys
 
+## Architecture Diagrams
+
+### Local Docker
+
+```mermaid
+flowchart LR
+  user[User / API Client] -->|http://localhost:9010| nginx
+  nginx -->|proxy to app:8000| app
+
+  app --> postgres[(PostgreSQL)]
+  app --> qdrant[(Qdrant)]
+  app --> redis[(Redis)]
+  app -->|default Ollama base URL| ollama[(Ollama on host)]
+  app -->|OpenAI / Gemini / Ollama providers| providers[External model APIs]
+
+  subgraph docker["Docker Compose Network"]
+    nginx
+    app
+    postgres
+    qdrant
+    redis
+  end
+
+  subgraph host["Host Machine"]
+    ollama
+  end
+```
+
+### ECS Fargate
+
+```mermaid
+flowchart LR
+  client[User / API Client] --> alb[ALB optional]
+  client -->|direct public traffic| eni[Task ENI :80]
+  alb --> eni
+  eni --> nginx
+  nginx -->|127.0.0.1:8000| app
+
+  app -->|127.0.0.1:5432| postgres[(PostgreSQL)]
+  app -->|127.0.0.1:6333| qdrant[(Qdrant)]
+  app -->|127.0.0.1:6379| redis[(Redis)]
+  app --> providers[External model APIs]
+  app --> ssm[AWS SSM Parameter Store]
+  nginx --> logs[CloudWatch Logs]
+  app --> logs
+  postgres --> logs
+  redis --> logs
+  qdrant --> logs
+
+  subgraph task["One ECS Fargate Task"]
+    nginx
+    app
+    postgres
+    redis
+    qdrant
+  end
+```
+
 ## High-level flow
 
 1. Documents are ingested through `POST /ingest/text` or `POST /ingest/files`.

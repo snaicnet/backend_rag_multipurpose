@@ -37,6 +37,15 @@ class AuthRepository:
             """,
             "CREATE INDEX IF NOT EXISTS idx_api_keys_user_id ON api_keys (user_id)",
             "CREATE INDEX IF NOT EXISTS idx_api_keys_prefix ON api_keys (key_prefix)",
+            """
+            ALTER TABLE documents
+            ADD COLUMN IF NOT EXISTS content_hash TEXT
+            """,
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_content_hash_profile
+            ON documents (content_hash, embedding_provider, embedding_model)
+            WHERE content_hash IS NOT NULL
+            """,
         ]
 
         async with self._pool.connection() as connection:

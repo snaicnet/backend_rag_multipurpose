@@ -61,8 +61,20 @@ class Settings(BaseSettings):
     similarity_threshold: float = Field(default=0.35)
     max_session_messages: int = Field(default=12)
 
-    chat_rate_limit_requests: int = Field(default=30)
+    chat_rate_limit_requests: int = Field(default=20)
     chat_rate_limit_window_seconds: int = Field(default=60)
+    chat_daily_limit_requests: int = Field(default=1000)
+    chat_max_message_chars: int = Field(default=4000)
+    chat_max_input_tokens: int = Field(default=1000)
+    chat_max_history_messages: int = Field(default=8)
+    chat_repeated_prompt_lookback: int = Field(default=5)
+    chat_max_context_chars: int = Field(default=8000)
+    chat_max_context_tokens: int = Field(default=2500)
+    chat_max_context_chunk_chars: int = Field(default=1800)
+    chat_min_top_k: int = Field(default=3)
+    chat_max_top_k: int = Field(default=8)
+    chat_max_response_chars: int = Field(default=2000)
+    chat_max_response_tokens: int = Field(default=700)
     retrieval_cache_ttl_seconds: int = Field(default=120)
     embedding_cache_ttl_seconds: int = Field(default=3600)
     session_ttl_seconds: int = Field(default=1800)
@@ -134,6 +146,14 @@ class Settings(BaseSettings):
                 name: profile.model_dump() for name, profile in self.embedding_profiles.items()
             },
             "similarity_threshold": self.similarity_threshold,
+            "chat_rate_limit_requests": self.chat_rate_limit_requests,
+            "chat_daily_limit_requests": self.chat_daily_limit_requests,
+            "chat_max_message_chars": self.chat_max_message_chars,
+            "chat_max_input_tokens": self.chat_max_input_tokens,
+            "chat_max_context_chars": self.chat_max_context_chars,
+            "chat_max_context_tokens": self.chat_max_context_tokens,
+            "chat_max_response_chars": self.chat_max_response_chars,
+            "chat_max_response_tokens": self.chat_max_response_tokens,
             "redis_session_storage_enabled_by_default": self.session_storage_enabled,
             "authentication_enabled_by_default": self.auth_enabled,
         }

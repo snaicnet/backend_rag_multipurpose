@@ -19,10 +19,14 @@ The project is a backend-only RAG chatbot service with these runtime dependencie
 4. Text is chunked.
 5. Chunks are embedded using the active embedding profile.
 6. Documents are stored in PostgreSQL and chunk vectors are stored in Qdrant.
-7. A chat request embeds the user query with the same active profile or an explicitly requested profile.
-8. Qdrant retrieves top matching chunks from the collection for that embedding dimension.
-9. A grounded prompt is built from retrieved context.
-10. The selected generation provider produces either a full answer or a streaming answer.
+7. A chat request is rate-limited and quota-checked per authenticated user.
+8. The input is filtered for blocked phrases, unusually long prompts, and repeated prompt abuse.
+9. The user query is embedded with the same active profile or an explicitly requested profile.
+10. Qdrant retrieves top matching chunks from the collection for that embedding dimension.
+11. Retrieval `top_k` is clamped to a safe range before any search happens.
+12. A grounded prompt is built from retrieved context with caps on history size, context size, and per-chunk size.
+13. The selected generation provider produces either a full answer or a streaming answer.
+14. The response is truncated to the configured output budget before being returned to the client.
 
 ## Code layout
 
@@ -71,6 +75,7 @@ Important fields:
 - `documents.original_filename`
 - `documents.mime_type`
 - Qdrant point payloads store chunk content, metadata, and embedding profile details
+- Retrieval queries are additionally constrained by `top_k` and the configured similarity threshold
 
 ## Authentication model
 
@@ -108,6 +113,7 @@ The application signs tokens and hashes credentials, but HTTP encryption itself 
 - Request payloads expose `embedding_profile`, `embedding_provider`, and `embedding_model` for explicit selection.
 - Provider streaming is implemented, but integration tests against live providers are not included.
 - TLS termination is not implemented in the app itself.
+- Chat guardrails are implemented in the service layer, not only in the prompt.
 
 Current repository default embedding profile:
 

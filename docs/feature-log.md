@@ -222,7 +222,42 @@ Changed:
 - canonical embedding dimension changed from `4096` to `1536`
 - schema updated to `VECTOR(1536)` so pgvector `ivfflat` indexing works in the deployment path
 
-## Current feature set - 2026-03-19
+## v0.5.4 - 2026-03-22
+
+Chat guardrails and request budgeting hardened.
+
+Added:
+
+- authenticated-user scoped burst rate limiting
+- daily chat quota of `1000` requests per user
+- prompt filtering for jailbreak and data-dumping phrases
+- repeated-prompt detection
+- prompt length limits
+- retrieval `top_k` clamping to `3..8`
+- context and response size caps
+- SNAIC-friendly grounded assistant style in the system prompt
+
+Behavior:
+
+- blocked chat requests return clear validation errors
+- streaming responses are capped before the client receives them
+- chat history is trimmed before prompt construction
+
+## v0.5.5 - 2026-03-22
+
+Ingestion deduplication added.
+
+Added:
+
+- exact duplicate knowledge-base uploads are deduplicated by normalized content hash plus embedding profile
+- duplicate uploads skip chunking, embedding, and vector upsert work
+
+Behavior:
+
+- the same content can still be ingested separately under a different embedding profile
+- duplicate uploads return a successful ingest result marked as deduplicated
+
+## Current feature set - 2026-03-22
 
 The repository currently includes:
 
@@ -231,6 +266,7 @@ The repository currently includes:
 - PostgreSQL plus pgvector storage and retrieval
 - Redis-backed rate limiting, caching, and optional sessions
 - multi-provider chat generation
+- chat guardrails for abuse, prompt injection, and output caps
 - Dockerized local runtime behind `nginx`
 - JWT auth, API keys, and admin user management
 - detailed operational documentation

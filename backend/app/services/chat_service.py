@@ -1,5 +1,4 @@
 from app.core.config import Settings
-from app.core.rate_limit import RateLimiter
 from app.db.qdrant import QdrantManager
 from app.db.redis import RedisManager
 from app.models.schemas import (
@@ -10,6 +9,7 @@ from app.models.schemas import (
     GenerationSelection,
 )
 from app.providers.registry import ProviderRegistry
+from app.services.guardrails import GuardrailService
 from app.services.embeddings import EmbeddingService
 from app.services.prompt_builder import PromptBuilder, SAFE_FALLBACK_TEXT
 from app.services.retrieval import RetrievalService
@@ -29,16 +29,12 @@ class ChatService:
         self._embedding_service = EmbeddingService(settings)
         self._retrieval_service = RetrievalService(settings, qdrant_manager, redis_manager)
         self._prompt_builder = PromptBuilder()
+        self._guardrails = GuardrailService(settings, redis_manager.client)
         self._session_service = SessionService(
             redis_client=redis_manager.client,
             ttl_seconds=settings.session_ttl_seconds,
             enabled=settings.session_storage_enabled,
             max_messages=settings.max_session_messages,
-        )
-        self._rate_limiter = RateLimiter(
-            redis_client=redis_manager.client,
-            limit=settings.chat_rate_limit_requests,
-            window_seconds=settings.chat_rate_limit_window_seconds,
         )
 
     async def prepare_chat(
@@ -64,17 +60,18 @@ class ChatService:
             messages=prepared.prompt_messages,
             model=prepared.model,
         )
+        answer = self._guardrails.truncate_response(completion.text)
 
         await self._session_service.append_messages(
             prepared.session_id,
             [
                 ChatMessage(role="user", content=prepared.user_message),
-                ChatMessage(role="assistant", content=completion.text),
+                ChatMessage(role="assistant", content=answer),
             ],
         )
 
         return ChatServiceResult(
-            answer=completion.text,
+            answer=answer,
             citations=prepared.citations,
             provider=prepared.provider,
             model=prepared.model,
@@ -144,27 +141,29 @@ class ChatService:
         payload: ChatRequest,
         rate_limit_key: str,
     ) -> "_PreparedChatContext":
-        allowed, _ = await self._rate_limiter.check(rate_limit_key)
-        if not allowed:
-            raise ValueError("Chat rate limit exceeded")
+        await self._guardrails.enforce_request_budget(rate_limit_key)
 
         generation = self._resolve_generation_selection(payload.provider, payload.model)
+        session_messages = await self._session_service.get_messages(payload.session_id)
+        history = session_messages + payload.chat_history
+        history = self._guardrails.limit_history(history)
+        recent_user_messages = [message.content for message in history if message.role == "user"]
+        normalized_message = self._guardrails.validate_user_message(payload.message, recent_user_messages)
+        top_k = self._guardrails.clamp_top_k(payload.top_k)
+
         embedding_selection, query_embeddings = await self._embedding_service.embed_texts(
-            texts=[payload.message],
+            texts=[normalized_message],
             profile_name=payload.embedding_profile,
             provider=payload.embedding_provider,
             model=payload.embedding_model,
         )
         query_embedding = query_embeddings[0]
 
-        session_messages = await self._session_service.get_messages(payload.session_id)
-        history = session_messages + payload.chat_history
-
         retrieved_chunks = await self._retrieval_service.retrieve(
-            query_text=payload.message,
+            query_text=normalized_message,
             query_embedding=query_embedding,
             selection=embedding_selection,
-            top_k=payload.top_k,
+            top_k=top_k,
         )
 
         if not retrieved_chunks:
@@ -178,14 +177,18 @@ class ChatService:
                 used_fallback=True,
                 fallback_text=SAFE_FALLBACK_TEXT,
                 session_id=payload.session_id,
-                user_message=payload.message,
+                user_message=normalized_message,
                 retrieved_chunks=[],
             )
 
         prompt_context = self._prompt_builder.build(
-            user_message=payload.message,
+            user_message=normalized_message,
             chat_history=history,
             retrieved_chunks=retrieved_chunks,
+            max_history_messages=self._settings.chat_max_history_messages,
+            max_context_chars=self._settings.chat_max_context_chars,
+            max_context_tokens=self._settings.chat_max_context_tokens,
+            max_chunk_chars=self._settings.chat_max_context_chunk_chars,
         )
         return _PreparedChatContext(
             provider=generation.provider,
@@ -197,7 +200,7 @@ class ChatService:
             used_fallback=False,
             fallback_text="",
             session_id=payload.session_id,
-            user_message=payload.message,
+            user_message=normalized_message,
             retrieved_chunks=retrieved_chunks,
         )
 

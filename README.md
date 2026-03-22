@@ -20,6 +20,9 @@ Backend-only RAG chatbot MVP built with FastAPI, PostgreSQL, Qdrant, Redis, and 
 - Request-level generation provider/model selection
 - Multipart ingestion for `txt`, `md`, `docx`, `csv`, and `xlsx`
 - JWT bearer authentication and hashed API keys
+- Chat guardrails for spam, quota, prompt-injection phrases, and output limits
+- Exact duplicate knowledge-base uploads are deduplicated by normalized content hash plus embedding profile
+- Grounded SNAIC chat behavior with a friendly, cheerful assistant style
 
 ## Important MVP constraint
 
@@ -32,6 +35,29 @@ Example profiles:
 - `ollama_4096`
 
 If you add a new dimension, the app will create the matching Qdrant collection on first use. Existing collections remain untouched.
+
+## Chat guardrails
+
+Default chat safety controls are enforced in code and can be overridden through `backend/.env` or the ECS task definition:
+
+- burst rate limit: `20` requests per `60` seconds per authenticated user
+- daily quota: `1000` chat requests per user
+- input size: `4000` characters and about `1000` tokens
+- retrieval scope: `top_k` is clamped to `3..8`
+- retrieval context: `8000` characters and about `2500` tokens per request
+- response size: `2000` characters and about `700` tokens
+- exact duplicate uploads are skipped when the content hash and embedding profile already exist
+- blocked phrases include:
+  - `ignore previous instructions`
+  - `dump all data`
+  - `show full document`
+  - `export everything`
+- `print full source`
+- `return exact text`
+- `which document you used`
+- `which sources did you use`
+
+The assistant is instructed to stay friendly, cheerful, and grounded to retrieved context. When context is missing, it falls back to a safe "I couldn't find that in the knowledge base." response instead of improvising.
 
 ## Ollama runtime mode
 

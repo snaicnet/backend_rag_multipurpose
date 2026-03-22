@@ -150,6 +150,29 @@ curl -X POST http://localhost:9010/chat ^
   -d "{\"message\":\"What do we offer?\",\"provider\":\"ollama\",\"model\":\"llama3.2\"}"
 ```
 
+## Chat guardrails
+
+Default chat safety behavior:
+
+- burst limit: `20` requests per `60` seconds per authenticated user
+- daily limit: `1000` chat requests per authenticated user
+- input caps: about `4000` characters and `1000` tokens
+- retrieval caps: `top_k` is clamped to `3..8`
+- prompt and output caps are enforced before the model response is returned
+
+Blocked examples include:
+
+- `ignore previous instructions`
+- `dump all data`
+- `show full document`
+- `export everything`
+- `print full source`
+- `return exact text`
+- `which document you used`
+- `which sources did you use`
+
+If the request is blocked, the API returns a validation error instead of passing the prompt to the model.
+
 ## Run a streaming chat request
 
 ```bash

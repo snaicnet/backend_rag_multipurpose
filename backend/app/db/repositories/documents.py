@@ -11,17 +11,27 @@ class DocumentRepository:
     def __init__(self, pool: AsyncConnectionPool) -> None:
         self._pool = pool
 
-    async def create(
+    async def create_or_get_by_content_hash(
         self,
         document: NormalizedDocument,
         embedding_provider: str,
         embedding_model: str,
-    ) -> DocumentRecord:
+        content_hash: str,
+    ) -> tuple[DocumentRecord, bool]:
+        existing = await self.get_by_content_hash(
+            content_hash=content_hash,
+            embedding_provider=embedding_provider,
+            embedding_model=embedding_model,
+        )
+        if existing is not None:
+            return existing, False
+
         document_id = uuid4()
 
         query = """
             INSERT INTO documents (
                 id,
+                content_hash,
                 title,
                 url,
                 source_type,
@@ -33,6 +43,7 @@ class DocumentRepository:
             )
             VALUES (
                 %(id)s,
+                %(content_hash)s,
                 %(title)s,
                 %(url)s,
                 %(source_type)s,
@@ -42,8 +53,10 @@ class DocumentRepository:
                 %(embedding_provider)s,
                 %(embedding_model)s
             )
+            ON CONFLICT (content_hash, embedding_provider, embedding_model) DO NOTHING
             RETURNING
                 id,
+                content_hash,
                 title,
                 url,
                 source_type,
@@ -58,6 +71,7 @@ class DocumentRepository:
 
         params = {
             "id": document_id,
+            "content_hash": content_hash,
             "title": document.title,
             "url": document.url,
             "source_type": document.source_type,
@@ -74,8 +88,57 @@ class DocumentRepository:
                 row = await cursor.fetchone()
             await connection.commit()
 
+        if row is not None:
+            return DocumentRecord.model_validate(row), True
+
+        existing = await self.get_by_content_hash(
+            content_hash=content_hash,
+            embedding_provider=embedding_provider,
+            embedding_model=embedding_model,
+        )
+        if existing is None:
+            raise RuntimeError("Failed to insert or fetch document record.")
+        return existing, False
+
+    async def get_by_content_hash(
+        self,
+        content_hash: str,
+        embedding_provider: str,
+        embedding_model: str,
+    ) -> DocumentRecord | None:
+        query = """
+            SELECT
+                id,
+                content_hash,
+                title,
+                url,
+                source_type,
+                metadata,
+                original_filename,
+                mime_type,
+                embedding_provider,
+                embedding_model,
+                created_at,
+                updated_at
+            FROM documents
+            WHERE content_hash = %(content_hash)s
+              AND embedding_provider = %(embedding_provider)s
+              AND embedding_model = %(embedding_model)s
+        """
+
+        params = {
+            "content_hash": content_hash,
+            "embedding_provider": embedding_provider,
+            "embedding_model": embedding_model,
+        }
+
+        async with self._pool.connection() as connection:
+            async with connection.cursor(row_factory=dict_row) as cursor:
+                await cursor.execute(query, params)
+                row = await cursor.fetchone()
+
         if row is None:
-            raise RuntimeError("Failed to insert document record.")
+            return None
 
         return DocumentRecord.model_validate(row)
 
@@ -83,6 +146,7 @@ class DocumentRepository:
         query = """
             SELECT
                 id,
+                content_hash,
                 title,
                 url,
                 source_type,
@@ -111,6 +175,7 @@ class DocumentRepository:
         query = """
             SELECT
                 id,
+                content_hash,
                 title,
                 url,
                 source_type,

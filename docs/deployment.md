@@ -102,6 +102,22 @@ If you run the app container outside Compose, make sure `POSTGRES_DSN`, `REDIS_U
 - `AUTH_BOOTSTRAP_ADMIN_USERNAME`
 - `AUTH_BOOTSTRAP_ADMIN_PASSWORD`
 
+Chat guardrail defaults can also be overridden through environment variables if you want to change the safety envelope without editing code:
+
+- `CHAT_RATE_LIMIT_REQUESTS`
+- `CHAT_RATE_LIMIT_WINDOW_SECONDS`
+- `CHAT_DAILY_LIMIT_REQUESTS`
+- `CHAT_MAX_MESSAGE_CHARS`
+- `CHAT_MAX_INPUT_TOKENS`
+- `CHAT_MAX_HISTORY_MESSAGES`
+- `CHAT_MAX_CONTEXT_CHARS`
+- `CHAT_MAX_CONTEXT_TOKENS`
+- `CHAT_MAX_CONTEXT_CHUNK_CHARS`
+- `CHAT_MIN_TOP_K`
+- `CHAT_MAX_TOP_K`
+- `CHAT_MAX_RESPONSE_CHARS`
+- `CHAT_MAX_RESPONSE_TOKENS`
+
 Current repository default embedding settings:
 
 - `DEFAULT_EMBEDDING_PROFILE=ollama_1536`
@@ -167,11 +183,13 @@ Implemented:
 
 - async FastAPI app
 - Redis-backed rate limiting
+- daily per-user chat quotas
 - JWT bearer auth
 - hashed API keys
 - health endpoint
 - provider abstraction
 - Qdrant-backed chunk storage and retrieval
+- input filtering and output truncation for chat safety
 
 Not yet implemented:
 
@@ -191,6 +209,14 @@ If you want everything running inside ECS on Fargate:
 - use `backend/postgres/Dockerfile` so the database schema is baked into the image
 
 This deployment keeps `nginx`, the FastAPI app, PostgreSQL, and Redis in one ECS task and exposes port `80`.
+
+For repeatable redeploys, use the PowerShell helper:
+
+```powershell
+.\scripts\redeploy-ecs.ps1
+```
+
+It builds the images, pushes them to ECR, registers a new task definition revision, and updates the ECS service.
 
 Important constraint:
 

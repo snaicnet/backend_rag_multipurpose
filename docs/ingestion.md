@@ -98,6 +98,7 @@ Depending on source type, stored metadata may include:
 - unsupported file types return per-file errors
 - empty files return per-file errors
 - remaining files continue processing
+- exact duplicate uploads are deduplicated by normalized content hash plus embedding profile, so the same knowledge base is not indexed twice for the same embedding setup
 
 Multipart form notes:
 

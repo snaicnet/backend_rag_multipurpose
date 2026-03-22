@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 
 from fastapi import UploadFile
@@ -178,6 +179,26 @@ class IngestService:
         chunks_inserted = 0
 
         for document in parsed_file.documents:
+            content_hash = self._hash_document(document.content)
+            document_record, created = await self._document_repository.create_or_get_by_content_hash(
+                document=document,
+                embedding_provider=embedding_provider,
+                embedding_model=embedding_model,
+                content_hash=content_hash,
+            )
+            if not created:
+                results.append(
+                    IngestFileResult(
+                        filename=parsed_file.filename,
+                        detected_type=parsed_file.detected_type,
+                        success=True,
+                        chunks_created=0,
+                        deduplicated=True,
+                        document_id=document_record.id,
+                    )
+                )
+                continue
+
             chunks = self._chunking_service.build_chunks(document)
             if not chunks:
                 results.append(
@@ -197,12 +218,6 @@ class IngestService:
                 model=embedding_model,
             )
             chunk_upserts = self._chunking_service.build_chunk_upserts(document, embeddings)
-
-            document_record = await self._document_repository.create(
-                document=document,
-                embedding_provider=embedding_provider,
-                embedding_model=embedding_model,
-            )
             inserted_chunks = await self._chunk_repository.bulk_create(
                 document_id=document_record.id,
                 chunks=chunk_upserts,
@@ -229,3 +244,7 @@ class IngestService:
             "documents_inserted": documents_inserted,
             "chunks_inserted": chunks_inserted,
         }
+
+    def _hash_document(self, content: str) -> str:
+        normalized = " ".join(content.split())
+        return hashlib.sha256(normalized.encode("utf-8")).hexdigest()

@@ -3,19 +3,22 @@
 ## Pipeline steps
 
 1. Accept user query on `/chat` or `/chat/stream`
-2. Rate-limit the request in Redis
-3. Resolve generation provider/model from the request or config defaults
-4. Resolve the embedding profile from the request or config defaults
-5. Embed the query with the selected provider/model
-6. Retrieve top matching chunks from the Qdrant collection for that embedding dimension
-7. Filter vector results using `SIMILARITY_THRESHOLD`
-8. If vector retrieval returns nothing, run a lexical fallback against stored titles and chunk content
-9. If lexical retrieval still returns nothing, use the best available semantic matches without applying the threshold
-10. If no chunks exist for the active embedding pair, return the safe fallback
-11. Build a grounded prompt from retrieved chunks
-12. Generate the answer using the selected generation provider
-13. Return citations and metadata
-14. Optionally store session messages in Redis
+2. Rate-limit the request in Redis and apply the daily per-user quota
+3. Filter the input for blocked phrases, unusually long prompts, and repeated prompt abuse
+4. Resolve generation provider/model from the request or config defaults
+5. Resolve the embedding profile from the request or config defaults
+6. Embed the query with the selected provider/model
+7. Clamp `top_k` to the configured safe range
+8. Retrieve top matching chunks from the Qdrant collection for that embedding dimension
+9. Filter vector results using `SIMILARITY_THRESHOLD`
+10. If vector retrieval returns nothing, run a lexical fallback against stored titles and chunk content
+11. If lexical retrieval still returns nothing, use the best available semantic matches without applying the threshold
+12. If no chunks exist for the active embedding pair, return the safe fallback
+13. Build a grounded prompt from retrieved chunks with history, context, and chunk-size caps
+14. Generate the answer using the selected generation provider
+15. Truncate the final answer to the configured output budget
+16. Return citations and metadata
+17. Optionally store session messages in Redis
 
 ## Retrieval query
 
@@ -30,6 +33,14 @@ Results are filtered by:
 - `similarity_threshold`
 - `top_k`
 
+The service layer also enforces:
+
+- authenticated-user request budgets
+- prompt length caps
+- output size caps
+- prompt-injection phrase blocking
+- repeated-prompt detection
+
 ## Grounding behavior
 
 The system prompt explicitly instructs the model to:
@@ -37,6 +48,7 @@ The system prompt explicitly instructs the model to:
 - answer only from the provided context
 - not invent services, pricing, experience, or facts
 - say it does not know when context is insufficient
+- stay professional, friendly, cheerful, and grounded
 
 ## Fallback behavior
 
@@ -69,6 +81,7 @@ Citations are built from retrieved chunks and include:
 - No multi-index support for different embedding dimensions
 - No document deletion endpoint
 - Broad questions over tiny corpora may still retrieve weak matches because the final fallback prefers grounded recall over an empty answer
+- Token budgets are approximate because the implementation uses whitespace-based counting rather than a dedicated tokenizer
 
 Current default indexed embedding setup:
 

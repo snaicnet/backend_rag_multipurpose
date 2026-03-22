@@ -19,6 +19,14 @@ Current ECS template defaults:
 - embedding profile: `openai_small_1536`
 - embedding profiles are supplied via `EMBEDDING_PROFILES`
 
+Chat safety defaults are enforced by the app and can be overridden in the task definition if needed:
+
+- burst rate limit: `CHAT_RATE_LIMIT_REQUESTS`
+- daily quota: `CHAT_DAILY_LIMIT_REQUESTS`
+- prompt and context caps: `CHAT_MAX_MESSAGE_CHARS`, `CHAT_MAX_INPUT_TOKENS`, `CHAT_MAX_CONTEXT_CHARS`, `CHAT_MAX_CONTEXT_TOKENS`
+- retrieval clamp: `CHAT_MIN_TOP_K`, `CHAT_MAX_TOP_K`
+- output cap: `CHAT_MAX_RESPONSE_CHARS`, `CHAT_MAX_RESPONSE_TOKENS`
+
 The `nginx` image uses one shared config template for both local Docker and ECS.
 
 - local Docker sets `NGINX_UPSTREAM_HOST=app`
@@ -254,6 +262,7 @@ Recommended production edits before registering:
 - Set `AUTH_REQUIRE_HTTPS=true` if TLS is terminated before traffic reaches `nginx`.
 - Set `DEFAULT_EMBEDDING_PROFILE` to the profile you actually want.
 - Update `EMBEDDING_PROFILES` when you add or change embedding models.
+- Tune the chat guardrail env vars above if you need a different safety envelope.
 - Keep the `nginx` env vars aligned with your task networking model.
 - Adjust task `cpu`, `memory`, and `ephemeralStorage` to your workload.
 
@@ -294,6 +303,40 @@ If the service already exists, register a new task definition revision and updat
 ```powershell
 aws ecs register-task-definition --cli-input-json file://deploy/ecs/task-definition.json --query 'taskDefinition.taskDefinitionArn' --output text
 aws ecs update-service --cluster snaic_website_cluster --service backend-rag-multipurpose --task-definition <new-task-definition-arn> --force-new-deployment
+```
+
+## One-command redeploy
+
+If you want a repeatable local command that builds, pushes, registers, and updates the ECS service, use:
+
+```powershell
+.\scripts\redeploy-ecs.ps1
+```
+
+That script:
+
+- builds `rag-backend`, `rag-nginx`, and `rag-postgres`
+- pushes them to ECR
+- registers a new task definition revision from `deploy/ecs/task-definition.json`
+- updates the ECS service with `--desired-count 1` and `--force-new-deployment`
+- waits for the service to become stable
+
+Override defaults if needed:
+
+```powershell
+.\scripts\redeploy-ecs.ps1 -Region ap-southeast-1 -AccountId 961341555117 -Cluster snaic_website_cluster -Service backend-rag-multipurpose
+```
+
+If you already pushed the images and only need to recycle ECS:
+
+```powershell
+.\scripts\redeploy-ecs.ps1 -SkipBuild -SkipPush
+```
+
+If you want a shorter or longer wait before the script gives up:
+
+```powershell
+.\scripts\redeploy-ecs.ps1 -TimeoutMinutes 10 -PollSeconds 10
 ```
 
 ## Traffic flow

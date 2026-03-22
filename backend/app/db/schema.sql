@@ -24,6 +24,7 @@ CREATE INDEX IF NOT EXISTS idx_api_keys_prefix ON api_keys (key_prefix);
 
 CREATE TABLE IF NOT EXISTS documents (
     id UUID PRIMARY KEY,
+    content_hash TEXT,
     title TEXT NOT NULL,
     url TEXT,
     source_type TEXT NOT NULL,
@@ -36,5 +37,8 @@ CREATE TABLE IF NOT EXISTS documents (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_content_hash_profile
+    ON documents (content_hash, embedding_provider, embedding_model)
+    WHERE content_hash IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_documents_source_type ON documents (source_type);
 CREATE INDEX IF NOT EXISTS idx_documents_metadata ON documents USING GIN (metadata);

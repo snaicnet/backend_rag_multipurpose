@@ -69,6 +69,7 @@ class IngestFileResult(BaseModel):
     detected_type: str
     success: bool
     chunks_created: int = 0
+    deduplicated: bool = False
     error: str | None = None
     document_id: UUID | None = None
 
@@ -147,6 +148,7 @@ class DocumentRecord(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
+    content_hash: str | None = None
     title: str
     url: str | None = None
     source_type: str

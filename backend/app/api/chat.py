@@ -1,10 +1,11 @@
 import json
 from typing import AsyncIterator
 
-from fastapi import APIRouter, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
 
-from app.models.schemas import ChatRequest, ChatResponse
+from app.core.security import require_authenticated_user
+from app.models.schemas import AuthenticatedUser, ChatRequest, ChatResponse
 from app.services.chat_service import ChatService
 
 router = APIRouter()
@@ -19,11 +20,8 @@ def _build_chat_service(request: Request) -> ChatService:
     )
 
 
-def _resolve_rate_limit_key(request: Request, payload: ChatRequest) -> str:
-    if payload.session_id:
-        return f"session:{payload.session_id}"
-    client_host = request.client.host if request.client else "unknown"
-    return f"ip:{client_host}"
+def _resolve_rate_limit_key(current_user: AuthenticatedUser) -> str:
+    return f"user:{current_user.id}"
 
 
 def _raise_chat_http_error(exc: Exception) -> None:
@@ -31,6 +29,8 @@ def _raise_chat_http_error(exc: Exception) -> None:
     status_code = status.HTTP_400_BAD_REQUEST
 
     if "rate limit" in message.lower():
+        status_code = status.HTTP_429_TOO_MANY_REQUESTS
+    elif "quota" in message.lower():
         status_code = status.HTTP_429_TOO_MANY_REQUESTS
     elif "required" in message.lower() or "unsupported" in message.lower():
         status_code = status.HTTP_400_BAD_REQUEST
@@ -45,9 +45,13 @@ def _sse(event: str, data: dict) -> str:
 
 
 @router.post("", response_model=ChatResponse)
-async def chat(request: Request, payload: ChatRequest) -> ChatResponse:
+async def chat(
+    request: Request,
+    payload: ChatRequest,
+    current_user: AuthenticatedUser = Depends(require_authenticated_user),
+) -> ChatResponse:
     service = _build_chat_service(request)
-    rate_limit_key = _resolve_rate_limit_key(request, payload)
+    rate_limit_key = _resolve_rate_limit_key(current_user)
 
     try:
         result = await service.prepare_chat(payload, rate_limit_key)
@@ -66,9 +70,13 @@ async def chat(request: Request, payload: ChatRequest) -> ChatResponse:
 
 
 @router.post("/stream")
-async def chat_stream(request: Request, payload: ChatRequest) -> StreamingResponse:
+async def chat_stream(
+    request: Request,
+    payload: ChatRequest,
+    current_user: AuthenticatedUser = Depends(require_authenticated_user),
+) -> StreamingResponse:
     service = _build_chat_service(request)
-    rate_limit_key = _resolve_rate_limit_key(request, payload)
+    rate_limit_key = _resolve_rate_limit_key(current_user)
 
     try:
         stream_state = await service.start_stream(payload, rate_limit_key)
@@ -76,6 +84,7 @@ async def chat_stream(request: Request, payload: ChatRequest) -> StreamingRespon
         _raise_chat_http_error(exc)
 
     async def event_generator() -> AsyncIterator[str]:
+        max_response_chars = request.app.state.settings.chat_max_response_chars
         yield _sse(
             "metadata",
             {
@@ -100,11 +109,20 @@ async def chat_stream(request: Request, payload: ChatRequest) -> StreamingRespon
             return
 
         answer_parts: list[str] = []
+        answer_length = 0
         async for delta in stream_state.stream:
             if not delta:
                 continue
-            answer_parts.append(delta)
-            yield _sse("chunk", {"delta": delta})
+            remaining = max_response_chars - answer_length
+            if remaining <= 0:
+                break
+            chunk = delta[:remaining]
+            if chunk:
+                answer_parts.append(chunk)
+                answer_length += len(chunk)
+                yield _sse("chunk", {"delta": chunk})
+            if len(delta) > len(chunk):
+                break
 
         final_text = "".join(answer_parts)
         await service.finalize_stream(stream_state, final_text)

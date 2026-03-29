@@ -8,6 +8,7 @@ A production-oriented RAG chatbot backend API built as a secure and highly custo
 - Multi-provider orchestration across OpenAI, Gemini, Ollama, and NVIDIA NIM
 - Built for website chatbots, internal assistants, support tools, and domain-specific AI products
 - Production-oriented backend features including caching, rate limiting, guardrails, streaming, and admin controls
+- Admin activity monitoring for chatbot usage review and safety auditing
 
 ## Getting started
 

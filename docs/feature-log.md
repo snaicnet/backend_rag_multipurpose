@@ -414,7 +414,40 @@ Changed:
 - chat defaults now resolve through the DB-backed model-selection record
 - docs now treat the profile catalog as the selectable list, while the active selection is managed by admin
 
-## Current feature set - 2026-03-26
+## v0.5.16 - 2026-03-29
+
+Chat activity monitoring and admin audit search added.
+
+Added:
+
+- PostgreSQL-backed `chat_activity_logs` table for chat usage auditing
+- request capture for authenticated chat traffic including:
+  - user id and username
+  - auth type
+  - client IP and forwarded IP chain
+  - user agent
+  - session id
+  - user prompt
+  - final answer
+  - provider and model metadata
+  - fallback and failure status
+- admin-only `GET /admin/chat-activity`
+
+Changed:
+
+- admin chat activity lookup now uses query params instead of record ID lookup
+- `GET /admin/chat-activity` now returns an `overview` block plus filtered `activities`
+- activity filters support `start_at`, `end_at`, `keyword`, and `limit`
+- `start_at` and `end_at` accept `DD/MM/YYYY` as well as ISO 8601 timestamps
+
+Fixed:
+
+- activity logging failures no longer break `/chat` or `/chat/stream`
+- startup now creates auth tables before creating audit tables on older volumes
+- chat activity response mapping fixed for Pydantic model-to-model validation
+- Docker smoke check confirmed `GET /admin/chat-activity` works both with no date filter and with `DD/MM/YYYY` dates
+
+## Current feature set - 2026-03-29
 
 The repository currently includes:
 
@@ -427,6 +460,7 @@ The repository currently includes:
 - explicit NVIDIA NIM alias support
 - optional reranking
 - admin document inspection endpoints for ingested content
+- admin chat activity monitoring and filtered audit search
 - forced reingest support for replacing duplicate uploads
 - chat guardrails for abuse, prompt injection, and output caps
 - Dockerized local runtime behind `nginx`

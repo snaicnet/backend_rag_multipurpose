@@ -28,6 +28,16 @@ Before starting the stack, replace the placeholder and environment-specific valu
 
 `backend/.env` is gitignored and should never be committed.
 
+To generate a secure JWT secret for `AUTH_JWT_SECRET`, use one of these commands:
+
+```powershell
+[Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 } | ForEach-Object { [byte]$_ }))
+```
+
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(64))"
+```
+
 If host port `9010` is unavailable, override it before starting:
 
 ```bash
@@ -42,6 +52,8 @@ This starts:
 - PostgreSQL for document/auth metadata
 - Qdrant for chunk vectors and similarity search
 - Redis `redis:7.4-alpine`
+
+PostgreSQL also stores chat activity audit records for the admin monitoring endpoint.
 
 Ollama is not containerized in the default stack.
 
@@ -146,6 +158,19 @@ To change the active chat or embedding profile after deployment, use the admin e
 - `GET /admin/model-selection`
 - `PUT /admin/model-selection`
 
+To review chatbot usage after deployment, use:
+
+- `GET /admin/chat-activity`
+
+Supported chat-activity query params:
+
+- `limit`
+- `start_at`
+- `end_at`
+- `keyword`
+
+Date filters accept `DD/MM/YYYY` such as `24/03/2025` as well as ISO 8601 timestamps.
+
 ## Database initialization
 
 Schema file:
@@ -157,8 +182,14 @@ The Docker Compose setup mounts this file into PostgreSQL init scripts. If your 
 Auth table note:
 
 - the application now creates `app_users` and `api_keys` on startup if they are missing
+- the application also creates `chat_activity_logs` on startup if it is missing
 - this avoids startup failure on older local volumes that were initialized before the auth schema was added
 - chunk vectors now live in Qdrant collections, which are created automatically on first use
+
+Bootstrap admin note:
+
+- changing `AUTH_BOOTSTRAP_ADMIN_PASSWORD` in `backend/.env` does not overwrite an already-created admin user on an existing Postgres volume
+- if the old password still works and the new one does not, you are running against persisted database state rather than a fresh bootstrap
 
 ## Authentication deployment notes
 
@@ -185,6 +216,12 @@ AUTH_BOOTSTRAP_ADMIN_USERNAME=admin
 AUTH_BOOTSTRAP_ADMIN_PASSWORD=replace-with-a-long-random-password
 AUTH_ACCESS_TOKEN_TTL_SECONDS=3600
 AUTH_REQUIRE_HTTPS=true
+```
+
+Generate the JWT secret before setting `AUTH_JWT_SECRET`:
+
+```powershell
+[Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 } | ForEach-Object { [byte]$_ }))
 ```
 
 ## Production notes
@@ -226,6 +263,14 @@ Before using the ECS assets, replace the environment-specific values in `deploy/
 - AWS account IDs, region names, subnet IDs, and security group IDs
 - ECR image URIs and repository prefixes
 - SSM parameter ARNs and secret names for auth and provider credentials
+
+Generate the JWT secret outside ECS first, typically from your local PowerShell terminal or AWS CloudShell, then store that generated value in SSM Parameter Store for `AUTH_JWT_SECRET`.
+
+Example command:
+
+```powershell
+aws ssm put-parameter --region YOUR_REGION --name /backend-rag/AUTH_JWT_SECRET --type SecureString --overwrite --value ([Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 } | ForEach-Object { [byte]$_ })))
+```
 
 For repeatable redeploys, use the PowerShell helper:
 

@@ -1,5 +1,237 @@
 [
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "uuid",
         "kind": 6,
         "isExtraImport": true,
@@ -145,6 +377,14 @@
         "documentation": {}
     },
     {
+        "label": "UUID",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
         "label": "APIRouter",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -162,6 +402,14 @@
     },
     {
         "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -449,6 +697,14 @@
         "documentation": {}
     },
     {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "require_admin_user",
         "importPath": "app.core.security",
         "description": "app.core.security",
@@ -482,6 +738,14 @@
     },
     {
         "label": "AuthenticatedUser",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityQueryResponse",
         "importPath": "app.models.schemas",
         "description": "app.models.schemas",
         "isExtraImport": true,
@@ -641,6 +905,14 @@
         "documentation": {}
     },
     {
+        "label": "ChatActivityWrite",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
         "label": "ChatRequest",
         "importPath": "app.models.schemas",
         "description": "app.models.schemas",
@@ -706,6 +978,22 @@
     },
     {
         "label": "UserRecord",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityRecord",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityWrite",
         "importPath": "app.models.schemas",
         "description": "app.models.schemas",
         "isExtraImport": true,
@@ -1050,6 +1338,38 @@
     },
     {
         "label": "UserUpdateRequest",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityOverview",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityQueryResponse",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityResponse",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityWrite",
         "importPath": "app.models.schemas",
         "description": "app.models.schemas",
         "isExtraImport": true,
@@ -1449,6 +1769,70 @@
         "documentation": {}
     },
     {
+        "label": "ChatActivityOverview",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityQueryResponse",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityResponse",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatCitation",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatRequest",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatServiceResult",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "AccessTokenResponse",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "AuthenticatedUser",
+        "importPath": "app.models.schemas",
+        "description": "app.models.schemas",
+        "isExtraImport": true,
+        "detail": "app.models.schemas",
+        "documentation": {}
+    },
+    {
         "label": "ChatCitation",
         "importPath": "app.models.schemas",
         "description": "app.models.schemas",
@@ -1625,6 +2009,30 @@
         "documentation": {}
     },
     {
+        "label": "ChatActivityService",
+        "importPath": "app.services.chat_activity_service",
+        "description": "app.services.chat_activity_service",
+        "isExtraImport": true,
+        "detail": "app.services.chat_activity_service",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityService",
+        "importPath": "app.services.chat_activity_service",
+        "description": "app.services.chat_activity_service",
+        "isExtraImport": true,
+        "detail": "app.services.chat_activity_service",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityService",
+        "importPath": "app.services.chat_activity_service",
+        "description": "app.services.chat_activity_service",
+        "isExtraImport": true,
+        "detail": "app.services.chat_activity_service",
+        "documentation": {}
+    },
+    {
         "label": "DocumentInspectionService",
         "importPath": "app.services.document_inspection_service",
         "description": "app.services.document_inspection_service",
@@ -1727,6 +2135,46 @@
         "description": "fastapi.responses",
         "isExtraImport": true,
         "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "app.core.logging",
+        "description": "app.core.logging",
+        "isExtraImport": true,
+        "detail": "app.core.logging",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "app.core.logging",
+        "description": "app.core.logging",
+        "isExtraImport": true,
+        "detail": "app.core.logging",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "app.core.logging",
+        "description": "app.core.logging",
+        "isExtraImport": true,
+        "detail": "app.core.logging",
+        "documentation": {}
+    },
+    {
+        "label": "configure_logging",
+        "importPath": "app.core.logging",
+        "description": "app.core.logging",
+        "isExtraImport": true,
+        "detail": "app.core.logging",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "app.core.logging",
+        "description": "app.core.logging",
+        "isExtraImport": true,
+        "detail": "app.core.logging",
         "documentation": {}
     },
     {
@@ -2091,6 +2539,22 @@
     },
     {
         "label": "router",
+        "importPath": "app.api.admin",
+        "description": "app.api.admin",
+        "isExtraImport": true,
+        "detail": "app.api.admin",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "app.api.auth",
+        "description": "app.api.auth",
+        "isExtraImport": true,
+        "detail": "app.api.auth",
+        "documentation": {}
+    },
+    {
+        "label": "router",
         "importPath": "app.api.auth",
         "description": "app.api.auth",
         "isExtraImport": true,
@@ -2135,6 +2599,14 @@
         "isExtraImport": true,
         "importPath": "app.api.chat",
         "description": "app.api.chat",
+        "detail": "app.api.chat",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "app.api.chat",
+        "description": "app.api.chat",
+        "isExtraImport": true,
         "detail": "app.api.chat",
         "documentation": {}
     },
@@ -2423,11 +2895,11 @@
         "documentation": {}
     },
     {
-        "label": "AsyncConnectionPool",
-        "importPath": "psycopg_pool",
-        "description": "psycopg_pool",
+        "label": "dict_row",
+        "importPath": "psycopg.rows",
+        "description": "psycopg.rows",
         "isExtraImport": true,
-        "detail": "psycopg_pool",
+        "detail": "psycopg.rows",
         "documentation": {}
     },
     {
@@ -2511,355 +2983,27 @@
         "documentation": {}
     },
     {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
+        "label": "AsyncConnectionPool",
+        "importPath": "psycopg_pool",
+        "description": "psycopg_pool",
         "isExtraImport": true,
-        "detail": "__future__",
+        "detail": "psycopg_pool",
         "documentation": {}
     },
     {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
+        "label": "AsyncConnectionPool",
+        "importPath": "psycopg_pool",
+        "description": "psycopg_pool",
         "isExtraImport": true,
-        "detail": "__future__",
+        "detail": "psycopg_pool",
         "documentation": {}
     },
     {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
+        "label": "AsyncConnectionPool",
+        "importPath": "psycopg_pool",
+        "description": "psycopg_pool",
         "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "annotations",
-        "importPath": "__future__",
-        "description": "__future__",
-        "isExtraImport": true,
-        "detail": "__future__",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
-        "documentation": {}
-    },
-    {
-        "label": "QdrantManager",
-        "importPath": "app.db.qdrant",
-        "description": "app.db.qdrant",
-        "isExtraImport": true,
-        "detail": "app.db.qdrant",
+        "detail": "psycopg_pool",
         "documentation": {}
     },
     {
@@ -2868,6 +3012,198 @@
         "description": "psycopg.types.json",
         "isExtraImport": true,
         "detail": "psycopg.types.json",
+        "documentation": {}
+    },
+    {
+        "label": "Jsonb",
+        "importPath": "psycopg.types.json",
+        "description": "psycopg.types.json",
+        "isExtraImport": true,
+        "detail": "psycopg.types.json",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantManager",
+        "importPath": "app.db.qdrant",
+        "description": "app.db.qdrant",
+        "isExtraImport": true,
+        "detail": "app.db.qdrant",
         "documentation": {}
     },
     {
@@ -3478,6 +3814,22 @@
         "documentation": {}
     },
     {
+        "label": "Counter",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityRepository",
+        "importPath": "app.db.repositories.chat_activity",
+        "description": "app.db.repositories.chat_activity",
+        "isExtraImport": true,
+        "detail": "app.db.repositories.chat_activity",
+        "documentation": {}
+    },
+    {
         "label": "RedisManager",
         "importPath": "app.db.redis",
         "description": "app.db.redis",
@@ -3759,38 +4111,6 @@
         "documentation": {}
     },
     {
-        "label": "get_logger",
-        "importPath": "app.core.logging",
-        "description": "app.core.logging",
-        "isExtraImport": true,
-        "detail": "app.core.logging",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "app.core.logging",
-        "description": "app.core.logging",
-        "isExtraImport": true,
-        "detail": "app.core.logging",
-        "documentation": {}
-    },
-    {
-        "label": "configure_logging",
-        "importPath": "app.core.logging",
-        "description": "app.core.logging",
-        "isExtraImport": true,
-        "detail": "app.core.logging",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "app.core.logging",
-        "description": "app.core.logging",
-        "isExtraImport": true,
-        "detail": "app.core.logging",
-        "documentation": {}
-    },
-    {
         "label": "CacheService",
         "importPath": "app.services.cache_service",
         "description": "app.services.cache_service",
@@ -4011,6 +4331,14 @@
         "documentation": {}
     },
     {
+        "label": "SimpleNamespace",
+        "importPath": "types",
+        "description": "types",
+        "isExtraImport": true,
+        "detail": "types",
+        "documentation": {}
+    },
+    {
         "label": "TestClient",
         "importPath": "fastapi.testclient",
         "description": "fastapi.testclient",
@@ -4057,7 +4385,7 @@
         "kind": 5,
         "importPath": "backend.app.api.admin",
         "description": "backend.app.api.admin",
-        "peekOfCode": "router = APIRouter()\ndef _build_reset_service(request: Request) -> ResetService:\n    return ResetService(\n        postgres_pool=request.app.state.postgres.pool,\n        qdrant_manager=request.app.state.qdrant,\n        redis_manager=request.app.state.redis,\n    )\ndef _build_auth_service(request: Request):\n    return request.app.state.auth_service\ndef _build_prompt_service(request: Request):",
+        "peekOfCode": "router = APIRouter()\ndef _parse_activity_datetime(value: str | None, *, end_of_day: bool) -> datetime | None:\n    if value is None:\n        return None\n    raw = value.strip()\n    if not raw:\n        return None\n    try:\n        parsed = datetime.strptime(raw, \"%d/%m/%Y\")\n        resolved_time = time.max if end_of_day else time.min",
         "detail": "backend.app.api.admin",
         "documentation": {}
     },
@@ -4071,11 +4399,29 @@
         "documentation": {}
     },
     {
+        "label": "_NullChatActivityService",
+        "kind": 6,
+        "importPath": "backend.app.api.chat",
+        "description": "backend.app.api.chat",
+        "peekOfCode": "class _NullChatActivityService:\n    async def record(self, payload: ChatActivityWrite) -> None:\n        return None\ndef _build_chat_service(request: Request) -> ChatService:\n    return ChatService(\n        settings=request.app.state.settings,\n        qdrant_manager=request.app.state.qdrant,\n        redis_manager=request.app.state.redis,\n        provider_registry=request.app.state.providers,\n        system_prompt_service=request.app.state.prompt_service,",
+        "detail": "backend.app.api.chat",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "kind": 5,
         "importPath": "backend.app.api.chat",
         "description": "backend.app.api.chat",
-        "peekOfCode": "router = APIRouter()\ndef _build_chat_service(request: Request) -> ChatService:\n    return ChatService(\n        settings=request.app.state.settings,\n        qdrant_manager=request.app.state.qdrant,\n        redis_manager=request.app.state.redis,\n        provider_registry=request.app.state.providers,\n        system_prompt_service=request.app.state.prompt_service,\n        model_selection_service=request.app.state.model_selection_service,\n    )",
+        "peekOfCode": "router = APIRouter()\nlogger = get_logger(__name__)\nclass _NullChatActivityService:\n    async def record(self, payload: ChatActivityWrite) -> None:\n        return None\ndef _build_chat_service(request: Request) -> ChatService:\n    return ChatService(\n        settings=request.app.state.settings,\n        qdrant_manager=request.app.state.qdrant,\n        redis_manager=request.app.state.redis,",
+        "detail": "backend.app.api.chat",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "backend.app.api.chat",
+        "description": "backend.app.api.chat",
+        "peekOfCode": "logger = get_logger(__name__)\nclass _NullChatActivityService:\n    async def record(self, payload: ChatActivityWrite) -> None:\n        return None\ndef _build_chat_service(request: Request) -> ChatService:\n    return ChatService(\n        settings=request.app.state.settings,\n        qdrant_manager=request.app.state.qdrant,\n        redis_manager=request.app.state.redis,\n        provider_registry=request.app.state.providers,",
         "detail": "backend.app.api.chat",
         "documentation": {}
     },
@@ -4356,6 +4702,15 @@
         "description": "backend.app.db.repositories.auth",
         "peekOfCode": "class AuthRepository:\n    def __init__(self, pool: AsyncConnectionPool) -> None:\n        self._pool = pool\n    async def ensure_auth_tables(self) -> None:\n        queries = [\n            \"\"\"\n            CREATE TABLE IF NOT EXISTS app_users (\n                id UUID PRIMARY KEY,\n                username TEXT NOT NULL UNIQUE,\n                password_hash TEXT NOT NULL,",
         "detail": "backend.app.db.repositories.auth",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityRepository",
+        "kind": 6,
+        "importPath": "backend.app.db.repositories.chat_activity",
+        "description": "backend.app.db.repositories.chat_activity",
+        "peekOfCode": "class ChatActivityRepository:\n    def __init__(self, pool: AsyncConnectionPool) -> None:\n        self._pool = pool\n    async def ensure_table(self) -> None:\n        queries = [\n            \"\"\"\n            CREATE TABLE IF NOT EXISTS chat_activity_logs (\n                id BIGSERIAL PRIMARY KEY,\n                user_id UUID NOT NULL REFERENCES app_users(id) ON DELETE CASCADE,\n                username TEXT NOT NULL,",
+        "detail": "backend.app.db.repositories.chat_activity",
         "documentation": {}
     },
     {
@@ -4643,6 +4998,51 @@
         "importPath": "backend.app.models.schemas",
         "description": "backend.app.models.schemas",
         "peekOfCode": "class ChatServiceResult(BaseModel):\n    answer: str\n    thinking: str | None = None\n    citations: list[ChatCitation] = Field(default_factory=list)\n    provider: ProviderName\n    model: str\n    embedding_profile: str\n    embedding_provider: ProviderName\n    embedding_model: str\n    used_fallback: bool = False",
+        "detail": "backend.app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityWrite",
+        "kind": 6,
+        "importPath": "backend.app.models.schemas",
+        "description": "backend.app.models.schemas",
+        "peekOfCode": "class ChatActivityWrite(BaseModel):\n    user_id: UUID\n    username: str\n    auth_type: Literal[\"bearer\", \"api_key\"]\n    request_path: str\n    client_ip: str | None = None\n    forwarded_for: list[str] = Field(default_factory=list)\n    user_agent: str | None = None\n    session_id: str | None = None\n    request_message: str",
+        "detail": "backend.app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityRecord",
+        "kind": 6,
+        "importPath": "backend.app.models.schemas",
+        "description": "backend.app.models.schemas",
+        "peekOfCode": "class ChatActivityRecord(BaseModel):\n    model_config = ConfigDict(from_attributes=True)\n    id: int\n    user_id: UUID\n    username: str\n    auth_type: Literal[\"bearer\", \"api_key\"]\n    request_path: str\n    client_ip: str | None = None\n    forwarded_for: list[str] = Field(default_factory=list)\n    user_agent: str | None = None",
+        "detail": "backend.app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityResponse",
+        "kind": 6,
+        "importPath": "backend.app.models.schemas",
+        "description": "backend.app.models.schemas",
+        "peekOfCode": "class ChatActivityResponse(BaseModel):\n    model_config = ConfigDict(from_attributes=True)\n    id: int\n    user_id: UUID\n    username: str\n    auth_type: Literal[\"bearer\", \"api_key\"]\n    request_path: str\n    client_ip: str | None = None\n    forwarded_for: list[str] = Field(default_factory=list)\n    user_agent: str | None = None",
+        "detail": "backend.app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityOverview",
+        "kind": 6,
+        "importPath": "backend.app.models.schemas",
+        "description": "backend.app.models.schemas",
+        "peekOfCode": "class ChatActivityOverview(BaseModel):\n    total_activities: int = 0\n    completed_activities: int = 0\n    failed_activities: int = 0\n    fallback_activities: int = 0\n    unique_users: int = 0\n    unique_client_ips: int = 0\n    first_activity_at: datetime | None = None\n    last_activity_at: datetime | None = None\n    top_providers: list[str] = Field(default_factory=list)",
+        "detail": "backend.app.models.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityQueryResponse",
+        "kind": 6,
+        "importPath": "backend.app.models.schemas",
+        "description": "backend.app.models.schemas",
+        "peekOfCode": "class ChatActivityQueryResponse(BaseModel):\n    overview: ChatActivityOverview\n    activities: list[ChatActivityResponse] = Field(default_factory=list)\nclass ChatStreamState(BaseModel):\n    model_config = ConfigDict(arbitrary_types_allowed=True)\n    provider: ProviderName\n    model: str\n    embedding_profile: str\n    embedding_provider: ProviderName\n    embedding_model: str",
         "detail": "backend.app.models.schemas",
         "documentation": {}
     },
@@ -5067,6 +5467,15 @@
         "description": "backend.app.services.cache_service",
         "peekOfCode": "class CacheService:\n    def __init__(self, client: Redis, ttl_seconds: int) -> None:\n        self._client = client\n        self._ttl_seconds = ttl_seconds\n    def make_key(self, prefix: str, payload: dict) -> str:\n        encoded = json.dumps(payload, sort_keys=True, ensure_ascii=True)\n        digest = hashlib.sha256(encoded.encode(\"utf-8\")).hexdigest()\n        return f\"{prefix}:{digest}\"\n    async def get_json(self, key: str) -> dict | list | None:\n        value = await self._client.get(key)",
         "detail": "backend.app.services.cache_service",
+        "documentation": {}
+    },
+    {
+        "label": "ChatActivityService",
+        "kind": 6,
+        "importPath": "backend.app.services.chat_activity_service",
+        "description": "backend.app.services.chat_activity_service",
+        "peekOfCode": "class ChatActivityService:\n    def __init__(self, postgres_pool: AsyncConnectionPool) -> None:\n        self._repository = ChatActivityRepository(postgres_pool)\n    async def ensure_table(self) -> None:\n        await self._repository.ensure_table()\n    async def record(self, payload: ChatActivityWrite) -> ChatActivityResponse:\n        record = await self._repository.create(payload)\n        return ChatActivityResponse.model_validate(record)\n    async def search(\n        self,",
+        "detail": "backend.app.services.chat_activity_service",
         "documentation": {}
     },
     {
@@ -5760,6 +6169,222 @@
         "description": "backend.tests.test_auth_ingest_chat_flow",
         "peekOfCode": "INGESTED_CONTENT = (\n    \"The SIT Centre for AI offers comprehensive end-to-end services with co-supervision by experts from both SIT and NVIDIA It serves as a gateway for increased AI adoption across industries, better development of students’ competency in AI and a boost in the AI talent pipeline\"\n)\nclass StubSettings:\n    app_name = \"backend-rag-multipurpose\"\n    auth_enabled = True\n    auth_require_https = False\n    auth_jwt_secret = \"test-secret\"\n    auth_jwt_algorithm = \"HS256\"\n    auth_access_token_ttl_seconds = 3600",
         "detail": "backend.tests.test_auth_ingest_chat_flow",
+        "documentation": {}
+    },
+    {
+        "label": "StubSettings",
+        "kind": 6,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "class StubSettings:\n    app_name = \"backend-rag-multipurpose\"\n    auth_enabled = True\n    auth_require_https = False\n    auth_jwt_secret = \"test-secret\"\n    auth_jwt_algorithm = \"HS256\"\n    auth_access_token_ttl_seconds = 3600\n    auth_bootstrap_admin_username = \"admin\"\n    auth_bootstrap_admin_password = \"change-me-immediately\"\nclass FakeAuthService:",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "FakeAuthService",
+        "kind": 6,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "class FakeAuthService:\n    def __init__(self, settings: StubSettings) -> None:\n        self._settings = settings\n        self._user = AuthenticatedUser(\n            id=UUID(\"11111111-1111-1111-1111-111111111111\"),\n            username=settings.auth_bootstrap_admin_username,\n            is_admin=True,\n            auth_type=\"bearer\",\n        )\n    async def issue_access_token(self, username: str, password: str) -> AccessTokenResponse:",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "FakeActivityService",
+        "kind": 6,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "class FakeActivityService:\n    def __init__(self, *, should_fail: bool = False) -> None:\n        self._records: list[ChatActivityResponse] = []\n        self._next_id = 1\n        self._should_fail = should_fail\n    async def record(self, payload) -> ChatActivityResponse:\n        if self._should_fail:\n            raise RuntimeError(\"activity storage unavailable\")\n        record = ChatActivityResponse(\n            id=self._next_id,",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "FakeChatService",
+        "kind": 6,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "class FakeChatService:\n    def __init__(self, *, should_fail: bool = False) -> None:\n        self._should_fail = should_fail\n    async def prepare_chat(self, payload: ChatRequest, rate_limit_key: str) -> ChatServiceResult:\n        if self._should_fail:\n            raise ValueError(\"provider unreachable\")\n        return ChatServiceResult(\n            answer=\"Recorded answer\",\n            citations=[\n                ChatCitation(",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "build_app",
+        "kind": 2,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "def build_app(activity_service: FakeActivityService) -> FastAPI:\n    settings = StubSettings()\n    app = FastAPI()\n    app.include_router(auth_router, prefix=\"/auth\")\n    app.include_router(admin_router, prefix=\"/admin\")\n    app.include_router(chat_router, prefix=\"/chat\")\n    app.state.settings = settings\n    app.state.auth_service = FakeAuthService(settings)\n    app.state.activity_service = activity_service\n    return app",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "test_chat_activity_is_recorded_and_visible_to_admin",
+        "kind": 2,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "def test_chat_activity_is_recorded_and_visible_to_admin(monkeypatch) -> None:\n    activity_service = FakeActivityService()\n    app = build_app(activity_service)\n    monkeypatch.setattr(chat_api, \"_build_chat_service\", lambda request: FakeChatService())\n    async def run_flow() -> None:\n        transport = httpx.ASGITransport(app=app)\n        async with httpx.AsyncClient(transport=transport, base_url=\"http://testserver\") as client:\n            token_response = await client.post(\n                \"/auth/token\",\n                json={\"username\": \"admin\", \"password\": \"change-me-immediately\"},",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "test_failed_chat_activity_is_recorded",
+        "kind": 2,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "def test_failed_chat_activity_is_recorded(monkeypatch) -> None:\n    activity_service = FakeActivityService()\n    app = build_app(activity_service)\n    monkeypatch.setattr(chat_api, \"_build_chat_service\", lambda request: FakeChatService(should_fail=True))\n    async def run_flow() -> None:\n        transport = httpx.ASGITransport(app=app)\n        async with httpx.AsyncClient(transport=transport, base_url=\"http://testserver\") as client:\n            token_response = await client.post(\n                \"/auth/token\",\n                json={\"username\": \"admin\", \"password\": \"change-me-immediately\"},",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "test_chat_still_succeeds_when_activity_recording_fails",
+        "kind": 2,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "def test_chat_still_succeeds_when_activity_recording_fails(monkeypatch) -> None:\n    activity_service = FakeActivityService(should_fail=True)\n    app = build_app(activity_service)\n    monkeypatch.setattr(chat_api, \"_build_chat_service\", lambda request: FakeChatService())\n    async def run_flow() -> None:\n        transport = httpx.ASGITransport(app=app)\n        async with httpx.AsyncClient(transport=transport, base_url=\"http://testserver\") as client:\n            token_response = await client.post(\n                \"/auth/token\",\n                json={\"username\": \"admin\", \"password\": \"change-me-immediately\"},",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "test_chat_activity_supports_keyword_and_date_filters",
+        "kind": 2,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "def test_chat_activity_supports_keyword_and_date_filters(monkeypatch) -> None:\n    activity_service = FakeActivityService()\n    now = datetime.now(timezone.utc)\n    activity_service._records = [\n        ChatActivityResponse(\n            id=2,\n            user_id=UUID(\"11111111-1111-1111-1111-111111111111\"),\n            username=\"admin\",\n            auth_type=\"bearer\",\n            request_path=\"/chat\",",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "test_chat_activity_accepts_dd_mm_yyyy_filters",
+        "kind": 2,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "def test_chat_activity_accepts_dd_mm_yyyy_filters(monkeypatch) -> None:\n    activity_service = FakeActivityService()\n    activity_service._records = [\n        ChatActivityResponse(\n            id=2,\n            user_id=UUID(\"11111111-1111-1111-1111-111111111111\"),\n            username=\"admin\",\n            auth_type=\"bearer\",\n            request_path=\"/chat\",\n            client_ip=\"203.0.113.9\",",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "redis_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "redis_module = types.ModuleType(\"redis\")\nredis_asyncio_module = types.ModuleType(\"redis.asyncio\")\nredis_asyncio_module.Redis = object\nredis_module.asyncio = redis_asyncio_module\nsys.modules.setdefault(\"redis\", redis_module)\nsys.modules.setdefault(\"redis.asyncio\", redis_asyncio_module)\npsycopg_pool_module = types.ModuleType(\"psycopg_pool\")\npsycopg_pool_module.AsyncConnectionPool = object\nsys.modules.setdefault(\"psycopg_pool\", psycopg_pool_module)\npsycopg_module = types.ModuleType(\"psycopg\")",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "redis_asyncio_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "redis_asyncio_module = types.ModuleType(\"redis.asyncio\")\nredis_asyncio_module.Redis = object\nredis_module.asyncio = redis_asyncio_module\nsys.modules.setdefault(\"redis\", redis_module)\nsys.modules.setdefault(\"redis.asyncio\", redis_asyncio_module)\npsycopg_pool_module = types.ModuleType(\"psycopg_pool\")\npsycopg_pool_module.AsyncConnectionPool = object\nsys.modules.setdefault(\"psycopg_pool\", psycopg_pool_module)\npsycopg_module = types.ModuleType(\"psycopg\")\npsycopg_rows_module = types.ModuleType(\"psycopg.rows\")",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "redis_asyncio_module.Redis",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "redis_asyncio_module.Redis = object\nredis_module.asyncio = redis_asyncio_module\nsys.modules.setdefault(\"redis\", redis_module)\nsys.modules.setdefault(\"redis.asyncio\", redis_asyncio_module)\npsycopg_pool_module = types.ModuleType(\"psycopg_pool\")\npsycopg_pool_module.AsyncConnectionPool = object\nsys.modules.setdefault(\"psycopg_pool\", psycopg_pool_module)\npsycopg_module = types.ModuleType(\"psycopg\")\npsycopg_rows_module = types.ModuleType(\"psycopg.rows\")\npsycopg_rows_module.dict_row = object",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "redis_module.asyncio",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "redis_module.asyncio = redis_asyncio_module\nsys.modules.setdefault(\"redis\", redis_module)\nsys.modules.setdefault(\"redis.asyncio\", redis_asyncio_module)\npsycopg_pool_module = types.ModuleType(\"psycopg_pool\")\npsycopg_pool_module.AsyncConnectionPool = object\nsys.modules.setdefault(\"psycopg_pool\", psycopg_pool_module)\npsycopg_module = types.ModuleType(\"psycopg\")\npsycopg_rows_module = types.ModuleType(\"psycopg.rows\")\npsycopg_rows_module.dict_row = object\npsycopg_types_module = types.ModuleType(\"psycopg.types\")",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_pool_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_pool_module = types.ModuleType(\"psycopg_pool\")\npsycopg_pool_module.AsyncConnectionPool = object\nsys.modules.setdefault(\"psycopg_pool\", psycopg_pool_module)\npsycopg_module = types.ModuleType(\"psycopg\")\npsycopg_rows_module = types.ModuleType(\"psycopg.rows\")\npsycopg_rows_module.dict_row = object\npsycopg_types_module = types.ModuleType(\"psycopg.types\")\npsycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_pool_module.AsyncConnectionPool",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_pool_module.AsyncConnectionPool = object\nsys.modules.setdefault(\"psycopg_pool\", psycopg_pool_module)\npsycopg_module = types.ModuleType(\"psycopg\")\npsycopg_rows_module = types.ModuleType(\"psycopg.rows\")\npsycopg_rows_module.dict_row = object\npsycopg_types_module = types.ModuleType(\"psycopg.types\")\npsycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_module = types.ModuleType(\"psycopg\")\npsycopg_rows_module = types.ModuleType(\"psycopg.rows\")\npsycopg_rows_module.dict_row = object\npsycopg_types_module = types.ModuleType(\"psycopg.types\")\npsycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_rows_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_rows_module = types.ModuleType(\"psycopg.rows\")\npsycopg_rows_module.dict_row = object\npsycopg_types_module = types.ModuleType(\"psycopg.types\")\npsycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_rows_module.dict_row",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_rows_module.dict_row = object\npsycopg_types_module = types.ModuleType(\"psycopg.types\")\npsycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)\nsys.modules.setdefault(\"psycopg.types.json\", psycopg_types_json_module)",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_types_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_types_module = types.ModuleType(\"psycopg.types\")\npsycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)\nsys.modules.setdefault(\"psycopg.types.json\", psycopg_types_json_module)\nimport httpx",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_types_json_module",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_types_json_module = types.ModuleType(\"psycopg.types.json\")\npsycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)\nsys.modules.setdefault(\"psycopg.types.json\", psycopg_types_json_module)\nimport httpx\nimport jwt",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_types_json_module.Jsonb",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_types_json_module.Jsonb = object\npsycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)\nsys.modules.setdefault(\"psycopg.types.json\", psycopg_types_json_module)\nimport httpx\nimport jwt\nfrom fastapi import FastAPI",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_module.rows",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_module.rows = psycopg_rows_module\npsycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)\nsys.modules.setdefault(\"psycopg.types.json\", psycopg_types_json_module)\nimport httpx\nimport jwt\nfrom fastapi import FastAPI\nimport app.api.chat as chat_api",
+        "detail": "backend.tests.test_chat_activity_monitoring",
+        "documentation": {}
+    },
+    {
+        "label": "psycopg_module.types",
+        "kind": 5,
+        "importPath": "backend.tests.test_chat_activity_monitoring",
+        "description": "backend.tests.test_chat_activity_monitoring",
+        "peekOfCode": "psycopg_module.types = psycopg_types_module\nsys.modules.setdefault(\"psycopg\", psycopg_module)\nsys.modules.setdefault(\"psycopg.rows\", psycopg_rows_module)\nsys.modules.setdefault(\"psycopg.types\", psycopg_types_module)\nsys.modules.setdefault(\"psycopg.types.json\", psycopg_types_json_module)\nimport httpx\nimport jwt\nfrom fastapi import FastAPI\nimport app.api.chat as chat_api\nfrom app.api.admin import router as admin_router",
+        "detail": "backend.tests.test_chat_activity_monitoring",
         "documentation": {}
     },
     {

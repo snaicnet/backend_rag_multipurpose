@@ -55,3 +55,38 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_content_hash_profile
     WHERE content_hash IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_documents_source_type ON documents (source_type);
 CREATE INDEX IF NOT EXISTS idx_documents_metadata ON documents USING GIN (metadata);
+
+CREATE TABLE IF NOT EXISTS chat_activity_logs (
+    id BIGSERIAL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES app_users(id) ON DELETE CASCADE,
+    username TEXT NOT NULL,
+    auth_type TEXT NOT NULL,
+    request_path TEXT NOT NULL,
+    client_ip TEXT,
+    forwarded_for JSONB NOT NULL DEFAULT '[]'::jsonb,
+    user_agent TEXT,
+    session_id TEXT,
+    request_message TEXT NOT NULL,
+    response_answer TEXT,
+    provider TEXT,
+    model TEXT,
+    embedding_profile TEXT,
+    embedding_provider TEXT,
+    embedding_model TEXT,
+    used_fallback BOOLEAN NOT NULL DEFAULT FALSE,
+    citations_count INTEGER NOT NULL DEFAULT 0,
+    retrieved_chunks_count INTEGER NOT NULL DEFAULT 0,
+    status TEXT NOT NULL,
+    error_message TEXT,
+    metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_activity_logs_created_at
+    ON chat_activity_logs (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_chat_activity_logs_user_id
+    ON chat_activity_logs (user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_chat_activity_logs_client_ip
+    ON chat_activity_logs (client_ip, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_chat_activity_logs_status
+    ON chat_activity_logs (status, created_at DESC);

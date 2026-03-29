@@ -4,12 +4,20 @@ from typing import AsyncIterator
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
 
+from app.core.logging import get_logger
 from app.core.security import require_authenticated_user
 from app.core.defaults import CHAT_MAX_RESPONSE_CHARS
-from app.models.schemas import AuthenticatedUser, ChatRequest, ChatResponse
+from app.models.schemas import AuthenticatedUser, ChatActivityWrite, ChatRequest, ChatResponse
+from app.services.chat_activity_service import ChatActivityService
 from app.services.chat_service import ChatService
 
 router = APIRouter()
+logger = get_logger(__name__)
+
+
+class _NullChatActivityService:
+    async def record(self, payload: ChatActivityWrite) -> None:
+        return None
 
 
 def _build_chat_service(request: Request) -> ChatService:
@@ -25,6 +33,10 @@ def _build_chat_service(request: Request) -> ChatService:
 
 def _resolve_rate_limit_key(current_user: AuthenticatedUser) -> str:
     return f"user:{current_user.id}"
+
+
+def _build_chat_activity_service(request: Request) -> ChatActivityService:
+    return getattr(request.app.state, "activity_service", _NullChatActivityService())
 
 
 def _raise_chat_http_error(exc: Exception) -> None:
@@ -51,6 +63,72 @@ def _thinking_enabled_for(settings) -> bool:
     return bool(getattr(settings, "chat_thinking_enabled", False))
 
 
+def _extract_forwarded_for(request: Request) -> list[str]:
+    header = request.headers.get("x-forwarded-for", "")
+    return [part.strip() for part in header.split(",") if part.strip()]
+
+
+def _resolve_client_ip(request: Request, forwarded_for: list[str]) -> str | None:
+    if forwarded_for:
+        return forwarded_for[0]
+    if request.client is not None:
+        return request.client.host
+    return None
+
+
+def _build_activity_payload(
+    request: Request,
+    current_user: AuthenticatedUser,
+    payload: ChatRequest,
+    *,
+    status_value: str,
+    response_answer: str | None = None,
+    provider: str | None = None,
+    model: str | None = None,
+    embedding_profile: str | None = None,
+    embedding_provider: str | None = None,
+    embedding_model: str | None = None,
+    used_fallback: bool = False,
+    citations_count: int = 0,
+    retrieved_chunks_count: int = 0,
+    error_message: str | None = None,
+) -> ChatActivityWrite:
+    forwarded_for = _extract_forwarded_for(request)
+    return ChatActivityWrite(
+        user_id=current_user.id,
+        username=current_user.username,
+        auth_type=current_user.auth_type,
+        request_path=request.url.path,
+        client_ip=_resolve_client_ip(request, forwarded_for),
+        forwarded_for=forwarded_for,
+        user_agent=request.headers.get("user-agent"),
+        session_id=payload.session_id,
+        request_message=payload.message,
+        response_answer=response_answer,
+        provider=provider,
+        model=model,
+        embedding_profile=embedding_profile,
+        embedding_provider=embedding_provider,
+        embedding_model=embedding_model,
+        used_fallback=used_fallback,
+        citations_count=citations_count,
+        retrieved_chunks_count=retrieved_chunks_count,
+        status=status_value,
+        error_message=error_message,
+        metadata={"debug": payload.debug, "top_k": payload.top_k},
+    )
+
+
+async def _record_activity_safe(
+    activity_service: ChatActivityService,
+    activity_payload: ChatActivityWrite,
+) -> None:
+    try:
+        await activity_service.record(activity_payload)
+    except Exception as exc:  # pragma: no cover - defensive logging path
+        logger.warning("chat_activity_record_failed: %s", exc)
+
+
 @router.post("", response_model=ChatResponse)
 async def chat(
     request: Request,
@@ -58,12 +136,42 @@ async def chat(
     current_user: AuthenticatedUser = Depends(require_authenticated_user),
 ) -> ChatResponse:
     service = _build_chat_service(request)
+    activity_service = _build_chat_activity_service(request)
     rate_limit_key = _resolve_rate_limit_key(current_user)
 
     try:
         result = await service.prepare_chat(payload, rate_limit_key)
     except Exception as exc:
+        await _record_activity_safe(
+            activity_service,
+            _build_activity_payload(
+                request,
+                current_user,
+                payload,
+                status_value="failed",
+                error_message=str(exc),
+            )
+        )
         _raise_chat_http_error(exc)
+
+    await _record_activity_safe(
+        activity_service,
+        _build_activity_payload(
+            request,
+            current_user,
+            payload,
+            status_value="completed",
+            response_answer=result.answer,
+            provider=result.provider,
+            model=result.model,
+            embedding_profile=result.embedding_profile,
+            embedding_provider=result.embedding_provider,
+            embedding_model=result.embedding_model,
+            used_fallback=result.used_fallback,
+            citations_count=len(result.citations),
+            retrieved_chunks_count=len(result.retrieved_chunks),
+        )
+    )
 
     return ChatResponse(
         answer=result.answer,
@@ -86,11 +194,22 @@ async def chat_stream(
     current_user: AuthenticatedUser = Depends(require_authenticated_user),
 ) -> StreamingResponse:
     service = _build_chat_service(request)
+    activity_service = _build_chat_activity_service(request)
     rate_limit_key = _resolve_rate_limit_key(current_user)
 
     try:
         stream_state = await service.start_stream(payload, rate_limit_key)
     except Exception as exc:
+        await _record_activity_safe(
+            activity_service,
+            _build_activity_payload(
+                request,
+                current_user,
+                payload,
+                status_value="failed",
+                error_message=str(exc),
+            )
+        )
         _raise_chat_http_error(exc)
 
     async def event_generator() -> AsyncIterator[str]:
@@ -113,6 +232,24 @@ async def chat_stream(
         )
 
         if stream_state.used_fallback:
+            await _record_activity_safe(
+                activity_service,
+                _build_activity_payload(
+                    request,
+                    current_user,
+                    payload,
+                    status_value="completed",
+                    response_answer=stream_state.fallback_text,
+                    provider=stream_state.provider,
+                    model=stream_state.model,
+                    embedding_profile=stream_state.embedding_profile,
+                    embedding_provider=stream_state.embedding_provider,
+                    embedding_model=stream_state.embedding_model,
+                    used_fallback=True,
+                    citations_count=0,
+                    retrieved_chunks_count=0,
+                )
+            )
             yield _sse("chunk", {"delta": stream_state.fallback_text})
             yield _sse(
                 "done",
@@ -128,37 +265,77 @@ async def chat_stream(
 
         answer_parts: list[str] = []
         answer_length = 0
-        async for delta in stream_state.stream:
-            if not delta:
-                continue
-            remaining = max_response_chars - answer_length
-            if remaining <= 0:
-                break
-            chunk = delta[:remaining]
-            if chunk:
-                answer_parts.append(chunk)
-                answer_length += len(chunk)
-                yield _sse("chunk", {"delta": chunk})
-            if len(delta) > len(chunk):
-                break
+        try:
+            async for delta in stream_state.stream:
+                if not delta:
+                    continue
+                remaining = max_response_chars - answer_length
+                if remaining <= 0:
+                    break
+                chunk = delta[:remaining]
+                if chunk:
+                    answer_parts.append(chunk)
+                    answer_length += len(chunk)
+                    yield _sse("chunk", {"delta": chunk})
+                if len(delta) > len(chunk):
+                    break
 
-        final_text = service.finalize_answer("".join(answer_parts))
-        await service.finalize_stream(stream_state, final_text)
-        yield _sse(
-            "done",
-            {
-                "answer": final_text,
-                "thinking": stream_state.thinking
-                if _thinking_enabled_for(request.app.state.settings)
-                else None,
-                "citations": [citation.model_dump(mode="json") for citation in stream_state.citations],
-                "used_fallback": False,
-                "retrieved_chunks": [
-                    chunk.model_dump(mode="json") for chunk in stream_state.retrieved_chunks
-                ]
-                if payload.debug
-                else [],
-            },
-        )
+            final_text = service.finalize_answer("".join(answer_parts))
+            await service.finalize_stream(stream_state, final_text)
+            await _record_activity_safe(
+                activity_service,
+                _build_activity_payload(
+                    request,
+                    current_user,
+                    payload,
+                    status_value="completed",
+                    response_answer=final_text,
+                    provider=stream_state.provider,
+                    model=stream_state.model,
+                    embedding_profile=stream_state.embedding_profile,
+                    embedding_provider=stream_state.embedding_provider,
+                    embedding_model=stream_state.embedding_model,
+                    used_fallback=False,
+                    citations_count=len(stream_state.citations),
+                    retrieved_chunks_count=len(stream_state.retrieved_chunks),
+                )
+            )
+            yield _sse(
+                "done",
+                {
+                    "answer": final_text,
+                    "thinking": stream_state.thinking
+                    if _thinking_enabled_for(request.app.state.settings)
+                    else None,
+                    "citations": [citation.model_dump(mode="json") for citation in stream_state.citations],
+                    "used_fallback": False,
+                    "retrieved_chunks": [
+                        chunk.model_dump(mode="json") for chunk in stream_state.retrieved_chunks
+                    ]
+                    if payload.debug
+                    else [],
+                },
+            )
+        except Exception as exc:
+            partial_answer = service.finalize_answer("".join(answer_parts))
+            await _record_activity_safe(
+                activity_service,
+                _build_activity_payload(
+                    request,
+                    current_user,
+                    payload,
+                    status_value="failed",
+                    response_answer=partial_answer or None,
+                    provider=stream_state.provider,
+                    model=stream_state.model,
+                    embedding_profile=stream_state.embedding_profile,
+                    embedding_provider=stream_state.embedding_provider,
+                    embedding_model=stream_state.embedding_model,
+                    error_message=str(exc),
+                    citations_count=len(stream_state.citations),
+                    retrieved_chunks_count=len(stream_state.retrieved_chunks),
+                )
+            )
+            raise
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")

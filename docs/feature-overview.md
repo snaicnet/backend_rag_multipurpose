@@ -13,6 +13,7 @@ This document summarizes the current implemented capabilities of the backend RAG
 - `POST /chat`
 - `POST /chat/stream`
 - `DELETE /admin/reset`
+- `GET /admin/chat-activity`
 - `GET /admin/system-prompt`
 - `PUT /admin/system-prompt`
 
@@ -20,6 +21,7 @@ This document summarizes the current implemented capabilities of the backend RAG
 
 - PostgreSQL storage for users, API keys, and documents
 - PostgreSQL storage for the editable system prompt
+- PostgreSQL storage for chat activity audit records
 - Qdrant storage for chunk embeddings and similarity search
 - Redis rate limiting, retrieval caching, embedding caching, and optional session storage
 - Request-level generation provider and model selection
@@ -27,6 +29,7 @@ This document summarizes the current implemented capabilities of the backend RAG
 - Multipart ingestion for `txt`, `md`, `docx`, `csv`, and `xlsx`
 - JWT bearer authentication and hashed API keys
 - Admin-only system prompt management through JWT bearer auth
+- Admin-only chat activity monitoring with overview analytics and filtered search
 - Chat guardrails for spam, quota, prompt-injection phrases, and output limits
 - Exact duplicate knowledge-base uploads are deduplicated by normalized content hash plus embedding profile
 - Grounded chatbot behavior tuned for retrieved-context responses
@@ -62,10 +65,24 @@ The assistant is instructed to stay grounded to retrieved context. When context 
 - document-based Q&A tools
 - domain-specific AI assistant backends
 
-## TODO
+## Admin monitoring
 
-- add a backend user message logger to monitor misuse and jailbreak attempts
-- add metrics to compute service performance and usage
+The admin activity endpoint returns:
+
+- an `overview` block with aggregate counts and top providers/models
+- an `activities` list containing the matching chat audit records
+
+Supported filters:
+
+- `limit`
+- `start_at`
+- `end_at`
+- `keyword`
+
+Accepted date formats:
+
+- `DD/MM/YYYY`
+- ISO 8601 timestamps
 
 ## Related documentation
 

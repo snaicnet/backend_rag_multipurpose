@@ -1,10 +1,12 @@
+from datetime import datetime, time, timezone
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 
 from app.core.security import require_admin_user
 from app.models.schemas import (
     AuthenticatedUser,
+    ChatActivityQueryResponse,
     ChunkRecord,
     ModelCatalogResponse,
     ModelSelectionResponse,
@@ -19,9 +21,39 @@ from app.models.schemas import (
     UserUpdateRequest,
 )
 from app.services.reset_service import ResetService
+from app.services.chat_activity_service import ChatActivityService
 from app.services.document_inspection_service import DocumentInspectionService
 
 router = APIRouter()
+
+
+def _parse_activity_datetime(value: str | None, *, end_of_day: bool) -> datetime | None:
+    if value is None:
+        return None
+
+    raw = value.strip()
+    if not raw:
+        return None
+
+    try:
+        parsed = datetime.strptime(raw, "%d/%m/%Y")
+        resolved_time = time.max if end_of_day else time.min
+        return datetime.combine(parsed.date(), resolved_time, tzinfo=timezone.utc)
+    except ValueError:
+        pass
+
+    normalized = raw.replace("Z", "+00:00")
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid date format. Use DD/MM/YYYY or ISO 8601 like 2026-03-29T23:59:59Z.",
+        ) from exc
+
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
 
 
 def _build_reset_service(request: Request) -> ResetService:
@@ -42,6 +74,10 @@ def _build_prompt_service(request: Request):
 
 def _build_model_selection_service(request: Request):
     return request.app.state.model_selection_service
+
+
+def _build_chat_activity_service(request: Request) -> ChatActivityService:
+    return request.app.state.activity_service
 
 
 def _build_document_inspection_service(request: Request) -> DocumentInspectionService:
@@ -131,6 +167,44 @@ async def get_document_raw_chunks(
         if "not found" in message.lower():
             status_code = status.HTTP_404_NOT_FOUND
         raise HTTPException(status_code=status_code, detail=message) from exc
+
+
+@router.get("/chat-activity", response_model=ChatActivityQueryResponse)
+async def list_chat_activity(
+    request: Request,
+    limit: int = 100,
+    start_at: str | None = Query(
+        default=None,
+        openapi_examples={
+            "date_only": {
+                "summary": "Date only",
+                "value": "24/03/2025",
+            }
+        },
+        description="Filter activities created at or after this date. Supports DD/MM/YYYY or ISO 8601 UTC timestamps.",
+    ),
+    end_at: str | None = Query(
+        default=None,
+        openapi_examples={
+            "date_only": {
+                "summary": "Date only",
+                "value": "29/03/2025",
+            }
+        },
+        description="Filter activities created at or before this date. Supports DD/MM/YYYY or ISO 8601 UTC timestamps.",
+    ),
+    keyword: str | None = None,
+    _: AuthenticatedUser = Depends(require_admin_user),
+) -> ChatActivityQueryResponse:
+    bounded_limit = max(1, min(limit, 500))
+    parsed_start_at = _parse_activity_datetime(start_at, end_of_day=False)
+    parsed_end_at = _parse_activity_datetime(end_at, end_of_day=True)
+    return await _build_chat_activity_service(request).search(
+        limit=bounded_limit,
+        start_at=parsed_start_at,
+        end_at=parsed_end_at,
+        keyword=keyword,
+    )
 
 
 @router.post("/users", response_model=UserResponse)

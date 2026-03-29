@@ -72,6 +72,31 @@ Relevant file:
 
 - `backend/docker-compose.yml`
 
+### Admin login kept rejecting the new bootstrap password after editing `backend/.env`
+
+Symptoms:
+
+- `POST /auth/token` returned `{"detail":"Invalid username or password"}`
+- the password in `backend/.env` looked correct
+- the issue showed up on an existing local Docker volume
+
+Cause:
+
+- bootstrap admin credentials are only used when the initial admin user is first created
+- once PostgreSQL already contains that user, changing `AUTH_BOOTSTRAP_ADMIN_PASSWORD` in `backend/.env` does not overwrite the stored password hash
+
+Solution:
+
+- use the original bootstrap password that was active when the admin row was first created, or
+- reset the admin user in PostgreSQL, or
+- recreate the local Postgres volume if you want a fresh local bootstrap state
+
+Relevant files:
+
+- `backend/.env`
+- `backend/app/services/auth_service.py`
+- `backend/docker-compose.yml`
+
 ### Docker tag failure: `No such image: rag-backend:latest`
 
 Error:
@@ -661,6 +686,41 @@ Relevant files:
 - `backend/.env`
 - `backend/app/core/config.py`
 - `backend/app/services/rerank.py`
+
+### Admin chat-activity endpoint returned HTTP 500 during audit rollout
+
+Symptoms:
+
+- `GET /admin/chat-activity` returned HTTP `500`
+- `/chat` sometimes succeeded but logged `chat_activity_record_failed`
+- the failure showed up with or without date filters in some deployments
+
+Causes:
+
+- the first rollout converted one Pydantic model into another without enabling attribute-based validation on the response model
+- the initial SQL search used nullable-parameter checks inline, which was more fragile than needed on the real PostgreSQL-backed path
+- audit writes originally ran on the request critical path, so a logging failure could also surface as a chat failure
+
+Solution:
+
+- enable `from_attributes=True` on the chat activity response model
+- make activity logging best-effort so audit failures do not break `/chat`
+- build the audit search `WHERE` clause dynamically instead of relying on `NULL` checks in SQL
+- verify the live container path after rebuild with:
+
+```powershell
+$token = (Invoke-RestMethod -Method Post -Uri 'http://localhost:9010/auth/token' -ContentType 'application/json' -Body '{"username":"admin","password":"YOUR_PASSWORD"}').access_token
+$headers = @{ Authorization = "Bearer $token" }
+Invoke-RestMethod -Method Get -Uri 'http://localhost:9010/admin/chat-activity' -Headers $headers
+Invoke-RestMethod -Method Get -Uri 'http://localhost:9010/admin/chat-activity?start_at=24/03/2025&end_at=29/03/2025' -Headers $headers
+```
+
+Relevant files:
+
+- `backend/app/api/chat.py`
+- `backend/app/api/admin.py`
+- `backend/app/models/schemas.py`
+- `backend/app/db/repositories/chat_activity.py`
 
 ### Chat default profile fails because the named generation profile is missing
 

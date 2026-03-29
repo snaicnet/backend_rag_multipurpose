@@ -256,6 +256,104 @@ class ChatServiceResult(BaseModel):
     retrieved_chunks: list["RetrievedChunk"] = Field(default_factory=list)
 
 
+class ChatActivityWrite(BaseModel):
+    user_id: UUID
+    username: str
+    auth_type: Literal["bearer", "api_key"]
+    request_path: str
+    client_ip: str | None = None
+    forwarded_for: list[str] = Field(default_factory=list)
+    user_agent: str | None = None
+    session_id: str | None = None
+    request_message: str
+    response_answer: str | None = None
+    provider: str | None = None
+    model: str | None = None
+    embedding_profile: str | None = None
+    embedding_provider: str | None = None
+    embedding_model: str | None = None
+    used_fallback: bool = False
+    citations_count: int = 0
+    retrieved_chunks_count: int = 0
+    status: Literal["completed", "failed"] = "completed"
+    error_message: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class ChatActivityRecord(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    user_id: UUID
+    username: str
+    auth_type: Literal["bearer", "api_key"]
+    request_path: str
+    client_ip: str | None = None
+    forwarded_for: list[str] = Field(default_factory=list)
+    user_agent: str | None = None
+    session_id: str | None = None
+    request_message: str
+    response_answer: str | None = None
+    provider: str | None = None
+    model: str | None = None
+    embedding_profile: str | None = None
+    embedding_provider: str | None = None
+    embedding_model: str | None = None
+    used_fallback: bool = False
+    citations_count: int = 0
+    retrieved_chunks_count: int = 0
+    status: Literal["completed", "failed"]
+    error_message: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime
+
+
+class ChatActivityResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    user_id: UUID
+    username: str
+    auth_type: Literal["bearer", "api_key"]
+    request_path: str
+    client_ip: str | None = None
+    forwarded_for: list[str] = Field(default_factory=list)
+    user_agent: str | None = None
+    session_id: str | None = None
+    request_message: str
+    response_answer: str | None = None
+    provider: str | None = None
+    model: str | None = None
+    embedding_profile: str | None = None
+    embedding_provider: str | None = None
+    embedding_model: str | None = None
+    used_fallback: bool = False
+    citations_count: int = 0
+    retrieved_chunks_count: int = 0
+    status: Literal["completed", "failed"]
+    error_message: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime
+
+
+class ChatActivityOverview(BaseModel):
+    total_activities: int = 0
+    completed_activities: int = 0
+    failed_activities: int = 0
+    fallback_activities: int = 0
+    unique_users: int = 0
+    unique_client_ips: int = 0
+    first_activity_at: datetime | None = None
+    last_activity_at: datetime | None = None
+    top_providers: list[str] = Field(default_factory=list)
+    top_models: list[str] = Field(default_factory=list)
+
+
+class ChatActivityQueryResponse(BaseModel):
+    overview: ChatActivityOverview
+    activities: list[ChatActivityResponse] = Field(default_factory=list)
+
+
 class ChatStreamState(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 

@@ -11,6 +11,7 @@ from app.db.postgres import PostgresManager
 from app.db.redis import RedisManager
 from app.providers.registry import ProviderRegistry
 from app.services.auth_service import AuthService
+from app.services.chat_activity_service import ChatActivityService
 from app.services.model_selection_service import ModelSelectionService
 from app.services.system_prompt_service import SystemPromptService
 
@@ -26,6 +27,7 @@ async def lifespan(app: FastAPI):
     qdrant = QdrantManager(settings)
     providers = ProviderRegistry.from_settings(settings)
     auth_service = AuthService(settings, postgres.pool)
+    chat_activity_service = ChatActivityService(postgres.pool)
     prompt_service = SystemPromptService(postgres.pool)
     model_selection_service = ModelSelectionService(settings, postgres.pool)
 
@@ -35,17 +37,19 @@ async def lifespan(app: FastAPI):
     app.state.qdrant = qdrant
     app.state.providers = providers
     app.state.auth_service = auth_service
+    app.state.activity_service = chat_activity_service
     app.state.prompt_service = prompt_service
     app.state.model_selection_service = model_selection_service
 
     await postgres.connect()
     await redis.connect()
+    await auth_service.ensure_bootstrap_admin()
     await prompt_service.ensure_default_system_prompt()
     await model_selection_service.ensure_default_model_selection()
+    await chat_activity_service.ensure_table()
     model_selection = await model_selection_service.get_model_selection()
     embedding_profile = settings.embedding_profiles[model_selection.embedding_profile]
     await _wait_for_qdrant(qdrant, embedding_profile.dimension)
-    await auth_service.ensure_bootstrap_admin()
 
     logger.info("application_startup_complete")
 

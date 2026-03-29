@@ -228,6 +228,26 @@ Suggested values:
 - `/backend-rag/AUTH_BOOTSTRAP_ADMIN_USERNAME`: your admin username
 - `/backend-rag/AUTH_BOOTSTRAP_ADMIN_PASSWORD`: your admin password
 
+You can generate the JWT secret outside ECS from your local PowerShell terminal or from AWS CloudShell with:
+
+```powershell
+[Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 } | ForEach-Object { [byte]$_ }))
+```
+
+or:
+
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(64))"
+```
+
+Then store that generated value in the `/backend-rag/AUTH_JWT_SECRET` SecureString parameter.
+
+Example one-command SSM write:
+
+```powershell
+aws ssm put-parameter --region YOUR_REGION --name /backend-rag/AUTH_JWT_SECRET --type SecureString --overwrite --value ([Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 } | ForEach-Object { [byte]$_ })))
+```
+
 The current ECS task template is NIM-based by default.
 
 ### Permissions note

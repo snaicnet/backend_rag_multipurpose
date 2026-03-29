@@ -172,6 +172,29 @@ curl -X PUT http://localhost:9010/admin/system-prompt ^
 
 The next `/chat` or `/chat/stream` request will use the updated prompt immediately.
 
+## Review chat activity
+
+The admin chat-activity endpoint returns an aggregated `overview` section followed by the matching `activities`.
+
+Query the most recent activity:
+
+```bash
+curl http://localhost:9010/admin/chat-activity ^
+  -H "Authorization: Bearer YOUR_JWT"
+```
+
+Query a date range using user-friendly dates:
+
+```bash
+curl "http://localhost:9010/admin/chat-activity?start_at=24/03/2025&end_at=29/03/2025&keyword=safety" ^
+  -H "Authorization: Bearer YOUR_JWT"
+```
+
+Supported date formats:
+
+- `DD/MM/YYYY`
+- ISO 8601 such as `2026-03-29T23:59:59Z`
+
 ## Pull Ollama models on the host
 
 If you use Ollama, pull the generation and embedding models on the host machine:
@@ -246,6 +269,22 @@ If host-installed pytest plugins interfere with collection, disable plugin autol
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
 python -m pytest backend/tests
 ```
+
+## Docker smoke check after deploy
+
+After `docker compose -f backend/docker-compose.yml up --build -d`, run a basic auth plus admin-monitoring check:
+
+```powershell
+$token = (Invoke-RestMethod -Method Post -Uri 'http://localhost:9010/auth/token' -ContentType 'application/json' -Body '{"username":"admin","password":"YOUR_PASSWORD"}').access_token
+$headers = @{ Authorization = "Bearer $token" }
+Invoke-RestMethod -Method Get -Uri 'http://localhost:9010/health'
+Invoke-RestMethod -Method Get -Uri 'http://localhost:9010/admin/chat-activity' -Headers $headers
+Invoke-RestMethod -Method Get -Uri 'http://localhost:9010/admin/chat-activity?start_at=24/03/2025&end_at=29/03/2025' -Headers $headers
+```
+
+Bootstrap admin reminder:
+
+- if your local Postgres volume already existed, the working password may still be the older bootstrap password rather than the latest value in `backend/.env`
 
 ## Run load tests
 

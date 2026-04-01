@@ -127,12 +127,6 @@ You can also override `-BaseUrl`, `-Username`, `-ChatMessage`, `-GenerationProvi
 - [Load Testing](loadtest/README.md)
 - [Runbook](docs/runbook.md)
 
-# Ownership and License
+# Developer
 
-Copyright (c) 2026 Isfaque AL Kaderi Tuhin.
-
-Licensed under Apache License 2.0.
-
-You may use, modify, and distribute this project, including for commercial use, but attribution and license notice must be retained.
-
-Attribution links: Built by [Isfaque AL Kaderi Tuhin](https://github.com/iahin) | [LinkedIn](https://www.linkedin.com/in/iatuhin/) | [Email](mailto:shioktech@gmail.com)
+Built by [Isfaque AL Kaderi Tuhin](https://github.com/iahin)

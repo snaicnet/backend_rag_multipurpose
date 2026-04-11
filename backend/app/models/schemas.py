@@ -148,6 +148,7 @@ class ChatResponse(BaseModel):
     used_fallback: bool = False
     session_id: str | None = None
     retrieved_chunks: list["RetrievedChunk"] = Field(default_factory=list)
+    prompt_messages: list[ChatMessage] = Field(default_factory=list)
 
 
 class ChatFeedbackRequest(BaseModel):
@@ -277,9 +278,9 @@ class RetrievedChunk(BaseModel):
 
 
 class PromptContext(BaseModel):
-    system_prompt: str
     messages: list[ChatMessage]
     citations: list[ChatCitation]
+    retrieved_chunks: list[RetrievedChunk] = Field(default_factory=list)
 
 
 class ChatCompletionResult(BaseModel):
@@ -301,6 +302,7 @@ class ChatServiceResult(BaseModel):
     used_fallback: bool = False
     session_id: str | None = None
     retrieved_chunks: list["RetrievedChunk"] = Field(default_factory=list)
+    prompt_messages: list[ChatMessage] = Field(default_factory=list)
 
 
 class ChatActivityWrite(BaseModel):
@@ -417,6 +419,7 @@ class ChatStreamState(BaseModel):
     fallback_text: str = ""
     session_id: str | None = None
     user_message: str = ""
+    prompt_messages: list[ChatMessage] = Field(default_factory=list)
 
 
 class ResetResponse(BaseModel):

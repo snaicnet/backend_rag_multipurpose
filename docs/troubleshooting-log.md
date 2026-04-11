@@ -540,6 +540,33 @@ Relevant files:
 - `deploy/ecs/task-definition.json`
 - `scripts/redeploy-ecs.ps1`
 
+### Prompt file changes did not affect live chat wording
+
+Symptoms:
+
+- editing `backend/app/services/prompt_builder.py` did not change the live chat output
+- the assistant still used phrasing such as `Based on the knowledge base provided`
+- prompt wording looked correct in code but not in real responses
+
+Cause:
+
+- the active system prompt is loaded from PostgreSQL through `system_prompt_settings`
+- a previously saved admin-managed prompt was still active
+- changing the default prompt file alone does not override an existing stored prompt
+
+Solution:
+
+- check the live prompt with `GET /admin/system-prompt`
+- update the stored prompt with `PUT /admin/system-prompt` if the database value is outdated
+- restart or redeploy only if you also changed the built-in default and want startup sync to apply to managed built-in prompt variants
+
+Relevant files:
+
+- `backend/app/services/prompt_builder.py`
+- `backend/app/services/system_prompt_service.py`
+- `backend/app/db/repositories/system_prompt.py`
+- `backend/app/api/admin.py`
+
 ### Default prompt existed in more than one place
 
 Symptoms:
@@ -770,6 +797,64 @@ Relevant files:
 - `backend/app/core/config.py`
 - `backend/.env`
 - `backend/.env.example`
+
+### Chat answered `No` even though the retrieved chunk clearly contained the evidence
+
+Symptoms:
+
+- `/chat` returned `No.` for a yes/no question
+- debug output showed a retrieved chunk containing the missing fact
+- example: the retrieved chunk included `Monash University`, but the answer still said `No.`
+
+Cause:
+
+- prompt building truncated each evidence excerpt to a hard `700` characters even when the configured chat chunk budget was larger
+- the retrieved chunk could therefore look correct in debug output while the decisive line never reached the model
+- an older binary-adjudication path also made diagnosis harder because yes/no questions could bypass the normal answer path
+
+Solution:
+
+- remove the hard `700` character excerpt cap and use the configured `max_chunk_chars` budget instead
+- remove the binary adjudication shortcut so the model always answers from the normal grounded prompt
+- restart the backend after deploying the fix so the running process picks up the updated prompt builder and chat flow
+
+Relevant files:
+
+- `backend/app/services/prompt_builder.py`
+- `backend/app/services/chat_service.py`
+- `backend/tests/test_query.py`
+
+### Chat said a technology/sector question was unsupported even though the KB listed both facts
+
+Symptoms:
+
+- `/chat` returned an unsupported-style answer such as:
+  - `The knowledge base does not provide specific details on how LLMs help manufacturing companies.`
+- debug output showed the retrieved chunks already contained both:
+  - `LLMs` under AI technology pillars or expertise areas
+  - `Manufacturing` or `Industry and Manufacturing` under supported sectors or domain areas
+
+Cause:
+
+- the model was still classifying some indirect questions as `[B]` unsupported before it reached the later partial-answer guidance
+- the prompt allowed conservative fact-combination in one section, but the classification step did not state strongly enough that these direct multi-fact connections should count as supported
+
+Solution:
+
+- strengthen the classification rule in the system prompt so `[A]` explicitly includes answers formed by directly combining closely related listed facts
+- add explicit examples such as `technology + supported sector`, `capability + solution area`, and `programme + listed outcome`
+- verify the live prompt through `GET /admin/system-prompt` instead of assuming the runtime picked up the latest prompt text
+
+Verification:
+
+- after rebuilding and restarting the Docker app with the updated prompt, the live backend answered:
+  - `LLMs are listed as an AI Technology Pillar and Industry and Manufacturing is listed as a Domain Area under AI Expertise Areas. This indicates that LLMs are part of SNAIC's AI capabilities for the manufacturing sector.`
+
+Relevant files:
+
+- `backend/app/services/prompt_builder.py`
+- `backend/app/services/system_prompt_service.py`
+- `backend/tests/test_query.py`
 
 ## Usage
 

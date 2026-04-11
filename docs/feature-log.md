@@ -575,6 +575,66 @@ Result:
 - prompt improvements are now reflected in the actual backend system after restart, not only in eval-specific paths
 - existing environments migrate safely to the improved built-in SNAIC prompt without clobbering intentional custom prompts
 
+## v0.5.23 - 2026-04-09
+
+NIM prompt handling and generation context shaping simplified.
+
+Changed:
+
+- NIM chat requests no longer prepend a synthetic system message ahead of the real stored system prompt
+- chat flow now always uses the normal grounded generation path and no longer runs the binary adjudication pre-pass
+- prompt building no longer injects binary-only decision scaffolding for yes/no questions
+- generation now uses the retrieved chunk set directly instead of a binary-specific subset selector
+- prompt excerpts now use the configured `max_chunk_chars` budget instead of an internal hard `700` character cap
+- default `chat_max_input_tokens` increased to `4000`
+
+Fixed:
+
+- late evidence inside a retrieved chunk now remains visible to the model when the configured chunk budget allows it
+- debug smoke helpers now print `retrieved_chunks` by default so retrieval-vs-prompt issues are easier to inspect
+
+Result:
+
+- the model now sees more of the actual retrieved evidence for answer generation
+- yes/no answers now come from the normal model output path instead of a separate adjudication shortcut
+- NIM follows the intended stored system prompt more reliably
+
+Updated later:
+
+- indirect grounded questions are now classified as supported when the answer follows from directly combining closely related listed facts
+- the default SNAIC prompt now treats combinations such as `technology + supported sector` as sufficient support for a conservative answer
+- local query debugging now prints the live stored system prompt so prompt-vs-runtime mismatches are easier to confirm
+
+Updated again:
+
+- prompt assembly now uses a simpler message layout:
+  - one `system` message for the stored system prompt
+  - one optional combined `assistant` message for rolling conversation history
+  - one `user` message for the current question
+  - one `user` message for retrieved context
+- `PromptContext` no longer stores a duplicate `system_prompt` field because the system prompt already exists inside `messages`
+- `PromptContext` now carries `retrieved_chunks` directly alongside `messages` and `citations`
+- prompt builder cleanup removed unused managed-prompt hash tracking and unused lexical helper constants
+- local runtime now has `CHAT_THINKING_ENABLED=true` in `backend/.env` so NIM reasoning mode is enabled through the existing provider path
+
+Result:
+
+- prompt payloads are easier to inspect and reason about during debugging
+- conversation history is now passed as one labeled assistant message instead of multiple mixed-role entries
+- prompt-related state is simpler and less redundant
+
+Updated again:
+
+- prompt context selection within each document now prefers the highest-similarity chunks instead of the earliest chunk order
+- prompt context now omits non-answering metadata noise such as publisher, published-at, URL, excerpt counts, and similarity labels
+- `CHAT_MAX_EXCERPTS_PER_DOCUMENT` was added as a runtime config so per-document prompt evidence can be tuned without editing code
+- `/chat` and `/chat/stream` now honor a server-side `CHAT_DEBUG_ENABLED` switch before returning debug payloads such as `retrieved_chunks` and `prompt_messages`
+
+Result:
+
+- prompt evidence shown to the model now more reliably includes the decisive retrieved span for same-document questions such as partner-organisation lookups
+- debug visibility can now be disabled globally even when a client sends `debug=true`
+
 ## Current feature set - 2026-03-29
 
 The repository currently includes:

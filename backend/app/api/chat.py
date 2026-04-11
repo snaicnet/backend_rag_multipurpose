@@ -98,6 +98,10 @@ def _thinking_enabled_for(settings) -> bool:
     return bool(getattr(settings, "chat_thinking_enabled", False))
 
 
+def _debug_enabled_for(settings, requested_debug: bool) -> bool:
+    return bool(requested_debug and getattr(settings, "chat_debug_enabled", True))
+
+
 def _extract_forwarded_for(request: Request) -> list[str]:
     header = request.headers.get("x-forwarded-for", "")
     return [part.strip() for part in header.split(",") if part.strip()]
@@ -173,6 +177,7 @@ async def chat(
     service = _build_chat_service(request)
     activity_service = _build_chat_activity_service(request)
     rate_limit_key = _resolve_rate_limit_key(current_user)
+    debug_enabled = _debug_enabled_for(request.app.state.settings, payload.debug)
 
     try:
         result = await service.prepare_chat(payload, rate_limit_key)
@@ -219,7 +224,8 @@ async def chat(
         embedding_model=result.embedding_model,
         used_fallback=result.used_fallback,
         session_id=result.session_id,
-        retrieved_chunks=result.retrieved_chunks if payload.debug else [],
+        retrieved_chunks=result.retrieved_chunks if debug_enabled else [],
+        prompt_messages=result.prompt_messages if debug_enabled else [],
     )
 
 
@@ -232,6 +238,7 @@ async def chat_stream(
     service = _build_chat_service(request)
     activity_service = _build_chat_activity_service(request)
     rate_limit_key = _resolve_rate_limit_key(current_user)
+    debug_enabled = _debug_enabled_for(request.app.state.settings, payload.debug)
 
     try:
         stream_state = await service.start_stream(payload, rate_limit_key)
@@ -260,7 +267,12 @@ async def chat_stream(
             "retrieved_chunks": [
                 chunk.model_dump(mode="json", exclude_none=True) for chunk in stream_state.retrieved_chunks
             ]
-            if payload.debug
+            if debug_enabled
+            else [],
+            "prompt_messages": [
+                message.model_dump(mode="json", exclude_none=True) for message in stream_state.prompt_messages
+            ]
+            if debug_enabled
             else [],
         }
         if stream_state.session_id is not None:
@@ -296,6 +308,7 @@ async def chat_stream(
                 "citations": [],
                 "used_fallback": True,
                 "retrieved_chunks": [],
+                "prompt_messages": [],
             }
             if stream_state.session_id is not None:
                 done_payload["session_id"] = stream_state.session_id
@@ -353,7 +366,13 @@ async def chat_stream(
                     chunk.model_dump(mode="json", exclude_none=True)
                     for chunk in stream_state.retrieved_chunks
                 ]
-                if payload.debug
+                if debug_enabled
+                else [],
+                "prompt_messages": [
+                    message.model_dump(mode="json", exclude_none=True)
+                    for message in stream_state.prompt_messages
+                ]
+                if debug_enabled
                 else [],
             }
             if stream_state.session_id is not None:

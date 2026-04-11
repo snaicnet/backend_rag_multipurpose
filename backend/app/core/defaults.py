@@ -1,12 +1,15 @@
 CHAT_REPEATED_PROMPT_LOOKBACK = 5
 CHAT_MAX_CONTEXT_CHUNK_CHARS = 1800
+CHAT_MAX_EXCERPTS_PER_DOCUMENT = 3
 CHAT_MIN_TOP_K = 3
 CHAT_MAX_TOP_K = 8
-CHAT_MAX_RESPONSE_CHARS = 2000
-CHAT_MAX_RESPONSE_TOKENS = 700
+CHAT_MAX_RESPONSE_CHARS = 4000
+CHAT_MAX_RESPONSE_TOKENS = 1200
 CHAT_TOP_P = 1.0
 CHAT_FREQUENCY_PENALTY = 0.0
 CHAT_PRESENCE_PENALTY = 0.0
+CHAT_DEBUG_ENABLED = True
+CHAT_BINARY_PRECOMPUTE_ENABLED = False
 EMBEDDING_CACHE_TTL_SECONDS = 3600
 SESSION_TTL_SECONDS = 1800
 SESSION_STORAGE_ENABLED = False
@@ -23,6 +26,11 @@ DEFAULT_GENERATION_CATALOG = [
         "profile_name": "nim_3super120",
         "provider": "nim",
         "model": "nvidia/nemotron-3-super-120b-a12b",
+    },
+    {
+        "profile_name": "nim_llama33_super49b",
+        "provider": "nim",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
     },
     {
         "profile_name": "ollama_llama32",

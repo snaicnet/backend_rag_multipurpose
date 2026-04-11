@@ -184,3 +184,5 @@ AGENT.md
 AGENTS.md
 .vscode/
 eval/output
+
+.deepeval

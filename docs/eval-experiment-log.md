@@ -1241,6 +1241,7 @@ Add one row per experiment for quick trend tracking.
 | EXP-20260402-08 | MultiHopRAG train | 100 | nvidia/nemotron-3-super-120b-a12b | nvidia/llama-nemotron-embed-1b-v2 | llama-nemotron-rerank-1b-v2 | none | 0.53 | 0.54644 | 0.516275 | 0.914167 | 0.3125 | Generation evidence narrowing materially improved accuracy. The remaining bottleneck is still false `No` decisions on multi-source yes/no questions. |
 | EXP-20260402-09 | MultiHopRAG train | 100 | nvidia/nemotron-3-super-120b-a12b | nvidia/llama-nemotron-embed-1b-v2 | llama-nemotron-rerank-1b-v2 | none | 0.69 | 0.700501 | 0.587431 | 0.910833 | 0.31125 | Binary adjudication pre-pass was the biggest generation-side improvement so far. Remaining misses are still mostly false `No` answers on comparison-heavy rows. |
 | EXP-20260402-10 | MultiHopRAG train | 100 | nvidia/nemotron-3-super-120b-a12b | nvidia/llama-nemotron-embed-1b-v2 | llama-nemotron-rerank-1b-v2 | none | 0.68 | 0.691113 | 0.603107 | 0.914167 | 0.3125 | Anchor-aware relation guidance kept the system in the same strong band but did not beat EXP-09 on exact match. Optimization cycle closed here. |
+| EXP-20260411-02 | SNAIC answerable | 21 | nim_3super120 | nim_nemotron_2048 | n/a | DeepEval + GEval | n/a | n/a | n/a | 0.994048 | 0.907804 | Post prompt-selection cleanup run. Retrieval stayed strong and answer quality improved materially versus the earlier SNAIC run. |
 
 ## Recent Accuracy Summary
 
@@ -1266,3 +1267,298 @@ Use this compact table for stakeholder updates.
   - binary adjudication before normal answer generation
 - Main remaining limitation:
   - false `No` answers on hard multi-source comparison rows
+
+## EXP-20260409-01
+
+### Change Summary
+
+- switched from the earlier benchmark flow to a new SNAIC-specific evaluation set in `eval/dataset/testset.csv`
+- regenerated the test set from `eval/create_domain_test.py`
+- manually reviewed the generated samples for correctness before rerunning eval
+- restricted the eval run to the `answerable` subset only
+- separated the backend eval model from the critic model
+- reset backend state before ingest so each run starts from a clean index
+- used:
+  - eval generation profile: `nim_3super120`
+  - eval embedding profile: `nim_nemotron_2048`
+  - critic model: `gpt-4.1-mini`
+  - critic embedding model: `text-embedding-3-small`
+
+### Eval Snapshot
+
+- dataset source: local
+- dataset file: `eval/dataset/testset.csv`
+- included sample types: `answerable`
+- sample count used: `21`
+- ingest source: `eval/dataset/snaic_overview.md`
+- backend reset before ingest: `true`
+- retrieval top_k: `5`
+
+### Metrics
+
+Response quality:
+- `faithfulness = 0.7615079365079366`
+- `answer_relevance = 0.515637843158069`
+- `context_relevance = 0.8761904761904761`
+- `answer_correctness = 0.49031662111016977`
+
+Contextual accuracy:
+- `context_precision = 0.9073412697947699`
+- `context_recall = 0.9408163265306122`
+- `hit_rate = 0.9523809523809523`
+- `mrr = 0.9166666666666666`
+
+### What Went Right
+
+- the new eval flow ran on a clean backend state instead of a contaminated index
+- retrieval quality was strong after reset and reingest
+- hit rate and MRR were high once they were changed to judge-based retrieval scoring
+- context precision and context recall indicate the backend is usually finding the right evidence
+- separating eval and critic models removed the earlier NIM timeout and wrapper issues from judging
+
+### What Went Wrong
+
+- the generated dataset still needed manual review because some synthetic rows were low quality or mismatched
+- answer correctness stayed materially lower than retrieval metrics
+- some answers were too short, incomplete, or answered a nearby fact instead of the target fact
+- some responses were clipped by backend response limits, which depressed correctness even when retrieval was good
+- `answer_relevance` was also weaker than retrieval metrics, which suggests the generation step is still the main bottleneck
+
+### Interpretation
+
+- for this SNAIC-specific run, retrieval is no longer the main failure point
+- the main remaining issue is answer generation quality after retrieval
+- the current eval setup is now suitable for debugging answer shaping, prompt behavior, and response-length limits rather than retrieval coverage
+
+### Next Focus
+
+- continue using the manually reviewed `answerable` subset for factual QA evaluation
+- tighten or regenerate weak test rows before treating the dataset as final
+- investigate backend answer truncation and response formatting
+- improve generation quality before expanding the eval back to `partial`, `not_found`, or adversarial cases
+
+### Follow-up Note
+
+- latest rerun artifact: `eval/output/ragas_eval/20260409_183552/summary.json`
+- latest rerun metrics:
+  - `faithfulness = 0.688504864311316`
+  - `answer_relevance = 0.5393660368290111`
+  - `context_relevance = 0.8761904761904763`
+  - `answer_correctness = 0.4940365889418247`
+  - `context_precision = 0.9123677248167719`
+  - `context_recall = 0.9`
+  - `hit_rate = 0.9523809523809523`
+  - `mrr = 0.9166666666666666`
+- after prompt relaxation, retrieval metrics remained strong but answer generation quality did not materially improve
+- observed failure pattern: retrieved context contains the answer, but the backend still sometimes returns a fallback-style "not found" response
+- current working hypothesis: the remaining issue is primarily answer-model behavior on `nim_3super120`, especially for grounded synthesis questions that require connecting nearby facts rather than repeating one explicit sentence
+- status of that hypothesis: recorded only
+- no eval-model switch or backend model change has been applied yet in this log entry
+
+### External Finding
+
+- current external evidence supports the working hypothesis that `nim_3super120` can be weak on strict instruction-following tasks even while being positioned for agentic reasoning
+- a recent NVIDIA Developer Forums report specifically describes `NVIDIA-Nemotron-3-Super-120B-A12B` as "not good at following simple instructions" for output formatting constraints:
+  - https://forums.developer.nvidia.com/t/nvidia-nemotron-3-super-120b-a12b-nvfp4-not-good-at-following-simple-instructions/363326
+- NVIDIA’s own launch post describes Nemotron 3 Super as built for agentic reasoning, long context, and controllable reasoning features such as `enable_thinking`, `reasoning_budget`, and `low_effort`:
+  - https://forums.developer.nvidia.com/t/nemotron-3-super-now-available-for-agentic-reasoning/363179
+- NVIDIA also published a follow-up improvements thread shortly after launch, which indicates the stack is still being actively corrected for behavior issues such as `force_nonempty_content` and tool-calling support:
+  - https://forums.developer.nvidia.com/t/nemotron-3-super-improvements-and-fixes/364754
+- inference from the sources:
+  - the model family is optimized around reasoning and agentic workflows, but current deployment behavior may still be inconsistent on tight instruction adherence and output-control cases
+  - that is consistent with the SNAIC eval pattern where retrieval is correct but the answer model sometimes chooses an overly conservative fallback instead of forming the closest grounded answer
+
+### Debugging Update - 2026-04-09
+
+- a concrete false-`No` case was reproduced on the SNAIC corpus with the question: `Is Monash Univercity listed as a partner organisation in the SNAIC collaborations?`
+- debug output showed retrieval was correct: the returned chunk contained `Monash University`
+- the failure was in prompt construction, not retrieval:
+  - prompt excerpts were being hard-capped at `700` characters inside `backend/app/services/prompt_builder.py`
+  - in the reproduced chunk, `Monash University` appeared after that cutoff, so the model never saw the decisive line even though the debug payload showed it
+- the backend also still carried extra binary-answering logic from the earlier eval cycle, which made the answer path harder to reason about during debugging
+
+### Fix Applied After The Reproduction
+
+- removed the hard `700` character excerpt cap and now use the configured `max_chunk_chars` budget for prompt excerpts
+- removed the binary adjudication pre-pass and binary-specific prompt scaffolding so chat always uses the normal grounded model output path
+- removed the synthetic NIM system-message prefix so the stored system prompt remains the leading instruction
+
+### Eval Interpretation Update
+
+- some of the earlier "retrieval is correct but generation says no" failures were at least partly caused by backend prompt shaping, not only by model weakness
+- for the SNAIC-specific eval flow, prompt-construction visibility now needs to be treated as part of generation quality analysis
+- future eval notes should distinguish:
+  - retrieval returned the right chunk
+  - prompt actually included the decisive span
+  - model still answered incorrectly after seeing that span
+
+### Additional Debugging Update - 2026-04-09
+
+- a second concrete failure mode was reproduced on the SNAIC corpus with the question: `How LLMs help manufacturing company?`
+- retrieval was correct and already contained both required facts:
+  - `LLMs` listed in AI expertise areas / AI technology pillars
+  - `Industry and Manufacturing` or `Manufacturing` listed as a supported domain or sector
+- the backend still returned an unsupported-style answer at first, which showed the issue was no longer retrieval coverage or excerpt truncation
+
+### Additional Fix Applied
+
+- strengthened the system-prompt classification step so `[A]` now explicitly includes answers formed by directly combining closely related listed facts
+- added explicit support examples such as `technology + supported sector`, `capability + solution area`, and `programme + listed outcome`
+- kept the answer wording conservative so the model states the connection without inventing unlisted benefits
+
+### Additional Verification
+
+- after rebuilding the Docker image and confirming the live stored prompt through `GET /admin/system-prompt`, the same question produced a grounded answer instead of an unsupported refusal
+- this narrows the earlier hypothesis further:
+  - part of the remaining SNAIC-specific generation misses came from prompt classification and support-threshold wording, not only from the model's raw instruction-following limits
+
+### Prompt Structure Update - 2026-04-11
+
+- prompt assembly was simplified further during follow-up debugging
+- the backend now sends:
+  - one `system` message with the stored system prompt
+  - one optional combined `assistant` message for rolling conversation history
+  - one `user` message for the current question
+  - one `user` message for retrieved context
+- `PromptContext` was simplified so it no longer stores a duplicate `system_prompt` field
+- `PromptContext` now carries `retrieved_chunks` directly, which makes prompt/debug state easier to inspect without relying only on citations or formatted context text
+- these changes were made to reduce prompt-shape confusion while continuing to debug SNAIC answer-generation quality
+
+### Prompt Selection And Debug Gate Update - 2026-04-11
+
+- a later debug pass confirmed that some false unsupported answers were caused by prompt-context selection, not retrieval failure:
+  - the relevant chunk was present in `retrieved_chunks`
+  - but the formatted retrieved-context message was still surfacing earlier same-document chunks instead of the highest-similarity chunk
+- prompt construction was then corrected so per-document excerpts are selected by `similarity_score`
+- prompt formatting was also stripped down to answer-relevant content only, removing metadata noise such as:
+  - publisher
+  - published-at
+  - URL
+  - retrieved-chunk counts
+  - similarity labels
+- a new runtime control was added:
+  - `CHAT_MAX_EXCERPTS_PER_DOCUMENT`
+- debug output is now guarded by a server-side `CHAT_DEBUG_ENABLED` setting, so `/chat` and `/chat/stream` can suppress prompt debug payloads even when a client sends `debug=true`
+
+### Current Interpretation
+
+- for the current SNAIC flow, the prompt is now working in the intended shape:
+  - retrieval returns the right chunk
+  - prompt construction surfaces the right chunk into the model-visible context
+- this removes one major confounder from future answer-quality analysis
+- remaining misses after this point should be treated as generation or prompt-instruction behavior first, not hidden-chunk selection bugs
+
+### Relevancy-Only Scoring Note - 2026-04-11
+
+- run artifact reviewed: `eval/output/ragas_eval/20260411_143740/summary.json`
+- observed anomaly:
+  - `context_relevance = 0.0`
+  - while retrieval metrics remained high (`context_precision`, `context_recall`, `hit_rate`, `mrr`)
+- diagnosis recorded:
+  - the custom context-relevance scorer in `eval/main.py` currently expects a strict `SCORE: <0..1>` line
+  - when the judge response does not match that exact format, the scorer falls back to `0.0`
+  - this can collapse the full `context_relevance` average to zero even when retrieved contexts are relevant
+- agreed workflow update:
+  - support running relevancy-only evaluation against existing run artifacts instead of rerunning full ingest/chat/metric flow
+  - objective: recompute `context_relevance` only and preserve previously computed metrics
+
+### Evaluator Stack Update - 2026-04-11
+
+- evaluation library for `eval/main.py` has been switched to DeepEval for primary metric scoring
+- active DeepEval metrics:
+  - `AnswerRelevancyMetric`
+  - `FaithfulnessMetric`
+  - `ContextualPrecisionMetric`
+  - `ContextualRecallMetric`
+  - `ContextualRelevancyMetric`
+  - `GEval` for answer correctness
+- retrieval ranking metrics (`hit_rate`, `mrr`) remain judge-based custom computations
+- rationale recorded:
+  - answer relevancy is now LLM-judge based rather than treated as cosine-only similarity
+  - this follows the same direction as commonly cited LLM-as-judge work (ARES, G-Eval, MT-Bench judge analysis)
+
+### Transition Note
+
+- older references in this log to Ragas-based scoring are historical and represent earlier runs
+- current runbook intent for ongoing SNAIC evals is DeepEval-first scoring in `eval/main.py`
+
+### External findings
+Why LLM-as-a-Judge beats cosine/embedding similarity
+RAGAS's answer_correctness uses a weighted combo of NLI claim matching + BERTScore-style semantic similarity. The core limitation is well-documented:
+
+Cosine similarity is surface-level — it rewards lexical/embedding proximity, not factual accuracy. Two sentences can be semantically close but one can be factually wrong.
+It can't reason about nuance — paraphrases, numerical facts, negations, and multi-hop reasoning all fool embedding-based metrics.
+
+
+Research backing LLM-as-a-Judge for RAG
+ARES (Saad-Falcon et al., 2023) — Stanford. Explicitly uses an LLM judge to score Answer Faithfulness, Answer Relevance, and Context Relevance per sample. Directly comparable to what your judge_answer_relevance is doing.
+G-Eval (Liu et al., 2023) — NLP Group, CMU. Showed LLM-based evaluation with chain-of-thought scoring correlates significantly better with human judgement than BLEU, ROUGE, or BERTScore across NLG tasks.
+Judging LLM-as-a-Judge (Zheng et al., 2023) — UC Berkeley / LMSYS (the MT-Bench paper). Demonstrated GPT-4 as judge achieves >80% agreement with human raters — higher agreement than human-human inter-annotator rates on many benchmarks.
+TruLens (Truera, 2023) — Industry framework built entirely on LLM-judged RAG triad: Context Relevance + Groundedness + Answer Relevance. Widely used in production.
+RULER / HELMET / LongBench — All use LLM judges for correctness over embedding similarity for long-context and RAG evaluation.
+## EXP-20260411-02 - DeepEval SNAIC Summary Rerun
+
+### Goal
+
+- record the improved SNAIC `answerable` DeepEval result after the April 11 prompt and context-selection fixes
+- capture the new score baseline for subsequent generation-side debugging
+
+### Change Summary
+
+- no retrieval-model change was introduced for this logged result
+- this run reflects the backend after the April 11 prompt-shape cleanup, per-document excerpt selection by `similarity_score`, and context-format simplification
+- summary artifact reviewed: `eval/output/20260411_184731/summary.json`
+
+### Backend Snapshot
+
+- eval generation profile: `nim_3super120`
+- eval embedding profile: `nim_nemotron_2048`
+- critic model: `gpt-4.1-mini`
+- retrieval top_k: `5`
+- prompt state: post prompt-selection fix and post debug-gate cleanup
+
+### Eval Snapshot
+
+- dataset source: local
+- dataset file: `eval/dataset/testset.csv`
+- included sample types: `answerable`
+- sample count used: `21`
+- judge metrics:
+  - `AnswerRelevancyMetric`
+  - `FaithfulnessMetric`
+  - `ContextualPrecisionMetric`
+  - `ContextualRecallMetric`
+  - `ContextualRelevancyMetric`
+  - `GEval` for answer correctness
+
+### Metrics
+
+Response quality:
+- `answer_correctness = 0.6744530435714287`
+- `answer_relevancy = 0.978283621142857`
+- `faithfulness = 0.980952380952381`
+
+Contextual accuracy:
+- `contextual_precision = 0.9078042328095238`
+- `contextual_recall = 0.9940476190476191`
+- `contextual_relevancy = 0.5226140332857142`
+- `hit_rate = 0.9523809523809523`
+- `mrr = 0.8849206349047618`
+
+### Pattern Notes
+
+What improved:
+- answer correctness moved up materially from the earlier SNAIC DeepEval baseline
+- answer relevancy and faithfulness are now both in a very strong band
+- retrieval quality stayed strong, with hit rate unchanged and contextual recall close to perfect
+
+What still looks weak:
+- contextual relevancy is still the lowest major metric in the set
+- MRR remains below the earlier `0.9167` SNAIC rerun, which means the first relevant chunk is not always ranked as early as it could be
+- the main remaining gap is no longer broad grounding failure; it is answer shaping and context concentration on the most decisive spans
+
+### Decision
+
+- keep the current prompt and context-selection changes as the new baseline
+- treat future misses as generation-quality or chunk-ranking issues first, not hidden-context bugs
+- next experiment should focus on improving contextual relevancy and early-rank chunk quality without broad prompt rewrites

@@ -116,11 +116,7 @@ class NimProvider(ProviderAdapter):
         return headers
 
     def _build_messages(self, messages: list[ChatMessage], *, thinking_enabled: bool) -> list[dict]:
-        thinking_hint = "detailed thinking on" if thinking_enabled else "detailed thinking off"
-        return [
-            ChatMessage(role="system", content=thinking_hint).model_dump(),
-            *[message.model_dump() for message in messages],
-        ]
+        return [message.model_dump() for message in messages]
 
     async def _post_chat(
         self,

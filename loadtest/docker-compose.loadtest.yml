@@ -1,0 +1,10 @@
+services:
+  k6:
+    image: grafana/k6:latest
+    container_name: rag_k6
+    working_dir: /scripts
+    entrypoint: ["k6"]
+    environment:
+      BASE_URL: http://nginx
+    volumes:
+      - ../loadtest:/scripts:ro

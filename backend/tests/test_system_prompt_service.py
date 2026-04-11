@@ -115,7 +115,7 @@ def test_system_prompt_service_updates_managed_legacy_prompt() -> None:
     asyncio.run(run_test())
 
 
-def test_system_prompt_service_preserves_custom_prompt() -> None:
+def test_system_prompt_service_overwrites_custom_prompt_on_startup() -> None:
     async def run_test() -> None:
         service = SystemPromptService(postgres_pool=None)  # type: ignore[arg-type]
         repository = FakePromptRepository("You are a custom admin-managed prompt.")
@@ -124,7 +124,7 @@ def test_system_prompt_service_preserves_custom_prompt() -> None:
         await service.ensure_default_system_prompt()
 
         assert repository.ensure_calls == 1
-        assert repository.updates == []
+        assert repository.updates == [DEFAULT_SYSTEM_PROMPT]
 
     asyncio.run(run_test())
 

@@ -1,9 +1,5 @@
 from app.models.schemas import ChatMessage, RetrievedChunk
-from app.services.prompt_builder import (
-    BINARY_ADJUDICATION_SYSTEM_PROMPT,
-    DEFAULT_SYSTEM_PROMPT,
-    PromptBuilder,
-)
+from app.services.prompt_builder import DEFAULT_SYSTEM_PROMPT, PromptBuilder
 
 
 def test_prompt_builder_includes_grounding_and_citations() -> None:
@@ -31,16 +27,19 @@ def test_prompt_builder_includes_grounding_and_citations() -> None:
         max_chunk_chars=2000,
     )
 
-    assert prompt.system_prompt == DEFAULT_SYSTEM_PROMPT
-    assert "You are the official SNAIC website assistant." in prompt.system_prompt
-    assert "IDENTITY & CONSTRAINTS" in prompt.system_prompt
-    assert "KNOWLEDGE BASE" in prompt.system_prompt
-    assert "USER QUESTION" in prompt.system_prompt
-    assert "Do not use emoji anywhere in the response." in prompt.system_prompt
-    assert "For questions about change, consistency, difference, portrayal, comparison" in prompt.system_prompt
-    assert "KNOWLEDGE BASE" in prompt.messages[-1].content
-    assert "<kb>" in prompt.messages[-1].content
-    assert "What services do we offer?" in prompt.messages[-1].content
+    system_content = prompt.messages[0].content
+    assert system_content == DEFAULT_SYSTEM_PROMPT
+    assert "You are the official SNAIC website assistant." in system_content
+    assert "You answer questions exclusively about SNAIC using only the KNOWLEDGE BASE provided." in system_content
+    assert "including answers formed by directly combining closely related facts that are explicitly listed" in system_content
+    assert "Treat a question as In-scope, supported when the answer follows directly from facts that are separately stated but obviously related" in system_content
+    assert "When the user asks for an implication, benefit, relevance, fit, or likely role of something in SNAIC" in system_content
+    assert "- Do not end responses with emoji or celebratory symbols." in system_content
+    assert prompt.messages[1].role == "assistant"
+    assert prompt.messages[1].content == "Conversation history:\nHi"
+    assert prompt.messages[2].content == "User question:\nWhat services do we offer?"
+    assert prompt.messages[3].content.startswith("Retrieved context:\n")
+    assert "We offer AI chatbot implementation for SME customers." in prompt.messages[3].content
     assert prompt.citations[0].title == "Service Catalog"
 
 
@@ -84,6 +83,35 @@ def test_prompt_builder_caps_context_budget() -> None:
     assert "B" * 301 not in prompt.messages[-1].content
 
 
+def test_prompt_builder_keeps_late_evidence_when_chunk_budget_allows() -> None:
+    builder = PromptBuilder()
+    late_evidence = ("Intro text. " * 80) + "Monash University"
+    chunks = [
+        RetrievedChunk(
+            chunk_id="11111111-1111-1111-1111-111111111111",
+            document_id="22222222-2222-2222-2222-222222222222",
+            title="Partner Organisations",
+            url=None,
+            source_type="markdown",
+            content=late_evidence,
+            metadata={},
+            similarity_score=0.9,
+        ),
+    ]
+
+    prompt = builder.build(
+        user_message="Is Monash University listed as a partner organisation?",
+        chat_history=[],
+        retrieved_chunks=chunks,
+        max_history_messages=8,
+        max_context_chars=8000,
+        max_context_tokens=2500,
+        max_chunk_chars=1800,
+    )
+
+    assert "Monash University" in prompt.messages[-1].content
+
+
 def test_prompt_builder_uses_custom_system_prompt() -> None:
     builder = PromptBuilder()
 
@@ -98,7 +126,6 @@ def test_prompt_builder_uses_custom_system_prompt() -> None:
         system_prompt="Custom system prompt",
     )
 
-    assert prompt.system_prompt == "Custom system prompt"
     assert prompt.messages[0].content == "Custom system prompt"
 
 
@@ -162,19 +189,20 @@ def test_prompt_builder_groups_chunks_by_document() -> None:
         max_chunk_chars=500,
     )
 
-    user_prompt = prompt.messages[-1].content
-    assert user_prompt.count("[Document") == 2
-    assert "Retrieved Chunks: 2" in user_prompt
-    assert "Title: Real Article Title" in user_prompt
-    assert "Publisher: TechCrunch" in user_prompt
-    assert "Published At: 2023-10-07" in user_prompt
-    assert "Title: sample-0001-ctx-1" not in user_prompt
-    assert "First excerpt from the same document." in user_prompt
-    assert "Second excerpt from the same document." in user_prompt
-    assert "Evidence from another document." in user_prompt
+    context_prompt = prompt.messages[-1].content
+    assert context_prompt.count("[Document") == 2
+    assert "Source: Real Article Title" in context_prompt
+    assert "Title: sample-0001-ctx-1" not in context_prompt
+    assert "First excerpt from the same document." in context_prompt
+    assert "Second excerpt from the same document." in context_prompt
+    assert "Evidence from another document." in context_prompt
+    assert "Publisher: TechCrunch" not in context_prompt
+    assert "Published At: 2023-10-07" not in context_prompt
+    assert "Retrieved Chunks:" not in context_prompt
+    assert "Similarity:" not in context_prompt
 
 
-def test_prompt_builder_adds_binary_decision_check_for_yes_no_questions() -> None:
+def test_prompt_builder_does_not_add_binary_decision_check_for_yes_no_questions() -> None:
     builder = PromptBuilder()
     chunks = [
         RetrievedChunk(
@@ -222,168 +250,45 @@ def test_prompt_builder_adds_binary_decision_check_for_yes_no_questions() -> Non
         max_chunk_chars=500,
     )
 
-    user_prompt = prompt.messages[-1].content
-    assert "BINARY DECISION CHECK" in user_prompt
-    assert "Answer `Yes.` only if every required part is supported" in user_prompt
-    assert "Question Clauses:" in user_prompt
+    context_prompt = prompt.messages[-1].content
+    assert "BINARY DECISION CHECK" not in context_prompt
+    assert "Question Clauses:" not in context_prompt
 
 
-def test_prompt_builder_selects_generation_subset_for_binary_questions() -> None:
+def test_prompt_builder_prefers_highest_similarity_excerpt_within_document() -> None:
     builder = PromptBuilder()
     chunks = [
         RetrievedChunk(
             chunk_id="11111111-1111-1111-1111-111111111111",
-            document_id="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-            title="Noise Article 1",
-            url="https://example.com/noise-1",
-            source_type="text",
-            content=(
-                "Title: Noise Article 1\n"
-                "Source: Wired\n"
-                "Published At: 2023-10-08\n"
-                "A noisy article with weak overlap."
-            ),
+            document_id="22222222-2222-2222-2222-222222222222",
+            title="snaic_overview",
+            url=None,
+            source_type="markdown",
+            content="Title: snaic_overview\nLow-priority excerpt.",
             metadata={},
-            similarity_score=0.95,
-        ),
-        RetrievedChunk(
-            chunk_id="22222222-2222-2222-2222-222222222222",
-            document_id="bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
-            title="TechCrunch Flexport Article",
-            url="https://example.com/tc",
-            source_type="text",
-            content=(
-                "Title: TechCrunch Flexport Article\n"
-                "Source: TechCrunch\n"
-                "Published At: 2023-10-07\n"
-                "Dave Clark discussed Flexport strategy changes."
-            ),
-            metadata={},
-            similarity_score=0.87,
+            similarity_score=0.2,
         ),
         RetrievedChunk(
             chunk_id="33333333-3333-3333-3333-333333333333",
-            document_id="cccccccc-cccc-cccc-cccc-cccccccccccc",
-            title="The Verge Google Article",
-            url="https://example.com/verge",
-            source_type="text",
-            content=(
-                "Title: The Verge Google Article\n"
-                "Source: The Verge\n"
-                "Published At: 2023-11-01\n"
-                "Coverage of Google's influence on the internet's appearance."
-            ),
-            metadata={},
-            similarity_score=0.86,
-        ),
-        RetrievedChunk(
-            chunk_id="44444444-4444-4444-4444-444444444444",
-            document_id="dddddddd-dddd-dddd-dddd-dddddddddddd",
-            title="Noise Article 2",
-            url="https://example.com/noise-2",
-            source_type="text",
-            content=(
-                "Title: Noise Article 2\n"
-                "Source: Fortune\n"
-                "Published At: 2023-09-20\n"
-                "Another noisy article."
-            ),
-            metadata={},
-            similarity_score=0.84,
-        ),
-        RetrievedChunk(
-            chunk_id="55555555-5555-5555-5555-555555555555",
-            document_id="eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
-            title="Noise Article 3",
-            url="https://example.com/noise-3",
-            source_type="text",
-            content=(
-                "Title: Noise Article 3\n"
-                "Source: Science News For Students\n"
-                "Published At: 2023-09-22\n"
-                "Background article with weak overlap."
-            ),
-            metadata={},
-            similarity_score=0.83,
-        ),
-    ]
-
-    selected = builder.select_generation_chunks(
-        user_message=(
-            "Did the TechCrunch report on October 7, 2023 and the The Verge report on "
-            "November 1, 2023 describe different aspects of Google's market influence?"
-        ),
-        retrieved_chunks=chunks,
-    )
-
-    selected_document_ids = {str(chunk.document_id) for chunk in selected}
-    assert "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" in selected_document_ids
-    assert "cccccccc-cccc-cccc-cccc-cccccccccccc" in selected_document_ids
-    assert len(selected_document_ids) == 2
-
-
-def test_prompt_builder_builds_binary_adjudication_messages() -> None:
-    builder = PromptBuilder()
-    chunks = [
-        RetrievedChunk(
-            chunk_id="11111111-1111-1111-1111-111111111111",
             document_id="22222222-2222-2222-2222-222222222222",
-            title="TechCrunch Article",
-            url="https://example.com/techcrunch",
-            source_type="text",
-            content=(
-                "Title: TechCrunch Article\n"
-                "Source: TechCrunch\n"
-                "Published At: 2023-10-07\n"
-                "Dave Clark discussed Flexport strategy changes."
-            ),
+            title="snaic_overview",
+            url=None,
+            source_type="markdown",
+            content="Title: snaic_overview\nNanyang Technological University, Singapore",
             metadata={},
-            similarity_score=0.92,
-        )
+            similarity_score=0.9,
+        ),
     ]
 
-    messages = builder.build_binary_adjudication_messages(
-        user_message="Did the TechCrunch report on October 7, 2023 describe a strategy change?",
+    prompt = builder.build(
+        user_message="How is NTU involved with SNAIC?",
+        chat_history=[],
         retrieved_chunks=chunks,
+        max_history_messages=8,
         max_context_chars=4000,
         max_context_tokens=1000,
         max_chunk_chars=500,
     )
 
-    assert messages[0].content == BINARY_ADJUDICATION_SYSTEM_PROMPT
-    assert 'Return JSON only: {"answer":"Yes|No|Insufficient","reason":"one short sentence"}' in messages[1].content
-    assert "DECISION TASK" in messages[1].content
-
-
-def test_prompt_builder_adds_relation_guidance_for_difference_questions() -> None:
-    builder = PromptBuilder()
-    chunks = [
-        RetrievedChunk(
-            chunk_id="11111111-1111-1111-1111-111111111111",
-            document_id="22222222-2222-2222-2222-222222222222",
-            title="TechCrunch Article",
-            url="https://example.com/techcrunch",
-            source_type="text",
-            content=(
-                "Title: TechCrunch Article\n"
-                "Source: TechCrunch\n"
-                "Published At: 2023-10-07\n"
-                "The company shifted toward ad revenue."
-            ),
-            metadata={},
-            similarity_score=0.92,
-        )
-    ]
-
-    messages = builder.build_binary_adjudication_messages(
-        user_message=(
-            "Does the TechCrunch article indicate a different monetization strategy compared to another report?"
-        ),
-        retrieved_chunks=chunks,
-        max_context_chars=4000,
-        max_context_tokens=1000,
-        max_chunk_chars=500,
-    )
-
-    assert "QUESTION RELATION" in messages[1].content
-    assert "difference or change questions" in messages[1].content
+    context_prompt = prompt.messages[-1].content
+    assert "Nanyang Technological University, Singapore" in context_prompt

@@ -7,6 +7,8 @@ from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app.core.defaults import (
+    CHAT_DEBUG_ENABLED,
+    CHAT_MAX_EXCERPTS_PER_DOCUMENT,
     CHAT_MAX_RESPONSE_CHARS,
     CHAT_MAX_RESPONSE_TOKENS,
     CHAT_FREQUENCY_PENALTY,
@@ -102,10 +104,12 @@ class Settings(BaseSettings):
     chat_rate_limit_window_seconds: int = Field(default=60)
     chat_daily_limit_requests: int = Field(default=1000)
     chat_max_message_chars: int = Field(default=4000)
-    chat_max_input_tokens: int = Field(default=1000)
+    chat_max_input_tokens: int = Field(default=4000)
     chat_max_history_messages: int = Field(default=8)
     chat_max_context_chars: int = Field(default=8000)
     chat_max_context_tokens: int = Field(default=2500)
+    chat_max_excerpts_per_document: int = Field(default=CHAT_MAX_EXCERPTS_PER_DOCUMENT)
+    chat_debug_enabled: bool = Field(default=CHAT_DEBUG_ENABLED)
     chat_temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     chat_thinking_enabled: bool = Field(default=False)
     chat_show_thinking_block: bool = Field(default=False)
@@ -201,6 +205,8 @@ class Settings(BaseSettings):
             "chat_max_input_tokens": self.chat_max_input_tokens,
             "chat_max_context_chars": self.chat_max_context_chars,
             "chat_max_context_tokens": self.chat_max_context_tokens,
+            "chat_max_excerpts_per_document": self.chat_max_excerpts_per_document,
+            "chat_debug_enabled": self.chat_debug_enabled,
             "chat_max_response_chars": CHAT_MAX_RESPONSE_CHARS,
             "chat_max_response_tokens": CHAT_MAX_RESPONSE_TOKENS,
             "chat_temperature": self.chat_temperature,

@@ -51,6 +51,7 @@ def test_live_api_flow(live_api_config: dict[str, str | None]) -> None:
 
             chat_payload: dict[str, object] = {
                 "message": live_api_config["chat_message"],
+                "debug": True,
             }
             if live_api_config["generation_provider"]:
                 chat_payload["provider"] = live_api_config["generation_provider"]
@@ -69,11 +70,13 @@ def test_live_api_flow(live_api_config: dict[str, str | None]) -> None:
 
             print("ANSWER:", payload["answer"])
             print("CITATIONS:", payload["citations"])
+            print("RETRIEVED_CHUNKS:", payload["retrieved_chunks"])
 
             assert payload["answer"].strip()
             assert "SIT Centre for AI" in payload["answer"]
             assert "NVIDIA" in payload["answer"]
             assert payload["citations"]
+            assert payload["retrieved_chunks"]
             assert any(
                 citation.get("title") == live_api_config["ingest_title"]
                 for citation in payload["citations"]

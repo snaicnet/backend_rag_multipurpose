@@ -5,6 +5,8 @@ from types import SimpleNamespace
 
 import pytest
 
+from app.core.defaults import CHAT_MAX_RESPONSE_CHARS
+
 redis_module = types.ModuleType("redis")
 redis_asyncio_module = types.ModuleType("redis.asyncio")
 redis_asyncio_module.Redis = object
@@ -52,7 +54,8 @@ def test_guardrails_enforce_rate_quota_and_limits() -> None:
 
     assert guardrails.clamp_top_k(1) == 3
     assert guardrails.clamp_top_k(20) == 8
-    assert len(guardrails.truncate_response("a" * 2100)) == 2000
+    oversized = "a" * (CHAT_MAX_RESPONSE_CHARS + 100)
+    assert len(guardrails.truncate_response(oversized)) == CHAT_MAX_RESPONSE_CHARS
     assert guardrails.truncate_response("Please contact SNAIC for more information. 🚀") == (
         "Please contact SNAIC for more information."
     )

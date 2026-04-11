@@ -381,6 +381,28 @@ def test_model_selection_service_seeds_nim_defaults() -> None:
     assert assumptions["configured_generation_profiles"]["nim_3super120"]["provider"] == "nim"
 
 
+def test_model_selection_service_accepts_llama33_nim_default() -> None:
+    settings = Settings(
+        default_generation_provider="nim",
+        default_generation_model="nvidia/llama-3.3-nemotron-super-49b-v1.5",
+        default_embedding_provider="nim",
+        default_embedding_model="nvidia/llama-nemotron-embed-1b-v2",
+        default_embedding_dimension=2048,
+    )
+
+    service = ModelSelectionService(settings, postgres_pool=SimpleNamespace())
+    service._repository = _FakeModelSelectionRepository()  # type: ignore[attr-defined]
+
+    asyncio.run(service.ensure_default_model_selection())
+    selection = asyncio.run(service.get_model_selection())
+    assumptions = settings.phase_one_assumptions()
+
+    assert selection.generation_profile == "nim_llama33_super49b"
+    assert selection.generation_provider == "nim"
+    assert selection.generation_model == "nvidia/llama-3.3-nemotron-super-49b-v1.5"
+    assert assumptions["configured_generation_profiles"]["nim_llama33_super49b"]["provider"] == "nim"
+
+
 def test_guardrails_truncate_response_ends_cleanly() -> None:
     from app.services.guardrails import GuardrailService
 

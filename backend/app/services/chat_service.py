@@ -19,9 +19,7 @@ from app.services.query_planner import QueryPlannerService
 from app.services.system_prompt_service import SystemPromptService
 from app.services.retrieval import RetrievalService
 from app.services.session_service import SessionService
-import json
 import re
-from typing import AsyncIterator
 
 
 class ChatService:
@@ -70,19 +68,16 @@ class ChatService:
                 used_fallback=True,
                 session_id=prepared.session_id,
                 retrieved_chunks=[],
+                prompt_messages=[],
             )
 
-        if prepared.precomputed_answer is not None:
-            answer = prepared.precomputed_answer
-            completion_thinking = None
-        else:
-            completion = await self._providers.get(prepared.provider).complete_chat(
-                messages=prepared.prompt_messages,
-                model=prepared.model,
-            )
-            completion_text = completion.text or ""
-            completion_thinking = completion.thinking or None
-            answer = self.finalize_answer(self._format_answer(completion_text, completion_thinking))
+        completion = await self._providers.get(prepared.provider).complete_chat(
+            messages=prepared.prompt_messages,
+            model=prepared.model,
+        )
+        completion_text = completion.text or ""
+        completion_thinking = completion.thinking or None
+        answer = self.finalize_answer(self._format_answer(completion_text, completion_thinking))
 
         await self._session_service.append_messages(
             prepared.session_id,
@@ -104,6 +99,7 @@ class ChatService:
             used_fallback=False,
             session_id=prepared.session_id,
             retrieved_chunks=prepared.retrieved_chunks,
+            prompt_messages=prepared.prompt_messages,
         )
 
     async def start_stream(
@@ -128,15 +124,12 @@ class ChatService:
                 fallback_text=prepared.fallback_text,
                 session_id=prepared.session_id,
                 user_message=prepared.user_message,
+                prompt_messages=[],
             )
 
-        stream = (
-            self._single_chunk_stream(prepared.precomputed_answer)
-            if prepared.precomputed_answer is not None
-            else self._providers.get(prepared.provider).stream_chat(
-                messages=prepared.prompt_messages,
-                model=prepared.model,
-            )
+        stream = self._providers.get(prepared.provider).stream_chat(
+            messages=prepared.prompt_messages,
+            model=prepared.model,
         )
 
         return ChatStreamState(
@@ -153,6 +146,7 @@ class ChatService:
             fallback_text="",
             session_id=prepared.session_id,
             user_message=prepared.user_message,
+            prompt_messages=prepared.prompt_messages,
         )
 
     async def finalize_stream(
@@ -227,24 +221,15 @@ class ChatService:
             )
 
         prompt_config = await self._system_prompt_service.get_system_prompt()
-        generation_chunks = self._prompt_builder.select_generation_chunks(
-            user_message=normalized_message,
-            retrieved_chunks=retrieved_chunks,
-        )
         prompt_context = self._prompt_builder.build(
             user_message=normalized_message,
             chat_history=history,
-            retrieved_chunks=generation_chunks,
+            retrieved_chunks=retrieved_chunks,
             max_history_messages=self._settings.chat_max_history_messages,
             max_context_chars=self._settings.chat_max_context_chars,
             max_context_tokens=self._settings.chat_max_context_tokens,
             max_chunk_chars=CHAT_MAX_CONTEXT_CHUNK_CHARS,
             system_prompt=prompt_config.system_prompt,
-        )
-        precomputed_answer = await self._maybe_precompute_binary_answer(
-            generation=generation,
-            user_message=normalized_message,
-            retrieved_chunks=generation_chunks,
         )
         return _PreparedChatContext(
             provider=generation.provider,
@@ -260,7 +245,6 @@ class ChatService:
             fallback_text="",
             session_id=payload.session_id,
             user_message=normalized_message,
-            precomputed_answer=precomputed_answer,
         )
 
     async def _resolve_generation_selection(
@@ -315,43 +299,6 @@ class ChatService:
         )
         return re.sub(r"\n{3,}", "\n\n", stripped).strip()
 
-    async def _maybe_precompute_binary_answer(
-        self,
-        *,
-        generation: GenerationSelection,
-        user_message: str,
-        retrieved_chunks: list,
-    ) -> str | None:
-        if not self._prompt_builder.is_binary_adjudication_candidate(user_message):
-            return None
-        if not retrieved_chunks:
-            return None
-
-        messages = self._prompt_builder.build_binary_adjudication_messages(
-            user_message=user_message,
-            retrieved_chunks=retrieved_chunks,
-            max_context_chars=self._settings.chat_max_context_chars,
-            max_context_tokens=self._settings.chat_max_context_tokens,
-            max_chunk_chars=CHAT_MAX_CONTEXT_CHUNK_CHARS,
-        )
-
-        try:
-            completion = await self._providers.get(generation.provider).complete_chat(
-                messages=messages,
-                model=generation.model,
-            )
-        except Exception:
-            return None
-
-        adjudicated = _parse_binary_adjudication_answer(completion.text or "")
-        if adjudicated not in {"Yes", "No"}:
-            return None
-        return self.finalize_answer(f"{adjudicated}.")
-
-    async def _single_chunk_stream(self, text: str) -> AsyncIterator[str]:
-        if text:
-            yield text
-
 
 class _PreparedChatContext:
     def __init__(
@@ -369,7 +316,6 @@ class _PreparedChatContext:
         fallback_text: str,
         session_id: str | None,
         user_message: str,
-        precomputed_answer: str | None = None,
     ) -> None:
         self.provider = provider
         self.model = model
@@ -384,28 +330,3 @@ class _PreparedChatContext:
         self.fallback_text = fallback_text
         self.session_id = session_id
         self.user_message = user_message
-        self.precomputed_answer = precomputed_answer
-
-
-def _parse_binary_adjudication_answer(raw_text: str) -> str | None:
-    candidate = raw_text.strip()
-    if not candidate:
-        return None
-
-    try:
-        payload = json.loads(candidate)
-    except json.JSONDecodeError:
-        match = re.search(r"\{.*\}", candidate, flags=re.DOTALL)
-        if not match:
-            return None
-        try:
-            payload = json.loads(match.group(0))
-        except json.JSONDecodeError:
-            return None
-
-    answer = str(payload.get("answer", "")).strip().lower()
-    if answer == "yes":
-        return "Yes"
-    if answer == "no":
-        return "No"
-    return None

@@ -40,13 +40,9 @@ SNAIC accelerates AI adoption in industry, develops AI talent, and conducts tran
 
 Advance AI adoption by companies through applied research.
 
-
-
 ### Mission 2: Industry
 
 Support industry capability development and AI applications development.
-
-
 
 ### Mission 3: Talent
 
@@ -57,8 +53,6 @@ Train skilled personnel for local industries, including students and working pro
 ## Vision
 
 Bring the potential of AI into business operations so organisations can improve efficiency, intelligence, creativity, and innovation.
-
-
 
 ## Core Problems SNAIC Helps Address
 
@@ -126,13 +120,9 @@ SNAIC develops practical AI solutions that are aligned to business value and res
 
 SNAIC works with companies to co-develop practical AI solutions for real use cases.
 
-
-
 ### Pillar 2: AI Talent Development
 
 SNAIC develops AI talent through Industrial Doctorates, Industry Master’s programmes, undergraduate training, and upskilling for industry employees.
-
-
 
 ### Pillar 3: Translational AI Research
 
@@ -146,8 +136,6 @@ SNAIC conducts applied research that bridges academic innovation and industry im
 
 SNAIC follows a “1 (SIT) + 1 (NVIDIA) to many companies” model.
 
-
-
 ### Model Benefits
 
 ·    End-to-end AI translation of impactful AI solutions
@@ -159,8 +147,6 @@ SNAIC follows a “1 (SIT) + 1 (NVIDIA) to many companies” model.
 ·    AI competency development for students and working professionals
 
 ·    Stronger AI talent pipeline
-
-
 
 ## Key Resources
 

@@ -1,0 +1,19 @@
+{
+  "model": "gpt-5-mini",
+  "sample_count": 60,
+  "requested_sample_count": 60,
+  "complexity": "simple",
+  "answer_style": "short",
+  "files": [
+    "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\knowledgebase\\OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+    "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\knowledgebase\\snaic_overview.md"
+  ],
+  "contexts_built": 127,
+  "chunk_size": 1000,
+  "chunk_overlap": 150,
+  "chunks_per_context": 2,
+  "context_batch_size": 25,
+  "checkpoint_path": "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\dataset\\testset.checkpoint.json",
+  "output_csv": "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\dataset\\testset.csv",
+  "output_jsonl": "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\dataset\\testset.jsonl"
+}

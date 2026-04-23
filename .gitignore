@@ -183,6 +183,5 @@ cython_debug/
 AGENT.md
 AGENTS.md
 .vscode/
-eval/output
 
 .deepeval

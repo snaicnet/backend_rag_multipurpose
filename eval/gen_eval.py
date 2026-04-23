@@ -10,7 +10,7 @@ from deepeval.metrics import (
 from openai import AsyncOpenAI
 import os
 import math
-from backend_rag_client import BackendRagClient
+from eval.client_backend import BackendRagClient
 from tqdm.auto import tqdm
 import pandas as pd
 from pathlib import Path

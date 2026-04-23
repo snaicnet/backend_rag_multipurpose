@@ -1,0 +1,25 @@
+{
+  "sample_count": 21,
+  "models": {
+    "eval_generation_profile": "nim_3super120",
+    "eval_embedding_profile": "nim_nemotron_2048",
+    "critic_model": "gpt-4.1-mini",
+    "critic_embedding_model": "text-embedding-3-small"
+  },
+  "response_quality": {
+    "faithfulness": 0.8706571623864857,
+    "answer_relevancy": 0.6964762611481853,
+    "answer_correctness": 0.6181952996273639,
+    "context_relevance": 0.0
+  },
+  "contextual_accuracy": {
+    "context_precision": 0.9303571428105308,
+    "context_recall": 0.9238095238095237,
+    "hit_rate": 1.0,
+    "mrr": 0.9325396825396824
+  },
+  "judge_scores": {
+    "judge_correctness": 0.8809523809523808,
+    "judge_relevance": 0.9714285714285713
+  }
+}

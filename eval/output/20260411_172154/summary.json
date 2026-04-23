@@ -1,0 +1,20 @@
+{
+  "sample_count": 21,
+  "models": {
+    "eval_generation_profile": "nim_3super120",
+    "eval_embedding_profile": "nim_nemotron_2048",
+    "critic_model": "gpt-4.1-mini"
+  },
+  "response_quality": {
+    "answer_correctness": 0.6393972157055889,
+    "answer_relevancy": 0.9499389499389499,
+    "faithfulness": 0.937641723356009
+  },
+  "contextual_accuracy": {
+    "contextual_precision": 0.9078042328042327,
+    "contextual_recall": 1.0,
+    "contextual_relevancy": 0.5328599996589288,
+    "hit_rate": 0.9523809523809523,
+    "mrr": 0.8849206349206349
+  }
+}

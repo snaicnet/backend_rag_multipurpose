@@ -1,0 +1,24 @@
+{
+  "status": "completed",
+  "mode": "primary_markdown",
+  "files": [
+    "C:\\Users\\Work\\Documents\\GitHub\\backend_rag_multipurpose\\eval\\dataset\\snaic_overview.md"
+  ],
+  "result": {
+    "documents_inserted": 1,
+    "chunks_inserted": 17,
+    "embedding_provider": "nim",
+    "embedding_model": "nvidia/llama-nemotron-embed-1b-v2",
+    "results": [
+      {
+        "filename": "snaic_overview",
+        "detected_type": "markdown",
+        "success": true,
+        "chunks_created": 17,
+        "deduplicated": false,
+        "error": null,
+        "document_id": "cbba4808-5858-4c74-9800-0017027c1e14"
+      }
+    ]
+  }
+}

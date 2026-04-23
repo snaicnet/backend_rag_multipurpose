@@ -110,9 +110,7 @@ To run the live ingest/chat API flow with custom inputs, use the PowerShell wrap
 
 You can also override `-BaseUrl`, `-Username`, `-ChatMessage`, `-GenerationProvider`, `-GenerationModel`, `-EmbeddingProfile`, `-EmbeddingProvider`, and `-EmbeddingModel` on the same command.
 
-# Ownership and License
+# Credit and Ownership
 
-Built by [Isfaque AL Kaderi Tuhin](https://github.com/iahin) | [LinkedIn](https://www.linkedin.com/in/iatuhin/) | [Email](mailto:shioktech@gmail.com)
-
-Licensed under Apache License 2.0.
+Built by [Isfaque AL Kaderi Tuhin, Research Engineer](https://github.com/iahin) | [LinkedIn](https://www.linkedin.com/in/iatuhin/) | [Email](mailto:shioktech@gmail.com)
 

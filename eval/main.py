@@ -10,41 +10,47 @@ from deepeval.metrics import (
 from openai import AsyncOpenAI
 import os
 import math
-from eval.client_backend import BackendRagClient
+import re
+from client_backend import BackendRagClient
 from tqdm.auto import tqdm
 import pandas as pd
 from pathlib import Path
-from datetime import datetime
 import json
 import ast
 import asyncio
+import datetime
 
 BASE_URL = "http://localhost:9010"
-USERNAME = ""
-PASSWORD = ""
-OPENAI_API_KEY = ""
-
-DOCS_DIR = Path("eval/dataset").resolve()
-DATASET_PATH = Path("eval/dataset/metric_results.csv").resolve()
-PRIMARY_INGEST_FILE = DOCS_DIR / "snaic_overview.md"
+USERNAME = "admin"
+PASSWORD = "change-me-immediately"
+DATASET_PATH = Path("eval/dataset/testset.csv").resolve()
+DATASET_MANIFEST_PATH = Path("eval/dataset/testset.manifest.json").resolve()
+INGEST_FILE_PATHS: list[str] = []
+BACKEND_TIMEOUT_SECONDS = 600.0
 RUNS_ROOT = Path("eval/output").resolve()
-RUN_DIR = (RUNS_ROOT / datetime.now().strftime("%Y%m%d_%H%M%S")).resolve()
+RUN_NAME = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+RUN_DIR = (RUNS_ROOT / RUN_NAME).resolve()
 RAW_RESULTS_PATH = RUN_DIR / "chat_results.jsonl"
 METRIC_RESULTS_PATH = RUN_DIR / "metric_results.csv"
 SUMMARY_PATH = RUN_DIR / "summary.json"
 INGEST_STATE_PATH = RUN_DIR / "ingest_state.json"
+RUN_CONFIG_PATH = RUN_DIR / "run_config.json"
 
 RESET_BACKEND_BEFORE_INGEST = False
 FORCE_REINGEST = False
 TOP_K = 5
 ENABLE_RATE_LIMIT_DELAY = False
 REQUEST_DELAY_SECONDS = 0.1
-INCLUDED_SYNTHESIZER_NAMES = {"answerable"}
+ALLOWED_SYNTHESIZER_NAMES: list[str] = []
+SYSTEM_PROMPT_OVERRIDE = ""
+FOCUSED_METRIC_COLUMNS = {"contextual_relevancy", "hit_rate", "mrr"}
 
 EVAL_GENERATION_PROFILE = "nim_3super120"
 EVAL_EMBEDDING_PROFILE = "nim_nemotron_2048"
 
-CRITIC_MODEL = "gpt-4.1-mini"
+CRITIC_MODEL = "gpt-5-mini"
+FORCE_RECOMPUTE_METRIC_COLUMNS = {"contextual_relevancy", "hit_rate", "mrr"}
+RETRIEVAL_OVERLAP_THRESHOLD = 0.18
 SUMMARY_METRIC_COLUMNS = [
     "answer_correctness",
     "answer_relevancy",
@@ -55,10 +61,6 @@ SUMMARY_METRIC_COLUMNS = [
     "hit_rate",
     "mrr",
 ]
-
-# DeepEval picks up the key from the environment; set it once here so every
-# metric constructed below inherits it automatically.
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 # ---------------------------------------------------------------------------
 # DeepEval metric definitions
@@ -127,7 +129,7 @@ def ensure_run_dir() -> None:
 
 
 def _openai_client() -> AsyncOpenAI:
-    return AsyncOpenAI(api_key=OPENAI_API_KEY)
+    return AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 
 # ---------------------------------------------------------------------------
@@ -137,9 +139,9 @@ def _openai_client() -> AsyncOpenAI:
 def load_samples() -> list[dict]:
     df = pd.read_csv(DATASET_PATH)
     df = df.fillna("")
-    if "synthesizer_name" in df.columns and INCLUDED_SYNTHESIZER_NAMES:
+    if "synthesizer_name" in df.columns and ALLOWED_SYNTHESIZER_NAMES:
         df = df[df["synthesizer_name"].isin(
-            INCLUDED_SYNTHESIZER_NAMES)].reset_index(drop=True)
+            ALLOWED_SYNTHESIZER_NAMES)].reset_index(drop=True)
     samples = []
     for index, row in df.iterrows():
         sample_id = str(row.get("sample_id") or row.get("id") or index)
@@ -209,6 +211,66 @@ def parse_reference_contexts(value) -> list[str]:
     return [text]
 
 
+_EVAL_TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
+_EVAL_STOPWORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "how",
+    "in", "is", "it", "of", "on", "or", "that", "the", "this", "to", "what",
+    "when", "where", "which", "who", "with",
+}
+_NOISY_CONTEXT_PREFIXES = (
+    "title:",
+    "workbook:",
+    "sheet:",
+    "row:",
+    "s/n:",
+    "remarks",
+    "column_",
+    "link provided:",
+)
+
+
+def normalize_context_text(text: str) -> str:
+    cleaned_lines: list[str] = []
+    for raw_line in str(text).splitlines():
+        stripped = raw_line.strip()
+        if not stripped:
+            continue
+        lowered = stripped.lower()
+        if any(lowered.startswith(prefix) for prefix in _NOISY_CONTEXT_PREFIXES):
+            continue
+        if lowered.startswith("revised answer"):
+            continue
+        cleaned_lines.append(stripped)
+    return " ".join(" ".join(cleaned_lines).split())
+
+
+def tokenize_for_overlap(text: str) -> set[str]:
+    normalized = normalize_context_text(text).lower()
+    return {
+        token
+        for token in _EVAL_TOKEN_PATTERN.findall(normalized)
+        if len(token) >= 3 and token not in _EVAL_STOPWORDS
+    }
+
+
+def max_reference_overlap(candidate_chunk: str, reference_contexts: list[str]) -> float:
+    candidate_tokens = tokenize_for_overlap(candidate_chunk)
+    if not candidate_tokens:
+        return 0.0
+
+    best = 0.0
+    for reference_context in reference_contexts:
+        reference_tokens = tokenize_for_overlap(reference_context)
+        if not reference_tokens:
+            continue
+        overlap = len(candidate_tokens & reference_tokens) / max(
+            1,
+            min(len(candidate_tokens), len(reference_tokens)),
+        )
+        best = max(best, overlap)
+    return best
+
+
 # ---------------------------------------------------------------------------
 # I/O helpers
 # ---------------------------------------------------------------------------
@@ -243,6 +305,11 @@ def save_json(path: Path, payload: dict) -> None:
         json.dump(payload, handle, indent=2, ensure_ascii=False)
 
 
+def load_json(path: Path) -> dict:
+    with path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
 def load_metric_results() -> pd.DataFrame:
     if METRIC_RESULTS_PATH.exists():
         return pd.read_csv(METRIC_RESULTS_PATH).fillna("")
@@ -266,11 +333,59 @@ def extract_retrieved_contexts(chat_payload: dict) -> list[str]:
     return contexts
 
 
+def resolve_ingest_files() -> list[Path]:
+    if INGEST_FILE_PATHS:
+        return [Path(raw_path).resolve() for raw_path in INGEST_FILE_PATHS]
+
+    if DATASET_MANIFEST_PATH.exists():
+        manifest = load_json(DATASET_MANIFEST_PATH)
+        manifest_files = manifest.get("files", [])
+        if isinstance(manifest_files, list) and manifest_files:
+            return [Path(str(raw_path)).resolve() for raw_path in manifest_files]
+
+    source_files = pd.read_csv(DATASET_PATH).fillna("").get("source_file")
+    if source_files is None:
+        return []
+
+    resolved: list[Path] = []
+    for value in source_files.tolist():
+        candidate = Path(str(value).strip())
+        if candidate.is_file():
+            resolved.append(candidate.resolve())
+    deduped = {path: None for path in resolved}
+    return sorted(deduped)
+
+
+def build_run_config(
+    *,
+    dataset_path: Path,
+    ingest_files: list[Path],
+    model_selection: dict,
+    system_prompt_payload: dict,
+) -> dict:
+    return {
+        "dataset_path": str(dataset_path),
+        "dataset_manifest_path": str(DATASET_MANIFEST_PATH) if DATASET_MANIFEST_PATH.exists() else "",
+        "dataset_manifest": load_json(DATASET_MANIFEST_PATH) if DATASET_MANIFEST_PATH.exists() else None,
+        "allowed_synthesizer_names": ALLOWED_SYNTHESIZER_NAMES,
+        "ingest_files": [str(path) for path in ingest_files],
+        "reset_backend_before_ingest": RESET_BACKEND_BEFORE_INGEST,
+        "force_reingest": FORCE_REINGEST,
+        "top_k": TOP_K,
+        "eval_generation_profile": EVAL_GENERATION_PROFILE,
+        "eval_embedding_profile": EVAL_EMBEDDING_PROFILE,
+        "critic_model": CRITIC_MODEL,
+        "active_model_selection": model_selection,
+        "active_system_prompt": system_prompt_payload,
+        "system_prompt_override_applied": bool(SYSTEM_PROMPT_OVERRIDE.strip()),
+    }
+
+
 # ---------------------------------------------------------------------------
 # row -> LLMTestCase
 # ---------------------------------------------------------------------------
 
-def row_to_test_case(row: dict) -> LLMTestCase:
+def row_to_test_case(row: dict, *, normalize_contexts: bool = False) -> LLMTestCase:
     """Convert a chat-result row into a DeepEval LLMTestCase.
 
     Field mapping
@@ -281,12 +396,22 @@ def row_to_test_case(row: dict) -> LLMTestCase:
     retrieval_context <- retrieved_contexts   (what the retriever actually fetched)
     context           <- reference_contexts   (ground-truth supporting passages)
     """
+    retrieval_context = row.get("retrieved_contexts", [])
+    context = row.get("reference_contexts", [])
+    if normalize_contexts:
+        retrieval_context = [
+            cleaned for item in retrieval_context if (cleaned := normalize_context_text(item))
+        ]
+        context = [
+            cleaned for item in context if (cleaned := normalize_context_text(item))
+        ]
+
     return LLMTestCase(
         input=row["user_input"],
         actual_output=row["response"],
         expected_output=row.get("reference", ""),
-        retrieval_context=row.get("retrieved_contexts", []),
-        context=row.get("reference_contexts", []),
+        retrieval_context=retrieval_context,
+        context=context,
     )
 
 
@@ -316,21 +441,35 @@ async def evaluate_deepeval_metric_if_needed(
     After each row is scored the partial results are flushed to disk so that
     a mid-run interruption loses at most one row of work.
     """
-    if col_name in base_df.columns:
-        print(f"  {col_name}: column already present — skipping.")
-        return base_df
+    force_recompute = col_name in FORCE_RECOMPUTE_METRIC_COLUMNS
+    if col_name in base_df.columns and not force_recompute:
+        existing_scores = pd.to_numeric(base_df[col_name], errors="coerce")
+        if existing_scores.notna().all():
+            print(f"  {col_name}: column already complete — skipping.")
+            return base_df
+        print(f"  {col_name}: partial column found — recomputing missing rows.")
+
+    if col_name in base_df.columns and force_recompute:
+        print(f"  {col_name}: forced recompute enabled.")
 
     print(f"  Computing {col_name} ...")
     scores: list[float | None] = []
 
     for row in tqdm(rows, desc=col_name, unit="sample"):
-        test_case = row_to_test_case(row)
+        test_case = row_to_test_case(
+            row,
+            normalize_contexts=(col_name == "contextual_relevancy"),
+        )
         try:
             # DeepEval's internal Rich indicator renders poorly in some IDE
             # consoles and appears as a static bar. Disable it and let the
             # outer tqdm loop show real per-sample progress instead.
             await metric.a_measure(test_case, _show_indicator=False)
             scores.append(float(metric.score))
+        except asyncio.CancelledError as exc:
+            print(
+                f"    [WARN] {col_name} cancelled for sample {row.get('sample_id')}: {exc}")
+            scores.append(None)
         except Exception as exc:
             print(
                 f"    [WARN] {col_name} failed for sample {row.get('sample_id')}: {exc}")
@@ -367,34 +506,62 @@ async def _judge_chunk_relevant(
     candidate_chunk: str,
 ) -> bool:
     """Return True if the candidate chunk is relevant enough to answer the question."""
+    overlap_score = max_reference_overlap(candidate_chunk, reference_contexts)
+    if overlap_score >= RETRIEVAL_OVERLAP_THRESHOLD:
+        return True
+
+    normalized_reference_contexts = [
+        cleaned for item in reference_contexts if (cleaned := normalize_context_text(item))
+    ]
+    normalized_candidate_chunk = normalize_context_text(candidate_chunk)
     ref_ctx = "\n\n".join(
-        reference_contexts[:2]) if reference_contexts else "None"
+        normalized_reference_contexts[:3]) if normalized_reference_contexts else "None"
     prompt = (
         f"Decide whether the candidate retrieved chunk is relevant enough to "
         f"support answering the question correctly.\n\n"
         f"Question:\n{question}\n\n"
         f"Reference Answer:\n{reference}\n\n"
         f"Reference Context:\n{ref_ctx}\n\n"
-        f"Candidate Chunk:\n{candidate_chunk}\n\n"
+        f"Candidate Chunk:\n{normalized_candidate_chunk}\n\n"
         f"Reply with exactly one word: YES or NO"
     )
-    resp = await client.chat.completions.create(
-        model=CRITIC_MODEL,
-        temperature=0,
-        max_tokens=1,
-        logprobs=True,
-        top_logprobs=5,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    # Use logprob mass on YES vs NO tokens for a soft, calibrated verdict
-    top = resp.choices[0].logprobs.content[0].top_logprobs
-    yes_prob = sum(math.exp(e.logprob)
-                   for e in top if e.token.strip().upper() == "YES")
-    no_prob = sum(math.exp(e.logprob)
-                  for e in top if e.token.strip().upper() == "NO")
-    if yes_prob + no_prob == 0:
-        return resp.choices[0].message.content.strip().upper() == "YES"
-    return yes_prob >= no_prob
+
+    supports_legacy_temperature_override = not CRITIC_MODEL.startswith("gpt-5")
+    base_request = {
+        "model": CRITIC_MODEL,
+        "messages": [{"role": "user", "content": prompt}],
+    }
+    if supports_legacy_temperature_override:
+        base_request["temperature"] = 0
+
+    try:
+        resp = await client.chat.completions.create(
+            **base_request,
+            max_completion_tokens=1,
+            logprobs=True,
+            top_logprobs=5,
+        )
+        top = resp.choices[0].logprobs.content[0].top_logprobs
+        yes_prob = sum(math.exp(e.logprob)
+                       for e in top if e.token.strip().upper() == "YES")
+        no_prob = sum(math.exp(e.logprob)
+                      for e in top if e.token.strip().upper() == "NO")
+        if yes_prob + no_prob == 0:
+            return resp.choices[0].message.content.strip().upper() == "YES"
+        return yes_prob >= no_prob
+    except Exception as exc:
+        error_text = str(exc).lower()
+        unsupported_fast_path = any(
+            token in error_text
+            for token in ("logprobs", "temperature", "max_tokens", "unsupported parameter", "unsupported value")
+        )
+        if not unsupported_fast_path:
+            raise
+        resp = await client.chat.completions.create(
+            **base_request,
+            max_completion_tokens=3,
+        )
+        return resp.choices[0].message.content.strip().upper().startswith("YES")
 
 
 async def compute_retrieval_metrics_if_needed(
@@ -407,13 +574,18 @@ async def compute_retrieval_metrics_if_needed(
     Both columns are computed together in one pass since they share the same
     per-chunk judge calls.  If both already exist the entire pass is skipped.
     """
-    if {"hit_rate", "mrr"}.issubset(base_df.columns):
+    if {"hit_rate", "mrr"}.issubset(base_df.columns) and not (
+        {"hit_rate", "mrr"} & FORCE_RECOMPUTE_METRIC_COLUMNS
+    ):
         print("  hit_rate / mrr: columns already present — skipping.")
         return rows, base_df
 
+    if {"hit_rate", "mrr"} & FORCE_RECOMPUTE_METRIC_COLUMNS:
+        print("  hit_rate / mrr: forced recompute enabled.")
     print("  Computing hit_rate and mrr (ARES chunk-relevance judge)...")
     client = _openai_client()
     enriched: list[dict] = []
+    updated_metric_df = base_df.copy()
 
     for row in tqdm(rows, desc="hit_rate/mrr", unit="sample"):
         rank: int | None = None
@@ -438,13 +610,15 @@ async def compute_retrieval_metrics_if_needed(
 
         # Incremental save so a crash loses at most one row
         save_chat_results(enriched + rows[len(enriched):])
+        current_index = len(enriched) - 1
+        updated_metric_df.loc[current_index, "hit_rate"] = updated["hit_rate"]
+        updated_metric_df.loc[current_index, "mrr"] = updated["mrr"]
+        save_metric_results(updated_metric_df)
         if ENABLE_RATE_LIMIT_DELAY:
             await asyncio.sleep(REQUEST_DELAY_SECONDS)
 
     save_chat_results(enriched)
-    enriched_df = pd.DataFrame(enriched)
-    save_metric_results(enriched_df)
-    return enriched, enriched_df
+    return enriched, updated_metric_df
 
 
 # ---------------------------------------------------------------------------
@@ -469,40 +643,48 @@ async def ingest_docx_if_needed(client: BackendRagClient) -> None:
         print("Ingest already completed. Reusing saved ingest state.")
         return
 
-    if PRIMARY_INGEST_FILE.exists():
-        print(f"Ingesting primary dataset file: {PRIMARY_INGEST_FILE.name}")
-        content = PRIMARY_INGEST_FILE.read_text(encoding="utf-8")
-        result = await client.ingest_text_items(
-            items=[
+    ingest_paths = resolve_ingest_files()
+    if not ingest_paths:
+        print("No ingest files resolved from config or dataset manifest. Skipping ingest step.")
+        save_json(INGEST_STATE_PATH, {
+                  "status": "skipped", "reason": "no_ingest_source_found", "files": []})
+        return
+
+    text_item_paths = [path for path in ingest_paths if path.suffix.lower() in {".md", ".txt"}]
+    upload_paths = [path for path in ingest_paths if path.suffix.lower() not in {".md", ".txt"}]
+
+    ingest_results: dict[str, object] = {"text_items": None, "files": None}
+    if text_item_paths:
+        print(f"Ingesting {len(text_item_paths)} text file(s)...")
+        items = []
+        for path in text_item_paths:
+            items.append(
                 {
-                    "title": PRIMARY_INGEST_FILE.stem,
-                    "content": content,
-                    "source_type": "markdown",
-                    "metadata": {"source_file": PRIMARY_INGEST_FILE.name},
+                    "title": path.stem,
+                    "content": path.read_text(encoding="utf-8", errors="ignore"),
+                    "source_type": "markdown" if path.suffix.lower() == ".md" else "text",
+                    "metadata": {"source_file": str(path)},
                 }
-            ],
+            )
+        ingest_results["text_items"] = await client.ingest_text_items(
+            items=items,
             force_reingest=FORCE_REINGEST,
         )
-        save_json(
-            INGEST_STATE_PATH,
-            {"status": "completed", "mode": "primary_markdown",
-             "files": [str(PRIMARY_INGEST_FILE)], "result": result},
+
+    if upload_paths:
+        print(f"Ingesting {len(upload_paths)} uploaded file(s)...")
+        ingest_results["files"] = await client.ingest_files(
+            file_paths=upload_paths,
+            force_reingest=FORCE_REINGEST,
         )
-        return
 
-    docx_paths = sorted(DOCS_DIR.glob("*.docx"))
-    if not docx_paths:
-        print("No primary markdown file or .docx files found. Skipping ingest step.")
-        save_json(INGEST_STATE_PATH, {
-                  "status": "skipped", "reason": "no_ingest_source_found"})
-        return
-
-    print(f"Ingesting {len(docx_paths)} .docx file(s)...")
-    result = await client.ingest_files(file_paths=docx_paths, force_reingest=FORCE_REINGEST)
     save_json(
         INGEST_STATE_PATH,
-        {"status": "completed", "mode": "docx_files",
-         "files": [str(p) for p in docx_paths], "result": result},
+        {
+            "status": "completed",
+            "files": [str(path) for path in ingest_paths],
+            "result": ingest_results,
+        },
     )
 
 
@@ -559,7 +741,26 @@ def _col_mean(df: pd.DataFrame, col: str) -> float | None:
     return float(vals.mean()) if vals.notna().any() else None
 
 
+def _summary_value(
+    df: pd.DataFrame,
+    col: str,
+    previous_summary: dict | None,
+    section: str,
+) -> float | None:
+    current = _col_mean(df, col)
+    if current is not None:
+        return current
+    if not previous_summary:
+        return None
+    section_payload = previous_summary.get(section)
+    if not isinstance(section_payload, dict):
+        return None
+    value = section_payload.get(col)
+    return float(value) if isinstance(value, (int, float)) else None
+
+
 def write_summary(df: pd.DataFrame) -> None:
+    previous_summary = load_json(SUMMARY_PATH) if SUMMARY_PATH.exists() else None
     summary = {
         "sample_count": int(len(df)),
         "models": {
@@ -568,16 +769,24 @@ def write_summary(df: pd.DataFrame) -> None:
             "critic_model":            CRITIC_MODEL,
         },
         "response_quality": {
-            "answer_correctness": _col_mean(df, "answer_correctness"),
-            "answer_relevancy":   _col_mean(df, "answer_relevancy"),
-            "faithfulness":       _col_mean(df, "faithfulness"),
+            "answer_correctness": _summary_value(
+                df, "answer_correctness", previous_summary, "response_quality"),
+            "answer_relevancy": _summary_value(
+                df, "answer_relevancy", previous_summary, "response_quality"),
+            "faithfulness": _summary_value(
+                df, "faithfulness", previous_summary, "response_quality"),
         },
         "contextual_accuracy": {
-            "contextual_precision": _col_mean(df, "contextual_precision"),
-            "contextual_recall":    _col_mean(df, "contextual_recall"),
-            "contextual_relevancy": _col_mean(df, "contextual_relevancy"),
-            "hit_rate":             _col_mean(df, "hit_rate"),
-            "mrr":                  _col_mean(df, "mrr"),
+            "contextual_precision": _summary_value(
+                df, "contextual_precision", previous_summary, "contextual_accuracy"),
+            "contextual_recall": _summary_value(
+                df, "contextual_recall", previous_summary, "contextual_accuracy"),
+            "contextual_relevancy": _summary_value(
+                df, "contextual_relevancy", previous_summary, "contextual_accuracy"),
+            "hit_rate": _summary_value(
+                df, "hit_rate", previous_summary, "contextual_accuracy"),
+            "mrr": _summary_value(
+                df, "mrr", previous_summary, "contextual_accuracy"),
         },
     }
     save_json(SUMMARY_PATH, summary)
@@ -594,6 +803,11 @@ def write_summary(df: pd.DataFrame) -> None:
 # ---------------------------------------------------------------------------
 
 async def async_main() -> None:
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("Set OPENAI_API_KEY in the environment before running.")
+    os.environ["OPENAI_API_KEY"] = api_key
+
     ensure_run_dir()
     print("Starting DeepEval RAG evaluation run...")
     print(f"Dataset  : {DATASET_PATH}")
@@ -617,14 +831,19 @@ async def async_main() -> None:
 
     samples = load_samples()
     print(f"Loaded {len(samples)} evaluation sample(s).")
-    if INCLUDED_SYNTHESIZER_NAMES:
-        print(f"Included sample types: {sorted(INCLUDED_SYNTHESIZER_NAMES)}")
+    if ALLOWED_SYNTHESIZER_NAMES:
+        print(f"Included sample types: {sorted(ALLOWED_SYNTHESIZER_NAMES)}")
+    ingest_files = resolve_ingest_files()
+    print(f"Resolved {len(ingest_files)} ingest file(s) for backend alignment.")
 
     # ------------------------------------------------------------------
     # Step 1 — ingest + collect chat results from the RAG backend
     # ------------------------------------------------------------------
     async with BackendRagClient(
-        base_url=BASE_URL, username=USERNAME, password=PASSWORD
+        base_url=BASE_URL,
+        username=USERNAME,
+        password=PASSWORD,
+        timeout_seconds=BACKEND_TIMEOUT_SECONDS,
     ) as client:
         await client.login()
         print("Login successful.")
@@ -636,6 +855,19 @@ async def async_main() -> None:
         model_selection = await client.update_model_selection(
             generation_profile=EVAL_GENERATION_PROFILE,
             embedding_profile=EVAL_EMBEDDING_PROFILE,
+        )
+        if SYSTEM_PROMPT_OVERRIDE.strip():
+            print("Applying system prompt override for this evaluation run...")
+            await client.update_system_prompt(SYSTEM_PROMPT_OVERRIDE.strip())
+        active_prompt = await client.get_system_prompt()
+        save_json(
+            RUN_CONFIG_PATH,
+            build_run_config(
+                dataset_path=DATASET_PATH,
+                ingest_files=ingest_files,
+                model_selection=model_selection,
+                system_prompt_payload=active_prompt,
+            ),
         )
         print(
             "Eval model active: "

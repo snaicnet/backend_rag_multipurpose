@@ -4,6 +4,15 @@ import httpx
 from pathlib import Path
 
 
+CONTENT_TYPES_BY_SUFFIX = {
+    ".csv": "text/csv",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".md": "text/markdown",
+    ".txt": "text/plain",
+    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+}
+
+
 class BackendRagClient:
     def __init__(
         self,
@@ -111,13 +120,17 @@ class BackendRagClient:
             for path in file_paths:
                 handle = path.open("rb")
                 handles.append(handle)
+                content_type = CONTENT_TYPES_BY_SUFFIX.get(
+                    path.suffix.lower(),
+                    "application/octet-stream",
+                )
                 files.append(
                     (
                         "files",
                         (
                             path.name,
                             handle,
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                            content_type,
                         ),
                     )
                 )

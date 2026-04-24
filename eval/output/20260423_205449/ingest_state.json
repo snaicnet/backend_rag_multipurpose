@@ -1,0 +1,9 @@
+{
+  "status": "reset_completed",
+  "result": {
+    "status": "ok",
+    "documents_deleted": 1,
+    "chunks_deleted": 1,
+    "redis_keys_deleted": 0
+  }
+}

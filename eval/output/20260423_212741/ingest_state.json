@@ -1,0 +1,3690 @@
+{
+  "status": "completed",
+  "files": [
+    "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\knowledgebase\\OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+    "C:\\Users\\Work\\Documents\\GitHub\\sniac_backend_rag_multipurpose\\eval\\knowledgebase\\snaic_overview.md"
+  ],
+  "result": {
+    "text_items": {
+      "documents_inserted": 1,
+      "chunks_inserted": 17,
+      "embedding_provider": "nim",
+      "embedding_model": "nvidia/llama-nemotron-embed-1b-v2",
+      "results": [
+        {
+          "filename": "snaic_overview",
+          "detected_type": "markdown",
+          "success": true,
+          "chunks_created": 17,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "99e63e0b-811b-4995-9339-2f910cc66f55"
+        }
+      ]
+    },
+    "files": {
+      "total_files": 1,
+      "succeeded": 406,
+      "failed": 0,
+      "total_chunks_inserted": 406,
+      "embedding_provider": "nim",
+      "embedding_model": "nvidia/llama-nemotron-embed-1b-v2",
+      "results": [
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5c9a1630-212b-4142-9874-352ddb93692e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d1ba37d4-6614-4e2d-a13e-6ea92cb2c7af"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4d384ea2-6176-4318-8ce7-02b446ebf9d2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6ba25b42-5323-49ca-b2dd-df1b93605791"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "585a5ffb-6225-4689-b353-3f1c7ee87ed5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "465a5dbb-8734-48dd-857a-83f0f3114ec2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "68b0c51a-3e1b-474c-8096-6f2b18adc9cc"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "597487e5-c885-4cdd-a25c-38eea7322c26"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8c01fb33-147e-4fac-b561-dedb45140077"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4d31fb27-5319-4c72-834d-f7c7b6317132"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "26501157-dc91-417a-829e-c87be5a082ce"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1c03286d-b674-4a5b-add4-68e14f5c195a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9cab3c01-c262-4c14-bee4-2824ffc775ed"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c523e5e4-ee36-48a2-978d-536510f764b0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2d4b0119-9a6e-4861-b21a-bfefdaf480f7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c20f86a4-5e63-4747-9c8a-d5226337c53c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "40afa2f0-de7c-44a2-8ebf-42c1c8178975"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ccd4483a-8e65-40b0-a9d3-eb8fffb972a4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "45239d5b-e401-454c-ba9e-24f5ff8cfa57"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ef53794a-e287-455f-9fb1-ef3d9caa4aa2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "49419d3b-e5fb-4ca1-a6d6-fcd6a4112b98"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d322ba4e-051f-46e7-b73d-3e3de036c96a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c274bf7a-d01a-430e-bbbc-fd73decc14cf"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0ccce250-233e-4433-a0d3-1c3de4384a9b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a89bb45b-dd70-4d2f-ae7e-be457d82c3ee"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d34213f1-7a58-4fb3-b024-6ce7d37e5426"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "16e730f6-e032-4fa0-ab93-cd5a9eb71ba4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "fd6bba29-540f-4e90-8406-949892dd9365"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "372d52ff-b578-4b07-8c2d-27647d8d27c6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a24d3140-7782-44f2-a444-9d68cef78798"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "75b77acc-7aad-42af-bfb0-62868777ae3e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2b22a048-dd24-44fd-a0f0-15005851fa14"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "84fc2fb4-e276-4c5d-ba71-fa00f63fef51"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "445108cd-e951-46d8-a207-7426daf0b420"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "04505a09-1f65-4d62-8d42-6b1158a81ba4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9b727f7a-1c34-428b-bb49-c22c7030eecb"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d3805a3b-63b4-4e06-b849-5576ed696bdd"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f878d9d6-6b97-46d0-bb3a-b12357910d44"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "48c31619-9094-4c7d-b18e-5e7802b67c50"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7e2ab185-dc34-4450-a4b6-b5058cc77e56"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "fb9f8b13-14aa-4b9f-90a6-db9acc1e2b15"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b1517b6a-e5e2-418e-b8cc-bff3e48e3665"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8cbbb573-e432-4d6d-a6c3-7f014122df78"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0c36df75-c6f5-46e3-83ac-6ad010f59a0e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "725114e1-b4d2-425d-b38f-dfdf08323cda"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "be7d300a-3084-4f76-b9e6-93b7cf31df81"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e47d2a8e-efd5-41cc-b029-fa0d6ae960be"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7c71bdfc-98e1-41b2-a83e-520cbbdceeb9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "82155868-0819-4acd-9c28-0c07bb17da11"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5c57dd53-9c15-44d6-a025-0f1a3b3c5a6f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d3b58bd7-6665-4b11-a17d-30c83e1fdd4e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b3bd9f47-6aae-447b-a73c-add2c42e5ea1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a0d071c9-ce84-4349-99c3-509cf057c544"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "aa07c0ca-94b9-4aaa-a169-1181731bc35d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "df9f87c2-7790-4515-b4c2-1c3e90cbc592"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b2a19b06-96f8-42a1-ac82-ed4533c28142"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "367e5462-eb3d-4ea5-8e4b-b8a968bf0529"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "15adc6ab-dd37-486a-baf0-fc9685c97b95"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a5bc96d7-51a9-4c02-9962-56d1c87951aa"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "81e23376-1b74-44b0-ad40-37717efacc8a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "177dc969-3488-4a28-9f56-830dd2a77932"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f6befc9a-17b2-49ee-8e73-027b1352bfa7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3542178b-cb40-44a9-b74f-f8b190c9807d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e230e0b1-eda2-4145-b671-628302606718"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "adf8bc9e-7758-454f-8b66-40802b678c47"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "30d2453d-09fa-4e86-8048-7a95abe8af9a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "92003efd-95a2-4c72-adaa-c8085588c001"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "473a9dad-6527-48dd-8e8e-425cdc40ea70"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "84d9b5cc-74d8-475b-9576-0e05dbf696bb"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "966eea9b-e819-4467-a640-c0f0c437f3e1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "12f9c58f-19b8-43ba-9256-5b7597784d02"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6bd7cf9e-8bf5-4656-ac34-4449e77a0964"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "cdbe469d-9790-4235-92b0-570aa33fe076"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a9bf87f8-f5f1-4763-8c04-7032e09e64fd"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9b9afc47-b0a5-484c-bf00-5f6fc956c78f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f8ceb551-5ee0-47f7-9800-f0e1ce561daa"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "68990c52-17b4-477b-9a33-b346cf56a1d1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ffe0aeda-2629-4887-bf82-f71893526f4b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "76a7005c-e86e-4fa4-a5b9-260c76096602"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "87e06f74-ee7f-45a0-b323-317278f506a9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ac255c1e-853a-4123-a170-9651fe8df7b0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d7321d6e-20b3-4f3d-b110-5080772073d0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0ed79e87-8d4a-4a8a-afc3-3c73b393b5f4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "83e9e2f2-0d99-46a4-96f6-85ee380503da"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "980e679c-33b1-4775-98e2-90482d211e6e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "fda912f4-92ab-4809-995b-cc0ab4034078"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4ffbfb03-d04b-4658-9d7b-489799ddd43f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "198b60d9-a52d-42df-8035-cefbaeaa2fda"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "481b9550-d24f-4233-87c0-e11a8ceefec5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2bbe91dc-af41-4475-bc2c-d41dba3b90f9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ad6d0603-e3d9-4258-a056-55089e7a672c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "29e5080b-38a5-4fdd-91fb-8a051702c5d1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a67b0880-2152-4550-9b0a-5de6c865b36e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3cec2fe6-31e3-4b90-b4ef-c16f90437a04"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2851395a-537f-42c9-be99-fffa494efc57"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c4cc1913-e8b9-4fc8-a877-75a15fb51f2d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0cc8e9bc-c9bd-483f-a152-fa0385024a0a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0545225a-0ff0-48e6-9dd1-7f6e78f6d95d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "093ae5f8-971a-46c5-b4a4-f79df5d82bb5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a456e762-2b0a-469a-a5a0-014a96f97725"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c697d238-cab9-43c4-b550-37c3fac35e26"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "46a7f596-2537-4967-b198-a274298114b6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d5cd6e6f-d59e-4d02-906d-1f8700fed924"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f442a177-e71d-40dc-a054-22fc75270484"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "eb4a3caf-21e3-40f9-968a-1fb71c0f15d9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ca6f8959-f763-4a33-937c-ec9a477f7223"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8602326a-1d85-4470-9ff1-0547838e8b0b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "cb1b3377-c125-42c3-b1a7-854ac2a91ab0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "11a3b1e5-1fc5-4362-934a-adbd811b7ed2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "76ec5013-b048-422d-9524-c9a4fb7dae7e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8557f3ad-8ca2-47e0-a031-5421ae77a0a4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "07766ab2-7c87-4f54-b7f7-9b929d9fc4c2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "04893981-792c-4391-9048-2d14b77e7ef9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e81a48f8-0df7-4562-a832-087c6911e913"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4ada0bd8-3baf-46eb-9ec2-ee3050b61f6d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c04a5fe3-2246-4747-9dbb-abdbc5936648"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "55dcf6f5-57d5-486f-bb1f-9fdd06f150f3"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "296f8376-4ccb-47a8-a655-cc6e1043893a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ac962826-3528-4d95-850e-f47b74901885"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3ca884cc-781c-4488-aefc-5be9a58e1576"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "cd91f080-a13b-4f7d-8569-42d2a7c7d60b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f7fb8413-7d5b-4c54-bcb2-5dc924cd93b8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e0618754-bf54-44c4-99d3-95e04b66ab57"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "023d4935-fc6b-49f1-b169-48073e3c53df"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d165cdbe-2bd0-454a-ade9-f6a002e3bee8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "80d9624e-8bbe-4c57-91b5-799b28c19788"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "29a1d5b8-0a04-462c-a337-4449580ffff1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ba533036-090d-4a63-89a5-e809cca53a2a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8d1c3b27-e763-4ba6-bb20-6b5d40a43042"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c7a3f829-0611-488a-81a4-249b98bca9b7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "05b205be-6f14-43c4-ba3e-404bf49b8163"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b9f64c57-20e1-4f38-9966-b7932a2e27e6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d32afce1-8e75-4ea6-baa2-8eb137862934"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9a077d65-dada-4139-b569-bb80e1a2801f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "aa53c630-a2f2-45bc-9e92-2eb2f641d212"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3b7cba33-1917-4c15-920e-cc5b74e0b201"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "04bd0131-2bff-4b4e-be29-0bc6d5c5fbb2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "daeb10ca-5910-411a-862e-eeeea58bd6da"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b15bfc72-1a3d-416a-b9d8-947bbee2be16"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ae7bdf01-9183-4c98-a2ca-e7cf1c6aec43"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "663ca2cb-4c31-4235-bf45-4ffcb6665fb7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3820513b-97f7-4725-a092-087b8851b294"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0fabda49-cfd1-4a5e-87a7-66d559ffed5d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "de32cf7d-6296-4323-8f3a-e87321406ace"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "adcce886-0a60-4d8e-9fb4-39c8eeb3415b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "468fe96d-cadf-4571-acec-21df6b4ec974"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "72c42250-19ee-4fc5-9dab-9b19320b2581"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a9360a1d-b2c5-470f-911e-4516eea7de8b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6779b2fd-3352-4dbd-844d-df3d4aedbaf7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "096dacab-8f14-4e1d-8852-f2d73558ee14"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1126fdc8-dbfa-4346-93f6-446ced7d1abe"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "86ea5c3c-ae05-4206-bca7-d6c8dd3577e0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a43d9538-7b72-4b94-8119-54ecb5931685"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a235aa98-7b76-4aa5-9fa4-46bc768741c0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "feee8c4a-f3f1-4fad-9eb8-fc088bec8f25"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "332d7633-a0fa-443b-8bab-40a444b8f1ec"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "cc369092-e5f2-4d69-8da6-81cbde2f651b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3df17395-c618-4ce9-beaa-b7e4b5662c2b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "46345220-b180-4252-85c7-8f5800c21f52"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6365914d-a920-44c6-b25a-9eb1f4ec877c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b7aeaa2f-3f26-44d5-b6bf-bee63051f98a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ec4adbb4-4101-41b8-9b43-0376099d5134"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0d7d127c-824b-45cb-b775-3b44460c11ed"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "769fb3a2-cc7e-4b2e-94ba-e3c68796d60f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4d896d36-c329-49a4-a219-f3f74f44a0b8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "178a4168-0c31-4bd9-9fe9-41637f2c5811"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "008acc54-e016-49d4-a80b-be9b552bf1e1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1a878f66-f188-4cbd-bb71-f0fed288dfe8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a93e010d-416e-4bbe-a6bc-fb3fe284359d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "de77aaf0-1287-414f-a42c-c73bf308b806"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "343d6ffe-50e1-41fe-9f15-f5710f938e38"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "016863e1-28d9-4440-aab5-8dff84543f1a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "582d36c8-6f87-40e7-8e73-4b47b248e88d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8f86eb4c-aa26-4eb9-91f1-a0381506b8a7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ec9b172d-1675-4205-871a-c0010e0e9a99"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0725fcc0-5475-4aab-a7ef-182db41d4daf"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6b788c06-0ee2-4c55-89b8-479af07cd4d5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "99286d4f-49ee-4b6f-83ec-a69f43f7566e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "10f379fd-890e-4523-8ca4-b6c37fc8db12"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8b6956eb-493e-4449-95e6-628002808ce8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "74d08aef-bc71-4126-9183-7dd5bada7167"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "bd088ce0-0655-4968-a85b-53c4f4012354"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3080c2f7-5067-4eda-9c6c-1e10cbe9209d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "17bfe529-9757-4804-9eca-2b2b5d670381"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "377979e0-196d-42d9-a73e-897bacb75e0a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4411ec0a-9cdd-4bda-bb80-3fe81f533756"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a564dca2-4527-4f2a-ab9f-be2947ce2f0b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ac30761b-4493-4edc-856d-5749556ac104"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "99046f35-e857-4a12-af89-e4f679450e80"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "07bc2246-62ae-434d-9122-e8c53140cbb5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d55a2bf3-705f-4a02-bb31-ea8800a6b9a1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "021976c3-aeca-4e11-8c61-cb20f8f877cd"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c863dcdc-6ee8-4328-ae60-8e0fd7273c40"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "49a40575-4dd8-49d7-bcbb-d0b2b7a419ae"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2e397ba2-4aed-4078-9082-168198e5c0cc"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a6361554-32a1-412b-8480-72f4fbc94125"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f2a77b02-6afc-4fbe-b085-2be839bdd927"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "36f99cb1-0d3a-44a9-8c63-d14b129c524e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "41a22fbb-3068-47e4-890d-5df9f218a343"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c816af61-4ff3-408d-a942-e4e26ef25623"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c598e408-4052-4202-8a51-212980f593a3"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "fb04baa9-5f8c-4e4d-a084-dc3559216789"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "eb39ce8a-ce7d-4795-b8fe-68404058e66f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "79049f3c-e115-4fdf-9ff8-b36f9d25d4a4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d27d2ebb-0882-466c-a566-218d0c42082b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8ac5f661-3078-4cb4-9b9e-95c3d38cba8f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b94317df-0777-4e9e-add2-9c31ca3b82e5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "721f3e2b-3fa7-4255-9f81-cbe675bb77a6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f88a4392-6baf-41a1-b295-76b2876f3429"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "883f2085-7abf-4c14-8384-2dbbb0b574d0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d3be6060-c921-4e9e-9960-9b0e1e73f323"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b844dc86-ee7c-47c3-ac12-280d74f5664b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e63eeaa1-d3d4-43e5-856a-f8486a38bb0b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "08593ade-d7f6-478e-be6e-1fa10422c6aa"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "37284c5a-3cd4-402d-92cf-d57d8c1d9815"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7fe86873-df41-4098-bd51-cec9137d2ad2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a613eaef-28e6-4158-95d6-efd060ad4a74"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4a01c39d-f055-438f-9ca6-0da68be44bbe"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "86913235-940e-48eb-ae05-a9d168a8cc6f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a53cd19e-23f1-4796-b697-4eb7be3cf918"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4135e7b9-35cc-4e39-81ac-ebe90a8c0efa"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3d79f41c-b253-4058-9006-39f48562bcc8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "63802c27-4d33-4c9b-9aa4-66cfbd622287"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5add9152-fa85-406b-a01b-be69e3188dbc"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b8710ca8-8335-427b-bfd8-84f072892b47"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6a289541-f1a6-4791-9224-164842891e0e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "fa34be3e-2b5a-41f8-84fd-52beb2a44984"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "379617c5-5309-4fcd-b787-5effa0d3faf6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8492a623-bd06-40a2-8e18-721b52cbce87"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "419d74f5-baf7-4507-b0e0-279bbe962106"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "fd023212-38e9-48d7-a884-2ac0e73de2ab"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6cbab35f-0f83-477a-a602-44868c4850e6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "42fc4ee1-e93f-4143-98a1-aadf7bb8b1e2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "98caec49-6a97-46d6-897e-076af0d44b5f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b134ef6c-97cc-4074-acc9-9aaa59c672fb"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "30901f72-3eaa-45cc-b1b6-41d110440ae4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "300bb424-faab-4a33-991d-d327d49d40ac"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b892855f-3c00-4b92-b5cb-2165dbf63e54"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1bc4b7a6-4ea8-498b-a390-7854f5647b0a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ca1b119b-0008-4568-852d-3edcdff68b29"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "53a0cfa9-1f01-4d04-b5f3-a62ba45b681d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "275777b7-a7d3-4a49-b133-f8743682490b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "696d0a9a-883c-482a-8da2-45f31686d5b9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e079fd24-a263-4366-bcea-33202abb5b37"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6740c3cc-7b88-46bf-b538-6110eee6024c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "510b493f-4824-4e28-97c7-1229e44a2e5f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1b8fedd4-9b9c-4f18-a9d7-6ca3cb3b5b5b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7f46c2a5-8d41-49f0-bcf9-4e418f736da7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "067e37cf-5d38-4f11-9168-a5d39bfcef35"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3333e496-de1c-4268-aa7b-dae1f55b0d64"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6bdfda9c-7d54-4421-a194-9b247c991cc5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c170b8a8-072e-4e42-9969-5b7bb85495b8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e3126273-18ba-4302-ba88-24260bc5e3c0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b0fcff69-2d57-437d-8aa8-434c68f8ceff"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4938e75f-a2c7-4a6f-9367-8b87ed580f4a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ce586ddb-f244-4fda-aefe-c9787e315a34"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5259e23a-810f-4c71-bd74-93874b0c043f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "713a4719-640e-41d0-bea6-8528f37150af"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7ead8c66-0db8-4310-9f5e-d85a6682d5e0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b47540cc-780b-4219-b7b8-734576f59293"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e9d97524-d34a-4fe4-a622-bb49374b8658"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "447a071d-6dec-4447-9682-ba1aed7ef52e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1936805c-0313-4e94-90cb-e53df1d0a150"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "11fc451b-ab70-4f2e-b9ed-69396b9a3d88"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c6937b2a-0ac0-4f8c-a7bf-5d5ea5d808d6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9941475e-39c2-4227-904c-8c6903528f7a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ea5106dd-4c24-428d-a991-72d508ff16d7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f719fc59-d8df-43b5-bf66-9ee3617fd760"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "086659ce-ea0e-4862-848c-0506963c2e25"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "237bff30-4eee-47a0-aa3f-281bc69a1a77"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "271acd58-a26e-4741-af12-44ab3a0f1470"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "754e9bb8-9e7f-4208-840a-48b7b339d578"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8e7dc11e-087a-405c-8359-2c8f0059c4ed"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2b28dbe1-3c72-4bbc-b2cd-196e3d23e077"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f7c8fa1d-5d59-48cb-9073-7467b187593f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3ee4e867-36dc-4bfa-9ca9-d9b8f5c7cb7f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "645b931c-52dc-43f6-80ad-6bae3051ad1d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "79eef062-c535-4383-a71b-ff791ec34a05"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "550d5ee1-818d-435d-a601-fa76d68016b6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "52fd7790-aaed-48da-89f5-5e9da2ffa3a2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "91d26a70-16e5-4b1c-90a4-088fec286df8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "dcbbbf8b-c37e-4405-b16b-9e2093d41d57"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "27ce265f-697f-4709-9f87-278fd7f9872b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e59d43a5-0b67-45b4-bfca-d776822e776b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "66d1fbd2-ead2-46d7-b750-6b91f38c8fa9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a2077acf-061d-438d-880c-94e5ae77df09"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4779170d-a644-4033-8f90-ad9c5441aa3c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "573fb6d7-2ed5-4430-a97a-f049e207a7ee"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9ead149a-b90c-4273-bfc9-748e5a487665"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d3ae4930-3c18-4aff-b26b-52c62d1841e7"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c7d5e6f6-e4a5-43f1-9b23-baca08dc938a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "61443f88-28ee-47a9-a504-6d26d3c97551"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3888f307-10d3-4f81-83f2-0a83ddb53469"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "77c7a0ad-e0ad-4f4d-965f-db4e2d9489f9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f4b34cde-3363-4192-affa-efd00adf45af"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "96673ccb-08c4-4436-99f6-bf0614b48332"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "32013c6f-c9c6-4646-96f8-9c2b92d0f793"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6a66c05f-bac5-414c-ba0e-ea47fbee2a91"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "bf406fd0-cf0c-4122-be69-2c059c1e7325"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d79cc919-faa4-4c4a-a5bb-bb350f21321c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "06ca029e-7b87-4e81-a041-0327fbcb44f4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2181b534-a920-4f16-a594-060b1c61b39e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "645a393f-7fdf-44c0-9a28-a7b09f94f163"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "04896771-3a3b-4c4a-a4c5-db79673a86a3"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ccc80eb3-2f06-4be3-8963-35ab5712d978"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b9ba82a2-4821-441f-a261-db323c56eabb"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "399acbfc-4a84-487e-97fa-05654d22f3eb"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d5da6162-0775-451d-96cd-fb2c2d529347"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "439b8f88-8995-45f1-ad1e-93b5e234c3c4"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3ff78d81-0845-459b-889e-431d9295d284"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8c6428ff-43c0-476a-b2ed-a09e71f41fd9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "eaf5e8f4-8448-4184-9005-c49f5b27e352"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "57e8492a-6f52-4dd8-88c9-4433b39ba82b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "92481045-ea63-4a72-a450-7a92eab78bb0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "df4110f9-a176-49be-a020-bcda287fb000"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "12a6fa9d-ce22-4cb5-86ff-36149919d654"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "2c34ba2f-c041-48d6-8bca-26eb330234f5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d1705de7-d4e7-4790-a7fa-74664d2db9ec"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "59016a78-ed40-41d2-8272-4d29e14344ac"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c3839f0c-53da-424a-8d9b-57a651ca23b9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "cd8d8884-4255-4cde-ac21-e82dee071e7b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e7c344b1-8573-449a-9926-96d12744de86"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b6742e25-e9e8-49c5-a888-71c526a8614d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1d8db66d-b914-45ef-9251-e53a090d4ae1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e7b3393b-eb2f-43bb-bb58-c4a53a1a874e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8b2346a8-0a4b-4e46-b59c-26b9ce2500e2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "195807e2-5e79-4433-b146-25029e968a2c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8ee896f6-0077-4f42-9c48-d31dbd1cb248"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "10ac75fe-232e-47d9-ba94-c38c8fd7128b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7b9a7979-0222-4416-8701-fef9899f9804"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b8f462c3-2fcf-48a2-9abd-6d72b1ced03a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5b22948c-6d0e-4f84-b990-3365be91f210"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "685cd7c9-89cf-4950-9221-2166e481be03"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7ed1e049-31e5-4c4f-88f8-2ba14463d093"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f771c931-8128-459d-8cb7-89eabe78ac94"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e97169de-99d2-49ce-a063-ce9a06624752"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7c0be52c-a7db-4c3f-87ec-4cc51724c1a8"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7e91083c-1fe8-429a-95df-349000e86944"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0e1d0fc1-dd69-4b63-93a4-8fb79c140320"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "be7fcaaf-87fa-4906-9e3c-771df9f77f5b"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "078ac77b-79b8-41a8-95e4-703617a2d0de"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8f762881-107c-4e65-8031-5648e0da0b5a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "aadd6e0f-93b2-43b6-8498-7d3507470a3e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "36182c4f-7fdf-4e97-9f79-18c8686baebc"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "121ae6ce-78e6-40b4-97cd-426e36be6fc6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0f644d78-f563-4840-a5db-85b729c0d3f3"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f06546c9-76eb-470f-818e-45304031d665"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1862e8bd-874b-40b9-9b1c-8fb7efc06d12"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c9ca009a-0abb-4bf0-b9be-d91049129833"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "44f2945d-306e-4e8c-a8fe-a76eb7288bce"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "31229f88-a651-4932-9554-c3f88b1de436"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "af270a7e-922f-4159-bbe3-20a9d1ad4abc"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ee84489a-1e1e-45e4-9439-08214c7767aa"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b1d52461-a92e-4296-8457-500020dd880f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "acbaf46f-853b-4c7b-b00a-cc8b533ec149"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6aa6b24b-8619-4e01-bb50-d4e5fa34af7f"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "86437ae1-0fe7-40fd-8ab1-106baf27fc6d"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c4cb9917-cf91-4bcc-8a13-21f4fd5f8cc5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "72d313a3-8a82-49ab-a6e3-c558d08a0c3a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4cddfb75-972b-4935-b5bc-47e8023217b3"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a57ea77a-b6a1-4968-9f17-d817d9988376"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "8dbc83be-7fe6-4268-8eb1-a6ca7c5494a3"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "64977b44-75d6-4987-97e5-edd91f57f347"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d5b38f1b-81ad-4ccf-92cf-e444b21734cf"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c5cea2c9-192f-490c-aa55-8c2e98f1637e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "89570cdf-6afd-40f3-9d4f-94b8fe521546"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ead025a4-b9fe-4c55-a8ca-52ad3820d147"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "f4005f7c-474a-443b-b58e-212ef8e0d91e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5eb71899-427c-49a9-8a5a-4acee0f55b38"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "aef256a5-8c9d-4922-bf29-f0d453c970e6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4ab826cf-28b5-48a3-82a3-ac83e5a4caee"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "344c2e1e-6399-4fcc-9e6c-47045e1eb5fe"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6db1f0ad-c000-4822-a81c-d49935ea0118"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e74e2045-a82d-48ed-8a28-0c18a49a785a"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "efe196ce-7aad-4427-80cf-a16fe636ee66"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "b034f679-5cfd-48d0-aabc-2831d1249370"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ae8d8966-3500-43a0-b754-aae07fce5384"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "58a2a8c1-8ea4-4b99-93b1-2c4be44fcef2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "142fa93c-108a-4f3b-93f3-d98e4b0cb70c"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "712b3fb4-a35e-4090-8202-342b2e5c558e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "094da285-620f-434f-84f4-d24a1715d726"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ee93c0df-590f-4473-bc00-07e11d963138"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "12e023d8-4e6b-4cc5-84e1-f910ece06007"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5c147760-4ce2-4352-939b-bdf2e6b17711"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "52df52b0-5833-478d-b35c-dd450db6a5a1"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "4b17e9b9-37e2-4297-9b34-0c5575769094"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "568c5e22-eefa-4b6d-bdb6-a44ed9f0b5d5"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a5046c04-a7ca-4956-a8a2-0fe056605f6e"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "c61d1e38-2655-41e2-862a-45a7a3dc69e0"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "53ac6d8b-0c60-49c4-9a14-4e5c3f93fdf2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1828c7a7-2982-4ddb-af2c-4ca7704ebf78"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "6dd86dc9-e4e6-4215-aad4-d8f268b1d9b2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "dda703c9-70f0-42c7-aff3-a8bcde1168f2"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "1a852e85-7162-440a-8176-7c54ca0aad77"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "ef9d78ff-6c06-41aa-866b-853809fdd306"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "9de92309-8612-4240-9d7b-cb7012cad511"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0849fcbb-5b39-4895-966e-40a6c8b97945"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "a424e7ed-c39a-408f-a36e-d76c96d37571"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "5e988bf4-b6f7-40d1-ac27-0db8bf41dec9"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "0e42d2a6-93c6-469c-b810-7a5018bfe627"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "e5719374-2fb8-4270-83e5-fea5b2ffd5b6"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "7ce3efe7-7a9e-436d-a299-c3ce9f767afa"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "d2fd9cf6-ff06-4b1a-b951-8502a065f231"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "93f7fc8b-69ee-44db-a8cd-bf8926a30c93"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "372b0344-bde3-4cbe-88a0-5873a834eeec"
+        },
+        {
+          "filename": "OTi ChatBot_FAQ_as of 01Oct2025.xlsx",
+          "detected_type": "xlsx",
+          "success": true,
+          "chunks_created": 1,
+          "deduplicated": false,
+          "error": null,
+          "document_id": "3f022de7-fea4-43f0-9bd0-c66de6dab84f"
+        }
+      ]
+    }
+  }
+}

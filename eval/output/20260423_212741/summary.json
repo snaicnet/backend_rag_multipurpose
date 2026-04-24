@@ -1,0 +1,20 @@
+{
+  "sample_count": 60,
+  "models": {
+    "eval_generation_profile": "nim_3super120",
+    "eval_embedding_profile": "nim_nemotron_2048",
+    "critic_model": "gpt-5-mini"
+  },
+  "response_quality": {
+    "answer_correctness": 0.7666666666666667,
+    "answer_relevancy": 0.9857758620689655,
+    "faithfulness": 0.9699438440347532
+  },
+  "contextual_accuracy": {
+    "contextual_precision": 0.9472953216374269,
+    "contextual_recall": 0.9078703703703703,
+    "contextual_relevancy": 0.44346005353469364,
+    "hit_rate": 1.0,
+    "mrr": 1.0
+  }
+}

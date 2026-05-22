@@ -5,7 +5,6 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 ProviderName = Literal["openai", "gemini", "ollama", "nim"]
-SupportedTextSourceType = Literal["text", "markdown", "unstructured"]
 SupportedFileSourceType = Literal["txt", "md", "docx", "csv", "xlsx"]
 
 
@@ -28,7 +27,6 @@ class HealthCheckResponse(BaseModel):
     redis: DependencyHealth
     qdrant: DependencyHealth
     providers: dict[str, ProviderHealth]
-    assumptions: dict[str, Any]
 
 
 class NormalizedDocument(BaseModel):
@@ -43,11 +41,10 @@ class NormalizedDocument(BaseModel):
 
 
 class TextIngestItem(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     title: str
     content: str
-    source_type: SupportedTextSourceType = "text"
-    url: str | None = None
-    metadata: dict[str, Any] = Field(default_factory=dict)
 
     @field_validator("content")
     @classmethod
@@ -56,13 +53,18 @@ class TextIngestItem(BaseModel):
             raise ValueError("content must not be empty")
         return value
 
+    @field_validator("title")
+    @classmethod
+    def validate_title_not_empty(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("title must not be empty")
+        return value.strip()
+
 
 class IngestTextRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     items: list[TextIngestItem] = Field(min_length=1)
-    embedding_profile: str | None = None
-    embedding_provider: ProviderName | None = None
-    embedding_model: str | None = None
-    force_reingest: bool = False
 
 
 class IngestFileResult(BaseModel):
@@ -117,23 +119,16 @@ class ChatCitation(BaseModel):
 
 
 class ChatRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     message: str
-    debug: bool = False
-    session_id: str | None = None
-    chat_history: list[ChatMessage] = Field(default_factory=list)
-    top_k: int = Field(default=5, ge=1, le=25)
-    provider: ProviderName | None = None
-    model: str | None = None
-    embedding_profile: str | None = None
-    embedding_provider: ProviderName | None = None
-    embedding_model: str | None = None
 
     @field_validator("message")
     @classmethod
     def validate_message_not_empty(cls, value: str) -> str:
         if not value.strip():
             raise ValueError("message must not be empty")
-        return value
+        return value.strip()
 
 
 class ChatResponse(BaseModel):
@@ -207,6 +202,7 @@ class DocumentRecord(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
     original_filename: str | None = None
     mime_type: str | None = None
+    created_by: str
     embedding_provider: str
     embedding_model: str
     created_at: datetime
@@ -308,7 +304,7 @@ class ChatServiceResult(BaseModel):
 class ChatActivityWrite(BaseModel):
     user_id: UUID
     username: str
-    auth_type: Literal["bearer", "api_key"]
+    auth_type: Literal["bearer"]
     request_path: str
     client_ip: str | None = None
     forwarded_for: list[str] = Field(default_factory=list)
@@ -335,7 +331,7 @@ class ChatActivityRecord(BaseModel):
     id: int
     user_id: UUID
     username: str
-    auth_type: Literal["bearer", "api_key"]
+    auth_type: Literal["bearer"]
     request_path: str
     client_ip: str | None = None
     forwarded_for: list[str] = Field(default_factory=list)
@@ -363,7 +359,7 @@ class ChatActivityResponse(BaseModel):
     id: int
     user_id: UUID
     username: str
-    auth_type: Literal["bearer", "api_key"]
+    auth_type: Literal["bearer"]
     request_path: str
     client_ip: str | None = None
     forwarded_for: list[str] = Field(default_factory=list)
@@ -438,7 +434,7 @@ class AuthenticatedUser(BaseModel):
     id: UUID
     username: str
     is_admin: bool
-    auth_type: Literal["bearer", "api_key"]
+    auth_type: Literal["bearer"]
 
 
 class AccessTokenResponse(BaseModel):
@@ -446,24 +442,6 @@ class AccessTokenResponse(BaseModel):
     token_type: str = "bearer"
     expires_in_seconds: int
     user: AuthenticatedUser
-
-
-class ApiKeyCreateRequest(BaseModel):
-    name: str
-
-    @field_validator("name")
-    @classmethod
-    def validate_name_not_empty(cls, value: str) -> str:
-        if not value.strip():
-            raise ValueError("name must not be empty")
-        return value.strip()
-
-
-class ApiKeyCreateResponse(BaseModel):
-    api_key: str
-    key_prefix: str
-    name: str
-    created_at: datetime
 
 
 class UserCreateRequest(BaseModel):
@@ -519,16 +497,6 @@ class UserResponse(BaseModel):
     is_admin: bool
     created_at: datetime
     updated_at: datetime
-
-
-class ApiKeyResponse(BaseModel):
-    id: UUID
-    user_id: UUID
-    name: str
-    key_prefix: str
-    is_active: bool
-    last_used_at: datetime | None = None
-    created_at: datetime
 
 
 class SystemPromptUpdateRequest(BaseModel):
@@ -658,14 +626,3 @@ class UserRecord(BaseModel):
     updated_at: datetime
 
 
-class ApiKeyRecord(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: UUID
-    user_id: UUID
-    name: str
-    key_prefix: str
-    key_hash: str
-    is_active: bool
-    last_used_at: datetime | None = None
-    created_at: datetime

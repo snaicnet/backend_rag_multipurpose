@@ -107,10 +107,6 @@ class FakeAuthService:
             raise ValueError("Invalid bearer token payload")
         return self._user
 
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        raise ValueError("API key auth is not used in this test")
-
-
 class FakePromptService:
     def __init__(self, initial_prompt: str) -> None:
         self._state = SimpleNamespace(
@@ -152,8 +148,8 @@ class FakeChatService:
                     metadata={},
                 )
             ],
-            provider=payload.provider or "ollama",
-            model=payload.model or "llama3.2",
+            provider="ollama",
+            model="llama3.2",
             embedding_profile="ollama_4096",
             embedding_provider="ollama",
             embedding_model="qwen3-embedding",

@@ -5,13 +5,14 @@ from fastapi import UploadFile
 from psycopg_pool import AsyncConnectionPool
 
 from app.core.config import Settings
-from app.core.defaults import EMBEDDING_CACHE_TTL_SECONDS
+from app.core.config import EMBEDDING_CACHE_TTL_SECONDS
 from app.core.logging import get_logger
 from app.db.qdrant import QdrantManager
 from app.db.redis import RedisManager
 from app.db.repositories.chunks import ChunkRepository
 from app.db.repositories.documents import DocumentRepository
 from app.models.schemas import (
+    AuthenticatedUser,
     IngestFileResult,
     IngestFilesResponse,
     IngestTextRequest,
@@ -56,12 +57,16 @@ class IngestService:
             ),
         )
 
-    async def ingest_text_items(self, payload: IngestTextRequest) -> IngestTextResponse:
+    async def ingest_text_items(
+        self,
+        payload: IngestTextRequest,
+        current_user: AuthenticatedUser,
+    ) -> IngestTextResponse:
         default_embedding_profile = await self._model_selection_service.get_embedding_profile_name()
         selection = self._embedding_service.resolve_selection(
-            payload.embedding_profile,
-            payload.embedding_provider,
-            payload.embedding_model,
+            None,
+            None,
+            None,
             default_profile_name=default_embedding_profile,
         )
 
@@ -72,23 +77,27 @@ class IngestService:
         for item in payload.items:
             document = NormalizedDocument(
                 title=item.title,
-                source_type=item.source_type,
+                source_type="text",
                 content=item.content.strip(),
-                metadata=dict(item.metadata),
-                url=item.url,
+                metadata=self._build_system_metadata(
+                    current_user=current_user,
+                    source_kind="text",
+                    title=item.title,
+                ),
             )
 
             persisted = await self._persist_documents(
                 parsed_file=ParsedFile(
                     filename=item.title,
-                    detected_type=item.source_type,
+                    detected_type="text",
                     documents=[document],
                 ),
                 embedding_provider=selection.provider,
                 embedding_model=selection.model,
                 embedding_profile=selection.profile_name,
                 embedding_dimension=selection.dimension,
-                force_reingest=payload.force_reingest,
+                force_reingest=False,
+                created_by=current_user.username,
             )
             results.extend(persisted["results"])
             documents_inserted += persisted["documents_inserted"]
@@ -105,19 +114,13 @@ class IngestService:
     async def ingest_uploaded_files(
         self,
         files: list[UploadFile],
-        source_type_override: str | None,
-        tags: list[str],
-        shared_metadata: dict,
-        embedding_profile: str | None,
-        embedding_provider: str | None,
-        embedding_model: str | None,
-        force_reingest: bool,
+        current_user: AuthenticatedUser,
     ) -> IngestFilesResponse:
         default_embedding_profile = await self._model_selection_service.get_embedding_profile_name()
         selection = self._embedding_service.resolve_selection(
-            embedding_profile,
-            embedding_provider,
-            embedding_model,
+            None,
+            None,
+            None,
             default_profile_name=default_embedding_profile,
         )
 
@@ -137,9 +140,13 @@ class IngestService:
                     filename=filename,
                     content=content,
                     mime_type=upload.content_type,
-                    source_type_override=source_type_override,
-                    shared_metadata=shared_metadata,
-                    tags=tags,
+                    shared_metadata=self._build_system_metadata(
+                        current_user=current_user,
+                        source_kind="file",
+                        title=filename,
+                        original_filename=filename,
+                        mime_type=upload.content_type,
+                    ),
                 )
 
                 persisted = await self._persist_documents(
@@ -148,7 +155,8 @@ class IngestService:
                     embedding_model=selection.model,
                     embedding_profile=selection.profile_name,
                     embedding_dimension=selection.dimension,
-                    force_reingest=force_reingest,
+                    force_reingest=False,
+                    created_by=current_user.username,
                 )
                 results.extend(persisted["results"])
                 total_chunks_inserted += persisted["chunks_inserted"]
@@ -185,6 +193,7 @@ class IngestService:
         embedding_profile: str,
         embedding_dimension: int,
         force_reingest: bool,
+        created_by: str = "system",
     ) -> dict:
         results: list[IngestFileResult] = []
         documents_inserted = 0
@@ -207,6 +216,7 @@ class IngestService:
                 embedding_provider=embedding_provider,
                 embedding_model=embedding_model,
                 content_hash=content_hash,
+                created_by=created_by,
             )
             if not created:
                 results.append(
@@ -271,3 +281,23 @@ class IngestService:
     def _hash_document(self, content: str) -> str:
         normalized = " ".join(content.split())
         return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+    def _build_system_metadata(
+        self,
+        *,
+        current_user: AuthenticatedUser,
+        source_kind: str,
+        title: str,
+        original_filename: str | None = None,
+        mime_type: str | None = None,
+    ) -> dict:
+        metadata = {
+            "source_kind": source_kind,
+            "title": title,
+            "created_by": current_user.username,
+        }
+        if original_filename is not None:
+            metadata["original_filename"] = original_filename
+        if mime_type is not None:
+            metadata["mime_type"] = mime_type
+        return metadata

@@ -120,20 +120,16 @@ Added:
 
 - bootstrap admin account on startup
 - JWT bearer authentication
-- hashed API keys
 - `POST /auth/token`
 - `GET /auth/me`
-- `POST /auth/api-keys`
 - optional HTTPS enforcement using `AUTH_REQUIRE_HTTPS`
 
 ## v0.4.1 - 2026-03-15
 
-Admin and key-management features expanded.
+Admin user-management features expanded.
 
 Added:
 
-- `GET /auth/api-keys`
-- `DELETE /auth/api-keys/{api_key_id}`
 - admin-only user CRUD:
   - `POST /admin/users`
   - `GET /admin/users`
@@ -154,7 +150,7 @@ Auth startup resilience improved.
 
 Added:
 
-- automatic creation of `app_users` and `api_keys` tables on startup if they are missing
+- automatic creation of `app_users` on startup if it is missing
 
 Result:
 
@@ -465,8 +461,7 @@ Added:
 
 Changed:
 
-- `/chat` now echoes `session_id` in the response when the client sends one
-- `/chat/stream` now includes `session_id` in SSE metadata and done events when the client sends one
+- chat session identifiers are handled server-side instead of through the public chat payload
 - feedback list supports optional `start_at` and `end_at` filters
 - feedback date filters accept `DD/MM/YYYY` and ISO 8601 timestamps
 
@@ -633,7 +628,7 @@ Updated again:
 Result:
 
 - prompt evidence shown to the model now more reliably includes the decisive retrieved span for same-document questions such as partner-organisation lookups
-- debug visibility can now be disabled globally even when a client sends `debug=true`
+- debug visibility is controlled globally by the server
 
 ## Current feature set - 2026-03-29
 

@@ -5,8 +5,8 @@
 1. Accept user query on `/chat` or `/chat/stream`
 2. Rate-limit the request in Redis and apply the daily per-user quota
 3. Filter the input for blocked phrases, unusually long prompts, and repeated prompt abuse
-4. Resolve generation provider/model from the request or config defaults
-5. Resolve the embedding profile from the request or config defaults
+4. Resolve generation provider/model from active model selection
+5. Resolve the embedding profile from active model selection
 6. Embed the query with the selected provider/model using `input_type=query` for NVIDIA NIM-compatible embedding models
 7. Clamp `top_k` to the configured safe range
 8. Retrieve a slightly larger candidate pool from the Qdrant collection for that embedding dimension

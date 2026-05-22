@@ -108,10 +108,6 @@ class FakeAuthService:
             raise ValueError("Invalid bearer token payload")
         return self._user
 
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        raise ValueError("API key auth is not used in this test")
-
-
 class FakeDocumentInspectionService:
     def __init__(self) -> None:
         self._document = DocumentRecord(
@@ -123,6 +119,7 @@ class FakeDocumentInspectionService:
             metadata={"department": "AI"},
             original_filename="SNAIC Overview.docx",
             mime_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            created_by="admin",
             embedding_provider="openai",
             embedding_model="text-embedding-3-small",
             created_at=datetime(2026, 3, 26, tzinfo=timezone.utc),

@@ -17,7 +17,7 @@ Use these rules when you update the app:
   - update `backend/.env` and `backend/.env.example` for secrets and endpoints only
   - update `deploy/ecs/task-definition.json` if ECS should match
   - update `README.md` and `docs/providers-and-models.md`
-  - edit `backend/app/core/defaults.py` to manage the selectable catalog
+  - edit `backend/app/core/config.py` to manage the selectable catalog
   - use `GET /admin/model-selection` and `PUT /admin/model-selection` to switch the active chat and embedding profiles
   - set `DEFAULT_GENERATION_PROVIDER`, `DEFAULT_GENERATION_MODEL`, `DEFAULT_EMBEDDING_PROVIDER`, `DEFAULT_EMBEDDING_MODEL`, and `DEFAULT_EMBEDDING_DIMENSION` in `backend/.env` for local Docker, or in `deploy/ecs/task-definition.json` for ECS, to control the startup default
 - Change chat behavior or reasoning:
@@ -81,33 +81,6 @@ Use the returned token for protected routes:
 curl http://localhost:9010/auth/me ^
   -H "Authorization: Bearer YOUR_JWT"
 ```
-
-## Create, list, and revoke API keys
-
-Create:
-
-```bash
-curl -X POST http://localhost:9010/auth/api-keys ^
-  -H "Authorization: Bearer YOUR_JWT" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"name\":\"local-client\"}"
-```
-
-List:
-
-```bash
-curl http://localhost:9010/auth/api-keys ^
-  -H "Authorization: Bearer YOUR_JWT"
-```
-
-Revoke:
-
-```bash
-curl -X DELETE http://localhost:9010/auth/api-keys/API_KEY_UUID ^
-  -H "Authorization: Bearer YOUR_JWT"
-```
-
-The revoke route returns HTTP `204 No Content`.
 
 ## Admin user CRUD
 
@@ -262,7 +235,7 @@ docker exec -it rag_ollama ollama pull rjmalagon/gte-qwen2-1.5b-instruct-embed-f
 curl -X POST http://localhost:9010/ingest/text ^
   -H "Authorization: Bearer YOUR_JWT" ^
   -H "Content-Type: application/json" ^
-  -d "{\"items\":[{\"title\":\"Overview\",\"content\":\"We offer AI chatbot implementation.\",\"source_type\":\"text\"}]}"
+  -d "{\"items\":[{\"title\":\"Overview\",\"content\":\"We offer AI chatbot implementation.\"}]}"
 ```
 
 ## Run a chat request
@@ -271,10 +244,10 @@ curl -X POST http://localhost:9010/ingest/text ^
 curl -X POST http://localhost:9010/chat ^
   -H "Authorization: Bearer YOUR_JWT" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"What do we offer?\",\"provider\":\"ollama\",\"model\":\"llama3.2\"}"
+  -d "{\"message\":\"What do we offer?\"}"
 ```
 
-If you send `session_id` in the request payload, `/chat` now returns the same `session_id` in the response. `/chat/stream` also includes it in the SSE metadata and done events.
+Chat generation, retrieval profile, session behavior, debug output, and retrieval limits are controlled by server settings and model selection.
 
 ## Chat guardrails
 
@@ -305,7 +278,7 @@ If the request is blocked, the API returns a validation error instead of passing
 curl -N -X POST http://localhost:9010/chat/stream ^
   -H "Authorization: Bearer YOUR_JWT" ^
   -H "Content-Type: application/json" ^
-  -d "{\"message\":\"What do we offer?\",\"provider\":\"ollama\",\"model\":\"llama3.2\"}"
+  -d "{\"message\":\"What do we offer?\"}"
 ```
 
 ## Run tests
@@ -370,7 +343,7 @@ Use `GET /admin/model-catalog` to see the available profiles and `PUT /admin/mod
 
 The active embedding profile controls the provider/model/dimension. If you choose a new dimension, the app creates the matching Qdrant collection automatically on first use.
 
-For per-request overrides, send `embedding_profile` on `/ingest/text`, `/ingest/files`, or `/chat` instead of mixing raw provider/model fields.
+Chat and ingestion use the active generation and embedding profiles from model selection.
 
 NIM-specific values used by this repository:
 
@@ -401,7 +374,7 @@ curl -X DELETE http://localhost:9010/admin/reset ^
 
 Current behavior:
 
-- the app now creates `app_users` and `api_keys` automatically on startup
+- the app now creates `app_users` automatically on startup
 
 If you still see this error, restart the app container after pulling the latest code:
 
@@ -416,7 +389,6 @@ Check:
 - `AUTH_ENABLED=true`
 - `backend/.env` has the expected bootstrap admin credentials
 - the bearer token is valid and not expired
-- the `X-API-Key` value is complete
 - in Swagger UI, use `Authorize` and paste only the raw token without quotes
 
 ### Admin user CRUD returns HTTP 400
@@ -455,7 +427,7 @@ If you switch to NIM, expect:
 
 ## Provider selection
 
-The app stores the selectable chat and embedding catalog in code (`backend/app/core/defaults.py`), and the active selection in a separate PostgreSQL row.
+The app stores the selectable chat and embedding catalog in code (`backend/app/core/config.py`), and the active selection in a separate PostgreSQL row.
 
 - `GET /admin/model-catalog` lists the configured generation and embedding profiles
 - `GET /admin/model-selection` returns the currently active profiles

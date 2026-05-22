@@ -61,6 +61,8 @@ class StubSettings:
     auth_access_token_ttl_seconds = 3600
     auth_bootstrap_admin_username = "admin"
     auth_bootstrap_admin_password = "change-me-immediately"
+    chat_top_k = 5
+    chat_debug_enabled = False
 
 
 class FakeAuthService:
@@ -108,10 +110,6 @@ class FakeAuthService:
         if payload.get("sub") != str(self._user.id):
             raise ValueError("Invalid bearer token payload")
         return self._user
-
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        raise ValueError("API key auth is not used in this test")
-
 
 class FakeActivityService:
     def __init__(self, *, should_fail: bool = False) -> None:
@@ -192,8 +190,8 @@ class FakeChatService:
                     metadata={},
                 )
             ],
-            provider=payload.provider or "ollama",
-            model=payload.model or "llama3.2",
+            provider="ollama",
+            model="llama3.2",
             embedding_profile="ollama_4096",
             embedding_provider="ollama",
             embedding_model="qwen3-embedding",
@@ -242,7 +240,7 @@ def test_chat_activity_is_recorded_and_visible_to_admin(monkeypatch) -> None:
             chat_response = await client.post(
                 "/chat",
                 headers=headers,
-                json={"message": "Is this monitored?", "session_id": "session-123", "top_k": 7},
+                json={"message": "Is this monitored?"},
             )
             assert chat_response.status_code == 200, chat_response.text
 
@@ -258,10 +256,10 @@ def test_chat_activity_is_recorded_and_visible_to_admin(monkeypatch) -> None:
             assert payload["activities"][0]["user_agent"] == "pytest-agent"
             assert payload["activities"][0]["request_message"] == "Is this monitored?"
             assert payload["activities"][0]["response_answer"] == "Recorded answer"
-            assert payload["activities"][0]["session_id"] == "session-123"
+            assert payload["activities"][0]["session_id"] is None
             assert payload["activities"][0]["citations_count"] == 1
             assert payload["activities"][0]["status"] == "completed"
-            assert payload["activities"][0]["metadata"] == {"debug": False, "top_k": 7}
+            assert payload["activities"][0]["metadata"] == {"debug": False, "top_k": 5}
 
     asyncio.run(run_flow())
 

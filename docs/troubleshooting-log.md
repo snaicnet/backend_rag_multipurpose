@@ -759,14 +759,13 @@ Symptoms:
 
 Cause:
 
-- feedback is joined to recorded chat activity by `session_id`
-- if the client did not send a stable `session_id` on `/chat` or `/chat/stream`, the backend has no reliable way to group the conversation into one feedback transcript
+- feedback is joined to recorded chat activity by `session_id` when server-side session identifiers are available
+- if no activity records exist for that session, the backend has no reliable way to group the conversation into one feedback transcript
 
 Solution:
 
-- send the same `session_id` value on every request in the same chat session
-- reuse that same `session_id` when calling `POST /chat/feedback`
-- confirm `/chat` echoes the same `session_id` back in the response when it was provided
+- confirm the server is recording chat activity for the relevant feedback session
+- reuse that same server-side session identifier when calling `POST /chat/feedback`
 
 Relevant files:
 
@@ -790,7 +789,7 @@ Cause:
 Solution:
 
 - make sure the selected generation profile exactly matches a key in the catalog
-- update it through `PUT /admin/model-selection` or correct the catalog entry in `backend/app/core/defaults.py`
+- update it through `PUT /admin/model-selection` or correct the catalog entry in `backend/app/core/config.py`
 
 Relevant files:
 

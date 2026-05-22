@@ -7,13 +7,13 @@ from difflib import SequenceMatcher
 
 from redis.asyncio import Redis
 
-from app.core.config import Settings
-from app.core.defaults import (
+from app.core.config import (
     CHAT_MAX_RESPONSE_CHARS,
     CHAT_MAX_RESPONSE_TOKENS,
     CHAT_MAX_TOP_K,
     CHAT_MIN_TOP_K,
     CHAT_REPEATED_PROMPT_LOOKBACK,
+    Settings,
 )
 from app.core.rate_limit import RateLimiter
 from app.models.schemas import ChatMessage

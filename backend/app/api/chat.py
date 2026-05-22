@@ -7,7 +7,7 @@ from fastapi.responses import StreamingResponse
 
 from app.core.logging import get_logger
 from app.core.security import require_authenticated_user
-from app.core.defaults import CHAT_MAX_RESPONSE_CHARS
+from app.core.config import CHAT_MAX_RESPONSE_CHARS
 from app.models.schemas import (
     AuthenticatedUser,
     ChatActivityWrite,
@@ -98,8 +98,8 @@ def _thinking_enabled_for(settings) -> bool:
     return bool(getattr(settings, "chat_thinking_enabled", False))
 
 
-def _debug_enabled_for(settings, requested_debug: bool) -> bool:
-    return bool(requested_debug and getattr(settings, "chat_debug_enabled", True))
+def _debug_enabled_for(settings) -> bool:
+    return bool(getattr(settings, "chat_debug_enabled", False))
 
 
 def _extract_forwarded_for(request: Request) -> list[str]:
@@ -141,7 +141,7 @@ def _build_activity_payload(
         client_ip=_resolve_client_ip(request, forwarded_for),
         forwarded_for=forwarded_for,
         user_agent=request.headers.get("user-agent"),
-        session_id=payload.session_id,
+        session_id=None,
         request_message=payload.message,
         response_answer=response_answer,
         provider=provider,
@@ -154,7 +154,10 @@ def _build_activity_payload(
         retrieved_chunks_count=retrieved_chunks_count,
         status=status_value,
         error_message=error_message,
-        metadata={"debug": payload.debug, "top_k": payload.top_k},
+        metadata={
+            "debug": _debug_enabled_for(request.app.state.settings),
+            "top_k": getattr(request.app.state.settings, "chat_top_k", 5),
+        },
     )
 
 
@@ -177,7 +180,7 @@ async def chat(
     service = _build_chat_service(request)
     activity_service = _build_chat_activity_service(request)
     rate_limit_key = _resolve_rate_limit_key(current_user)
-    debug_enabled = _debug_enabled_for(request.app.state.settings, payload.debug)
+    debug_enabled = _debug_enabled_for(request.app.state.settings)
 
     try:
         result = await service.prepare_chat(payload, rate_limit_key)
@@ -238,7 +241,7 @@ async def chat_stream(
     service = _build_chat_service(request)
     activity_service = _build_chat_activity_service(request)
     rate_limit_key = _resolve_rate_limit_key(current_user)
-    debug_enabled = _debug_enabled_for(request.app.state.settings, payload.debug)
+    debug_enabled = _debug_enabled_for(request.app.state.settings)
 
     try:
         stream_state = await service.start_stream(payload, rate_limit_key)

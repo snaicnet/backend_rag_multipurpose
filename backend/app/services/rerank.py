@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 
 import httpx
 
-from app.core.defaults import RERANK_BASE_URL
+from app.core.config import RERANK_BASE_URL
 from app.core.config import Settings
 from app.models.schemas import RetrievedChunk
 

@@ -65,6 +65,7 @@ class FakeDocumentRepository:
         embedding_provider: str,
         embedding_model: str,
         content_hash: str,
+        created_by: str,
     ) -> tuple[SimpleNamespace, bool]:
         self.calls.append(content_hash)
         if self.existing_record is None:

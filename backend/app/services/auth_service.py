@@ -12,8 +12,6 @@ from app.core.config import Settings
 from app.db.repositories.auth import AuthRepository
 from app.models.schemas import (
     AccessTokenResponse,
-    ApiKeyCreateResponse,
-    ApiKeyResponse,
     AuthenticatedUser,
     UserCreateRequest,
     UserRecord,
@@ -89,52 +87,6 @@ class AuthService:
             raise ValueError("Authenticated user is not active")
 
         return self._build_authenticated_user(user, auth_type="bearer")
-
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        lookup = await self._repository.get_api_key_with_user(self._hash_api_key(raw_api_key))
-        if lookup is None:
-            raise ValueError("Invalid API key")
-
-        api_key, user = lookup
-        if not api_key.is_active or not user.is_active:
-            raise ValueError("API key is inactive")
-
-        await self._repository.touch_api_key(api_key.id)
-        return self._build_authenticated_user(user, auth_type="api_key")
-
-    async def create_api_key(
-        self,
-        current_user: AuthenticatedUser,
-        name: str,
-    ) -> ApiKeyCreateResponse:
-        raw_secret = secrets.token_urlsafe(32)
-        key_prefix = secrets.token_hex(4)
-        raw_api_key = f"rag_{key_prefix}_{raw_secret}"
-        record = await self._repository.create_api_key(
-            user_id=current_user.id,
-            name=name,
-            key_prefix=key_prefix,
-            key_hash=self._hash_api_key(raw_api_key),
-        )
-        return ApiKeyCreateResponse(
-            api_key=raw_api_key,
-            key_prefix=record.key_prefix,
-            name=record.name,
-            created_at=record.created_at,
-        )
-
-    async def list_api_keys_for_user(self, user_id: UUID) -> list[ApiKeyResponse]:
-        records = await self._repository.list_api_keys_for_user(user_id)
-        return [self._to_api_key_response(record) for record in records]
-
-    async def revoke_api_key(
-        self,
-        api_key_id: UUID,
-        user_id: UUID | None = None,
-    ) -> None:
-        revoked = await self._repository.revoke_api_key(api_key_id, user_id=user_id)
-        if not revoked:
-            raise ValueError("API key not found")
 
     async def create_user(self, payload: UserCreateRequest) -> UserResponse:
         existing = await self._repository.get_user_by_username(payload.username)
@@ -242,9 +194,6 @@ class AuthService:
         )
         return hmac.compare_digest(derived, expected)
 
-    def _hash_api_key(self, raw_api_key: str) -> str:
-        return hashlib.sha256(raw_api_key.encode("utf-8")).hexdigest()
-
     def _to_user_response(self, user: UserRecord) -> UserResponse:
         return UserResponse(
             id=user.id,
@@ -253,15 +202,4 @@ class AuthService:
             is_admin=user.is_admin,
             created_at=user.created_at,
             updated_at=user.updated_at,
-        )
-
-    def _to_api_key_response(self, record: object) -> ApiKeyResponse:
-        return ApiKeyResponse(
-            id=record.id,
-            user_id=record.user_id,
-            name=record.name,
-            key_prefix=record.key_prefix,
-            is_active=record.is_active,
-            last_used_at=record.last_used_at,
-            created_at=record.created_at,
         )

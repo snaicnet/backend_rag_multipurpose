@@ -39,21 +39,7 @@ async def main() -> None:
 
         chat_payload: dict[str, object] = {
             "message": QUERY,
-            "debug": DEBUG,
-            "top_k": TOP_K,
         }
-        if SESSION_ID is not None:
-            chat_payload["session_id"] = SESSION_ID
-        if GENERATION_PROVIDER is not None:
-            chat_payload["provider"] = GENERATION_PROVIDER
-        if GENERATION_MODEL is not None:
-            chat_payload["model"] = GENERATION_MODEL
-        if EMBEDDING_PROFILE is not None:
-            chat_payload["embedding_profile"] = EMBEDDING_PROFILE
-        if EMBEDDING_PROVIDER is not None:
-            chat_payload["embedding_provider"] = EMBEDDING_PROVIDER
-        if EMBEDDING_MODEL is not None:
-            chat_payload["embedding_model"] = EMBEDDING_MODEL
 
         chat_response = await client.post("/chat", headers=headers, json=chat_payload)
         chat_response.raise_for_status()

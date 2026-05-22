@@ -1,7 +1,11 @@
-from app.core.config import Settings
+from app.core.config import (
+    CHAT_MAX_CONTEXT_CHUNK_CHARS,
+    SESSION_STORAGE_ENABLED,
+    SESSION_TTL_SECONDS,
+    Settings,
+)
 from app.db.qdrant import QdrantManager
 from app.db.redis import RedisManager
-from app.core.defaults import CHAT_MAX_CONTEXT_CHUNK_CHARS, SESSION_STORAGE_ENABLED, SESSION_TTL_SECONDS
 from app.models.schemas import (
     ChatMessage,
     ChatRequest,
@@ -175,21 +179,22 @@ class ChatService:
     ) -> "_PreparedChatContext":
         await self._guardrails.enforce_request_budget(rate_limit_key)
 
-        generation = await self._resolve_generation_selection(payload.provider, payload.model)
+        generation = await self._resolve_generation_selection()
         default_embedding_profile = await self._model_selection_service.get_embedding_profile_name()
-        session_messages = await self._session_service.get_messages(payload.session_id)
-        history = session_messages + payload.chat_history
+        session_id = None
+        session_messages = await self._session_service.get_messages(session_id)
+        history = session_messages
         history = self._guardrails.limit_history(history)
         recent_user_messages = [message.content for message in history if message.role == "user"]
         normalized_message = self._guardrails.validate_user_message(payload.message, recent_user_messages)
-        top_k = self._guardrails.clamp_top_k(payload.top_k)
+        top_k = self._guardrails.clamp_top_k(self._settings.chat_top_k)
         planned_queries = self._query_planner.build_queries(normalized_message) or [normalized_message]
 
         embedding_selection, query_embeddings = await self._embedding_service.embed_texts(
             texts=planned_queries,
-            profile_name=payload.embedding_profile or default_embedding_profile,
-            provider=payload.embedding_provider,
-            model=payload.embedding_model,
+            profile_name=default_embedding_profile,
+            provider=None,
+            model=None,
             input_type="query",
         )
         query_embedding = query_embeddings[0]
@@ -215,7 +220,7 @@ class ChatService:
                 citations=[],
                 used_fallback=True,
                 fallback_text=SAFE_FALLBACK_TEXT,
-                session_id=payload.session_id,
+                session_id=session_id,
                 user_message=normalized_message,
                 retrieved_chunks=[],
             )
@@ -243,30 +248,17 @@ class ChatService:
             citations=prompt_context.citations,
             used_fallback=False,
             fallback_text="",
-            session_id=payload.session_id,
+            session_id=session_id,
             user_message=normalized_message,
         )
 
-    async def _resolve_generation_selection(
-        self,
-        provider: str | None,
-        model: str | None,
-    ) -> GenerationSelection:
-        resolved_provider = provider
-        resolved_model = model
-
-        if resolved_provider is None or resolved_model is None:
-            default_profile = await self._model_selection_service.get_generation_profile_name()
-            default_generation = self._settings.generation_profiles.get(default_profile)
-            if default_generation is None:
-                raise ValueError(f"Unknown generation profile '{default_profile}'")
-            if resolved_provider is None:
-                resolved_provider = default_generation.provider
-            if resolved_model is None:
-                resolved_model = default_generation.model
-
-        if resolved_provider is None or resolved_model is None:
-            raise ValueError("generation profile is required")
+    async def _resolve_generation_selection(self) -> GenerationSelection:
+        default_profile = await self._model_selection_service.get_generation_profile_name()
+        default_generation = self._settings.generation_profiles.get(default_profile)
+        if default_generation is None:
+            raise ValueError(f"Unknown generation profile '{default_profile}'")
+        resolved_provider = default_generation.provider
+        resolved_model = default_generation.model
 
         if resolved_provider not in self._providers.supported_provider_names():
             raise ValueError(f"Unsupported generation provider '{resolved_provider}'")

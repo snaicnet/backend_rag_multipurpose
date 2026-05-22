@@ -27,6 +27,7 @@ async def lifespan(app: FastAPI):
     redis = RedisManager(settings)
     qdrant = QdrantManager(settings)
     providers = ProviderRegistry.from_settings(settings)
+    
     auth_service = AuthService(settings, postgres.pool)
     chat_activity_service = ChatActivityService(postgres.pool)
     chat_feedback_service = ChatFeedbackService(postgres.pool)
@@ -72,7 +73,7 @@ async def _wait_for_qdrant(qdrant: QdrantManager, dimension: int, retries: int =
         try:
             await qdrant.ensure_collection(dimension)
             return
-        except Exception as exc:  # pragma: no cover - startup retry path
+        except Exception as exc:
             last_error = exc
             if attempt == retries:
                 break
@@ -83,16 +84,10 @@ async def _wait_for_qdrant(qdrant: QdrantManager, dimension: int, retries: int =
 
 
 def create_app() -> FastAPI:
-    settings = get_settings()
     app = FastAPI(
-        title=settings.app_name,
-        version="0.1.0",
-        description=(
-            "Backend RAG API built by Isfaque AL Kaderi Tuhin. "
-            "LinkedIn: https://www.linkedin.com/in/iatuhin/ | "
-            "GitHub: https://github.com/iahin | "
-            "Contact: shioktech@gmail.com"
-        ),
+        title=get_settings().app_name,
+        version=get_settings().app_version,
+        description=get_settings().app_description,
         lifespan=lifespan,
     )
     app.include_router(api_router)

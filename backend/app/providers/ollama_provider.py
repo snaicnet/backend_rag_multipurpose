@@ -4,7 +4,7 @@ from typing import AsyncIterator
 import httpx
 
 from app.core.config import Settings
-from app.core.defaults import CHAT_MAX_RESPONSE_TOKENS, CHAT_TOP_P
+from app.core.config import CHAT_MAX_RESPONSE_TOKENS, CHAT_TOP_P
 from app.models.schemas import ChatCompletionResult, ChatMessage, ProviderHealth
 from app.providers.base import ProviderAdapter
 

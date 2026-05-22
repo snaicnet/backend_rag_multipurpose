@@ -28,20 +28,12 @@ def test_live_api_flow(live_api_config: dict[str, str | None]) -> None:
 
             ingest_payload: dict[str, object] = {
                 "items": [
-                    {
-                        "title": live_api_config["ingest_title"],
-                        "content": live_api_config["ingest_text"],
-                        "source_type": "text",
-                    }
+                        {
+                            "title": live_api_config["ingest_title"],
+                            "content": live_api_config["ingest_text"],
+                        }
                 ]
             }
-            if live_api_config["embedding_profile"]:
-                ingest_payload["embedding_profile"] = live_api_config["embedding_profile"]
-            if live_api_config["embedding_provider"]:
-                ingest_payload["embedding_provider"] = live_api_config["embedding_provider"]
-            if live_api_config["embedding_model"]:
-                ingest_payload["embedding_model"] = live_api_config["embedding_model"]
-
             ingest_response = await client.post(
                 "/ingest/text",
                 headers=headers,
@@ -51,18 +43,7 @@ def test_live_api_flow(live_api_config: dict[str, str | None]) -> None:
 
             chat_payload: dict[str, object] = {
                 "message": live_api_config["chat_message"],
-                "debug": True,
             }
-            if live_api_config["generation_provider"]:
-                chat_payload["provider"] = live_api_config["generation_provider"]
-            if live_api_config["generation_model"]:
-                chat_payload["model"] = live_api_config["generation_model"]
-            if live_api_config["embedding_profile"]:
-                chat_payload["embedding_profile"] = live_api_config["embedding_profile"]
-            if live_api_config["embedding_provider"]:
-                chat_payload["embedding_provider"] = live_api_config["embedding_provider"]
-            if live_api_config["embedding_model"]:
-                chat_payload["embedding_model"] = live_api_config["embedding_model"]
 
             chat_response = await client.post("/chat", headers=headers, json=chat_payload)
             assert chat_response.status_code == 200, chat_response.text

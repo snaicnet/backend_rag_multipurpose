@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 from psycopg.rows import dict_row
 from psycopg_pool import AsyncConnectionPool
 
-from app.models.schemas import ApiKeyRecord, UserRecord
+from app.models.schemas import UserRecord
 
 
 class AuthRepository:
@@ -24,22 +24,12 @@ class AuthRepository:
             )
             """,
             """
-            CREATE TABLE IF NOT EXISTS api_keys (
-                id UUID PRIMARY KEY,
-                user_id UUID NOT NULL REFERENCES app_users(id) ON DELETE CASCADE,
-                name TEXT NOT NULL,
-                key_prefix TEXT NOT NULL,
-                key_hash TEXT NOT NULL UNIQUE,
-                is_active BOOLEAN NOT NULL DEFAULT TRUE,
-                last_used_at TIMESTAMPTZ,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-            )
-            """,
-            "CREATE INDEX IF NOT EXISTS idx_api_keys_user_id ON api_keys (user_id)",
-            "CREATE INDEX IF NOT EXISTS idx_api_keys_prefix ON api_keys (key_prefix)",
-            """
             ALTER TABLE documents
             ADD COLUMN IF NOT EXISTS content_hash TEXT
+            """,
+            """
+            ALTER TABLE documents
+            ADD COLUMN IF NOT EXISTS created_by TEXT NOT NULL DEFAULT 'system'
             """,
             """
             CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_content_hash_profile
@@ -259,162 +249,3 @@ class AuthRepository:
 
         return deleted
 
-    async def create_api_key(
-        self,
-        user_id: UUID,
-        name: str,
-        key_prefix: str,
-        key_hash: str,
-    ) -> ApiKeyRecord:
-        query = """
-            INSERT INTO api_keys (
-                id,
-                user_id,
-                name,
-                key_prefix,
-                key_hash,
-                is_active
-            )
-            VALUES (
-                %(id)s,
-                %(user_id)s,
-                %(name)s,
-                %(key_prefix)s,
-                %(key_hash)s,
-                TRUE
-            )
-            RETURNING
-                id,
-                user_id,
-                name,
-                key_prefix,
-                key_hash,
-                is_active,
-                last_used_at,
-                created_at
-        """
-
-        params = {
-            "id": uuid4(),
-            "user_id": user_id,
-            "name": name,
-            "key_prefix": key_prefix,
-            "key_hash": key_hash,
-        }
-
-        async with self._pool.connection() as connection:
-            async with connection.cursor(row_factory=dict_row) as cursor:
-                await cursor.execute(query, params)
-                row = await cursor.fetchone()
-            await connection.commit()
-
-        if row is None:
-            raise RuntimeError("Failed to create API key.")
-
-        return ApiKeyRecord.model_validate(row)
-
-    async def get_api_key_with_user(self, key_hash: str) -> tuple[ApiKeyRecord, UserRecord] | None:
-        query = """
-            SELECT
-                ak.id AS api_key_id,
-                ak.user_id,
-                ak.name,
-                ak.key_prefix,
-                ak.key_hash,
-                ak.is_active AS api_key_is_active,
-                ak.last_used_at,
-                ak.created_at AS api_key_created_at,
-                u.id AS user_id_value,
-                u.username,
-                u.password_hash,
-                u.is_active AS user_is_active,
-                u.is_admin,
-                u.created_at AS user_created_at,
-                u.updated_at
-            FROM api_keys ak
-            JOIN app_users u ON u.id = ak.user_id
-            WHERE ak.key_hash = %(key_hash)s
-        """
-
-        async with self._pool.connection() as connection:
-            async with connection.cursor(row_factory=dict_row) as cursor:
-                await cursor.execute(query, {"key_hash": key_hash})
-                row = await cursor.fetchone()
-
-        if row is None:
-            return None
-
-        api_key = ApiKeyRecord(
-            id=row["api_key_id"],
-            user_id=row["user_id"],
-            name=row["name"],
-            key_prefix=row["key_prefix"],
-            key_hash=row["key_hash"],
-            is_active=row["api_key_is_active"],
-            last_used_at=row["last_used_at"],
-            created_at=row["api_key_created_at"],
-        )
-        user = UserRecord(
-            id=row["user_id_value"],
-            username=row["username"],
-            password_hash=row["password_hash"],
-            is_active=row["user_is_active"],
-            is_admin=row["is_admin"],
-            created_at=row["user_created_at"],
-            updated_at=row["updated_at"],
-        )
-        return api_key, user
-
-    async def list_api_keys_for_user(self, user_id: UUID) -> list[ApiKeyRecord]:
-        query = """
-            SELECT
-                id,
-                user_id,
-                name,
-                key_prefix,
-                key_hash,
-                is_active,
-                last_used_at,
-                created_at
-            FROM api_keys
-            WHERE user_id = %(user_id)s
-            ORDER BY created_at DESC
-        """
-
-        async with self._pool.connection() as connection:
-            async with connection.cursor(row_factory=dict_row) as cursor:
-                await cursor.execute(query, {"user_id": user_id})
-                rows = await cursor.fetchall()
-
-        return [ApiKeyRecord.model_validate(row) for row in rows]
-
-    async def revoke_api_key(self, api_key_id: UUID, user_id: UUID | None = None) -> bool:
-        query = """
-            UPDATE api_keys
-            SET is_active = FALSE
-            WHERE id = %(api_key_id)s
-        """
-        params: dict[str, object] = {"api_key_id": api_key_id}
-        if user_id is not None:
-            query += " AND user_id = %(user_id)s"
-            params["user_id"] = user_id
-
-        async with self._pool.connection() as connection:
-            async with connection.cursor() as cursor:
-                await cursor.execute(query, params)
-                updated = cursor.rowcount > 0
-            await connection.commit()
-
-        return updated
-
-    async def touch_api_key(self, api_key_id: UUID) -> None:
-        query = """
-            UPDATE api_keys
-            SET last_used_at = NOW()
-            WHERE id = %(api_key_id)s
-        """
-
-        async with self._pool.connection() as connection:
-            async with connection.cursor() as cursor:
-                await cursor.execute(query, {"api_key_id": api_key_id})
-            await connection.commit()

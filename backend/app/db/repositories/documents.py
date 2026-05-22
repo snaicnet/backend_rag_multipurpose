@@ -17,6 +17,7 @@ class DocumentRepository:
         embedding_provider: str,
         embedding_model: str,
         content_hash: str,
+        created_by: str,
     ) -> tuple[DocumentRecord, bool]:
         existing = await self.get_by_content_hash(
             content_hash=content_hash,
@@ -38,6 +39,7 @@ class DocumentRepository:
                 metadata,
                 original_filename,
                 mime_type,
+                created_by,
                 embedding_provider,
                 embedding_model
             )
@@ -50,6 +52,7 @@ class DocumentRepository:
                 %(metadata)s,
                 %(original_filename)s,
                 %(mime_type)s,
+                %(created_by)s,
                 %(embedding_provider)s,
                 %(embedding_model)s
             )
@@ -63,6 +66,7 @@ class DocumentRepository:
                 metadata,
                 original_filename,
                 mime_type,
+                created_by,
                 embedding_provider,
                 embedding_model,
                 created_at,
@@ -78,6 +82,7 @@ class DocumentRepository:
             "metadata": Jsonb(document.metadata),
             "original_filename": document.original_filename,
             "mime_type": document.mime_type,
+            "created_by": created_by,
             "embedding_provider": embedding_provider,
             "embedding_model": embedding_model,
         }
@@ -116,6 +121,7 @@ class DocumentRepository:
                 metadata,
                 original_filename,
                 mime_type,
+                created_by,
                 embedding_provider,
                 embedding_model,
                 created_at,
@@ -153,6 +159,7 @@ class DocumentRepository:
                 metadata,
                 original_filename,
                 mime_type,
+                created_by,
                 embedding_provider,
                 embedding_model,
                 created_at,
@@ -182,6 +189,7 @@ class DocumentRepository:
                 metadata,
                 original_filename,
                 mime_type,
+                created_by,
                 embedding_provider,
                 embedding_model,
                 created_at,

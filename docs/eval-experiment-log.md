@@ -1438,7 +1438,7 @@ Contextual accuracy:
   - similarity labels
 - a new runtime control was added:
   - `CHAT_MAX_EXCERPTS_PER_DOCUMENT`
-- debug output is now guarded by a server-side `CHAT_DEBUG_ENABLED` setting, so `/chat` and `/chat/stream` can suppress prompt debug payloads even when a client sends `debug=true`
+- debug output is now guarded by a server-side `CHAT_DEBUG_ENABLED` setting, so `/chat` and `/chat/stream` can suppress prompt debug payloads
 
 ### Current Interpretation
 

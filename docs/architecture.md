@@ -72,7 +72,7 @@ flowchart LR
 ## High-level flow
 
 1. Documents are ingested through `POST /ingest/text` or `POST /ingest/files`.
-2. Protected routes require a bearer token or `X-API-Key`.
+2. Protected routes require a JWT bearer token.
 3. Inputs are normalized into a shared internal document model.
 4. Text is chunked.
 5. Chunks are embedded using the active embedding profile.
@@ -107,14 +107,13 @@ backend/app/
 - PostgreSQL access is isolated under `backend/app/db/repositories/`.
 - File-type-specific parsing stays under `backend/app/parsers/`.
 - RAG orchestration lives in `backend/app/services/`.
-- Auth token issuance and API key verification live in `backend/app/services/auth_service.py`.
+- Auth token issuance and verification live in `backend/app/services/auth_service.py`.
 
 ## Data model
 
 Primary tables:
 
 - `app_users`
-- `api_keys`
 - `documents`
 
 Primary vector store:
@@ -125,14 +124,14 @@ Important fields:
 
 - `app_users.username`
 - `app_users.password_hash`
-- `api_keys.key_prefix`
-- `api_keys.key_hash`
 - `documents.title`
 - `documents.url`
 - `documents.source_type`
 - `documents.metadata`
 - `documents.original_filename`
 - `documents.mime_type`
+- `documents.created_by`
+- `documents.created_at`
 - Qdrant point payloads store chunk content, metadata, and embedding profile details
 - Retrieval queries are additionally constrained by `top_k` and the configured similarity threshold
 
@@ -143,13 +142,10 @@ Implemented authentication is:
 - local bootstrap admin user stored in PostgreSQL
 - password hashing with `hashlib.scrypt`
 - JWT access tokens signed with `AUTH_JWT_SECRET`
-- optional `X-API-Key` auth for service clients
-- API keys stored as SHA-256 hashes, never in plaintext
 
 Protected routes:
 
 - `GET /auth/me`
-- `POST /auth/api-keys`
 - `POST /ingest/text`
 - `POST /ingest/files`
 - `POST /chat`
@@ -169,7 +165,7 @@ The application signs tokens and hashes credentials, but HTTP encryption itself 
 
 - Embedding profiles are configured in `.env` and can be switched without code changes.
 - Each embedding dimension maps to its own Qdrant collection, created automatically on first use.
-- Request payloads expose `embedding_profile`, `embedding_provider`, and `embedding_model` for explicit selection.
+- Ingestion and chat use the active DB-backed generation and embedding profiles; client chat payloads only provide `message`.
 - Retrieval can run in heuristic multi-query mode and can prefer document diversity, but it is still not a full planner-based multi-hop system.
 - Provider streaming is implemented, but integration tests against live providers are not included.
 - TLS termination is not implemented in the app itself.

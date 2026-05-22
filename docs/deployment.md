@@ -132,7 +132,7 @@ Chat guardrail defaults now use code values, so they are not expected in `backen
 Current repository default model-selection seed:
 
 - the startup seed uses the provider/model/dimension values from `backend/.env` for local Docker and from `deploy/ecs/task-definition.json` for ECS
-- the catalog entries themselves are seeded in code from `backend/app/core/defaults.py`
+- the catalog entries themselves are seeded in code from `backend/app/core/config.py`
 - the selectable catalog is seeded in code on startup, then can be changed through the admin APIs
 - `SIMILARITY_THRESHOLD` uses the code default
 
@@ -167,8 +167,7 @@ Important behavior notes after rollout:
 
 - chat activity and chat feedback are stored in PostgreSQL, so they persist only as long as the active database volume persists
 - in the single-task ECS shape, replacing the task can wipe these records because PostgreSQL is still task-local
-- `GET /admin/chat-feedback` can only return useful `full_chat_text` when the client reused a stable `session_id` across chat requests
-- `/chat` and `/chat/stream` only echo `session_id` when the client supplied it
+- `GET /admin/chat-feedback` stores submitted ratings and comments; full chat transcript reconstruction depends on server-side session/activity data
 
 Supported chat-activity query params:
 
@@ -202,7 +201,7 @@ The Docker Compose setup mounts this file into PostgreSQL init scripts. If your 
 
 Auth table note:
 
-- the application now creates `app_users` and `api_keys` on startup if they are missing
+- the application now creates `app_users` on startup if it is missing
 - the application also creates `chat_activity_logs` on startup if it is missing
 - the application also creates `chat_feedback` on startup if it is missing
 - this avoids startup failure on older local volumes that were initialized before the auth schema was added
@@ -223,7 +222,7 @@ After redeploying the backend image or replacing the task, verify:
 4. `POST /chat/stream` still streams successfully
 5. `GET /admin/chat-activity` returns `200`
 6. `GET /admin/chat-feedback` returns `200`
-7. if your client sends `session_id`, confirm `/chat` or `/chat/stream` echoes it and feedback records for that session produce `full_chat_text`
+7. submit a feedback record and confirm `GET /admin/chat-feedback` returns it
 
 If chat works but admin monitoring fails, the likely causes are:
 

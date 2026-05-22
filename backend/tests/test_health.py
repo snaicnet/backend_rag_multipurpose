@@ -1,5 +1,7 @@
+import asyncio
+
+import httpx
 from fastapi import FastAPI
-from fastapi.testclient import TestClient
 
 from app.api.health import router as health_router
 from app.models.schemas import DependencyHealth, ProviderHealth
@@ -53,14 +55,6 @@ class StubProviders:
 class StubSettings:
     app_name = "backend-rag-multipurpose"
 
-    def phase_one_assumptions(self) -> dict:
-        return {
-            "default_generation_provider": "ollama",
-            "default_generation_model": "llama3.2",
-            "default_embedding_provider": "ollama",
-            "default_embedding_model": "rjmalagon/gte-qwen2-1.5b-instruct-embed-f16",
-        }
-
 
 def build_test_app() -> FastAPI:
     app = FastAPI()
@@ -74,9 +68,12 @@ def build_test_app() -> FastAPI:
 
 
 def test_health_endpoint_returns_ok() -> None:
-    client = TestClient(build_test_app())
+    async def run_request() -> httpx.Response:
+        transport = httpx.ASGITransport(app=build_test_app())
+        async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            return await client.get("/health")
 
-    response = client.get("/health")
+    response = asyncio.run(run_request())
 
     assert response.status_code == 200
     payload = response.json()

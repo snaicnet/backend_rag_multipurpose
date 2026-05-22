@@ -7,7 +7,6 @@ This document summarizes the current implemented capabilities of the backend RAG
 - `GET /health`
 - `POST /auth/token`
 - `GET /auth/me`
-- `POST /auth/api-keys`
 - `POST /ingest/text`
 - `POST /ingest/files`
 - `POST /chat`
@@ -21,7 +20,7 @@ This document summarizes the current implemented capabilities of the backend RAG
 
 ## Core platform capabilities
 
-- PostgreSQL storage for users, API keys, and documents
+- PostgreSQL storage for users and documents
 - PostgreSQL storage for the editable system prompt
 - PostgreSQL storage for chat activity audit records
 - PostgreSQL storage for chat feedback records
@@ -32,7 +31,7 @@ This document summarizes the current implemented capabilities of the backend RAG
 - Source-diversity-aware retrieved-context selection
 - Optional reranking for retrieval quality
 - Multipart ingestion for `txt`, `md`, `docx`, `csv`, and `xlsx`
-- JWT bearer authentication and hashed API keys
+- JWT bearer authentication
 - Admin-only system prompt management through JWT bearer auth
 - Admin-only chat activity monitoring with overview analytics and filtered search
 - Chat feedback capture with 1 to 5 rating and optional comments
@@ -107,8 +106,6 @@ Feedback records include:
 - `date`
 - `full_chat_text`
 - `comments`
-
-When a client sends `session_id` on `/chat` or `/chat/stream`, the backend now echoes that same session id back in the response path.
 
 ## Related documentation
 

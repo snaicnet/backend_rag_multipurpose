@@ -107,10 +107,6 @@ class StubSettings:
         ),
     }
 
-    def phase_one_assumptions(self) -> dict:
-        return {}
-
-
 class FakeAuthService:
     def __init__(self, settings: StubSettings) -> None:
         self._settings = settings
@@ -157,21 +153,13 @@ class FakeAuthService:
             raise ValueError("Invalid bearer token payload")
         return self._user
 
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        raise ValueError("API key auth is not used in this test")
-
-
 class FakeIngestService:
     def __init__(self, settings: StubSettings, corpus: list[dict[str, str]]) -> None:
         self._settings = settings
         self._corpus = corpus
 
-    async def ingest_text_items(self, payload: IngestTextRequest) -> IngestTextResponse:
-        selection = self._resolve_selection(
-            payload.embedding_profile,
-            payload.embedding_provider,
-            payload.embedding_model,
-        )
+    async def ingest_text_items(self, payload: IngestTextRequest, current_user) -> IngestTextResponse:
+        selection = self._resolve_selection(None, None, None)
 
         results: list[IngestFileResult] = []
         for item in payload.items:
@@ -187,7 +175,7 @@ class FakeIngestService:
             results.append(
                 IngestFileResult(
                     filename=item.title,
-                    detected_type=item.source_type,
+                    detected_type="text",
                     success=True,
                     chunks_created=1,
                     document_id=UUID("22222222-2222-2222-2222-222222222222"),
@@ -233,7 +221,7 @@ class FakeChatService:
             if self._corpus
             else SAFE_FALLBACK_TEXT
         )
-        profile_name = payload.embedding_profile or self._settings.default_embedding_profile
+        profile_name = self._settings.default_embedding_profile
         profile = self._resolve_profile(profile_name)
         return ChatServiceResult(
             answer=answer,
@@ -248,8 +236,8 @@ class FakeChatService:
                     metadata={},
                 )
             ],
-            provider=payload.provider or self._settings.default_llm_provider,
-            model=payload.model or self._settings.default_llm_model,
+            provider=self._settings.default_llm_provider,
+            model=self._settings.default_llm_model,
             embedding_profile=profile_name,
             embedding_provider=profile.provider,
             embedding_model=profile.model,
@@ -316,24 +304,21 @@ def test_auth_then_ingest_then_chat_returns_ingested_content(monkeypatch) -> Non
                         {
                             "title": "SNAIC Overview",
                             "content": INGESTED_CONTENT,
-                            "source_type": "text",
                         }
                     ],
-                    "embedding_profile": "openai_small_1536",
                 },
             )
             assert ingest_response.status_code == 200
             ingest_payload = ingest_response.json()
             assert ingest_payload["documents_inserted"] == 1
             assert ingest_payload["chunks_inserted"] == 1
-            assert ingest_payload["embedding_model"] == "text-embedding-3-small"
+            assert ingest_payload["embedding_model"] == "qwen3-embedding"
 
             chat_response = await client.post(
                 "/chat",
                 headers={"Authorization": f"Bearer {token}"},
                 json={
                     "message": "what is snaic",
-                    "embedding_profile": "ollama_4096",
                 },
             )
             assert chat_response.status_code == 200

@@ -42,7 +42,7 @@ class PostgresManager:
         except Exception as exc:  # pragma: no cover - defensive branch
             return DependencyHealth(ok=False, detail=f"postgres_error: {exc}")
 
-    async def wait_until_ready(self, retries: int = 15, delay_seconds: float = 2.0) -> None:
+    async def wait_until_ready(self, retries: int = 5, delay_seconds: float = 2.0) -> None:
         last_detail = "postgres_unreachable: unknown"
         for attempt in range(1, retries + 1):
             health = await self.healthcheck()

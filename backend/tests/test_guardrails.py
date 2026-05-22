@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.core.defaults import CHAT_MAX_RESPONSE_CHARS
+from app.core.config import CHAT_MAX_RESPONSE_CHARS
 
 redis_module = types.ModuleType("redis")
 redis_asyncio_module = types.ModuleType("redis.asyncio")

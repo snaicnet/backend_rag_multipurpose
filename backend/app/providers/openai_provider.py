@@ -3,13 +3,13 @@ from typing import AsyncIterator
 
 import httpx
 
-from app.core.config import Settings
-from app.core.defaults import (
+from app.core.config import (
     CHAT_FREQUENCY_PENALTY,
-    CHAT_PRESENCE_PENALTY,
     CHAT_MAX_RESPONSE_TOKENS,
+    CHAT_PRESENCE_PENALTY,
     OPENAI_REASONING_EFFORT,
     CHAT_TOP_P,
+    Settings,
 )
 from app.models.schemas import ChatCompletionResult, ChatMessage, ProviderHealth
 from app.providers.base import ProviderAdapter

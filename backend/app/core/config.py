@@ -6,21 +6,76 @@ from pydantic import BaseModel, Field
 from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from app.core.defaults import (
-    CHAT_DEBUG_ENABLED,
-    CHAT_MAX_EXCERPTS_PER_DOCUMENT,
-    CHAT_MAX_RESPONSE_CHARS,
-    CHAT_MAX_RESPONSE_TOKENS,
-    CHAT_FREQUENCY_PENALTY,
-    CHAT_PRESENCE_PENALTY,
-    DEFAULT_EMBEDDING_CATALOG,
-    DEFAULT_GENERATION_CATALOG,
-    NIM_BASE_URL,
-    CHAT_TOP_P,
-    SESSION_STORAGE_ENABLED,
-)
-
 ProviderName = Literal["openai", "gemini", "ollama", "nim"]
+
+CHAT_REPEATED_PROMPT_LOOKBACK = 5
+CHAT_MAX_CONTEXT_CHUNK_CHARS = 1800
+CHAT_MAX_EXCERPTS_PER_DOCUMENT = 3
+CHAT_MIN_TOP_K = 3
+CHAT_MAX_TOP_K = 8
+CHAT_MAX_RESPONSE_CHARS = 4000
+CHAT_MAX_RESPONSE_TOKENS = 1200
+CHAT_TOP_P = 1.0
+CHAT_FREQUENCY_PENALTY = 0.0
+CHAT_PRESENCE_PENALTY = 0.0
+CHAT_DEBUG_ENABLED = True
+CHAT_BINARY_PRECOMPUTE_ENABLED = False
+EMBEDDING_CACHE_TTL_SECONDS = 3600
+SESSION_TTL_SECONDS = 1800
+SESSION_STORAGE_ENABLED = False
+OPENAI_REASONING_EFFORT = "low"
+NIM_BASE_URL = "https://integrate.api.nvidia.com/v1"
+RERANK_BASE_URL = "https://ai.api.nvidia.com/v1/retrieval"
+
+DEFAULT_GENERATION_CATALOG = [
+    {
+        "profile_name": "openai_gpt41_mini",
+        "provider": "openai",
+        "model": "gpt-4.1-mini",
+    },
+    {
+        "profile_name": "nim_3super120",
+        "provider": "nim",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+    },
+    {
+        "profile_name": "nim_llama33_super49b",
+        "provider": "nim",
+        "model": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    },
+    {
+        "profile_name": "ollama_llama32",
+        "provider": "ollama",
+        "model": "llama3.2",
+    },
+]
+
+DEFAULT_EMBEDDING_CATALOG = [
+    {
+        "profile_name": "openai_small_1536",
+        "provider": "openai",
+        "model": "text-embedding-3-small",
+        "dimension": 1536,
+    },
+    {
+        "profile_name": "ollama_1536",
+        "provider": "ollama",
+        "model": "rjmalagon/gte-qwen2-1.5b-instruct-embed-f16",
+        "dimension": 1536,
+    },
+    {
+        "profile_name": "ollama_4096",
+        "provider": "ollama",
+        "model": "qwen3-embedding",
+        "dimension": 4096,
+    },
+    {
+        "profile_name": "nim_nemotron_2048",
+        "provider": "nim",
+        "model": "nvidia/llama-nemotron-embed-1b-v2",
+        "dimension": 2048,
+    },
+]
 
 
 class EmbeddingProfileSpec(BaseModel):
@@ -43,9 +98,25 @@ class Settings(BaseSettings):
     )
 
     app_name: str = Field(default="backend-rag-multipurpose")
+    app_version: str = Field(default="0.1.0")
+    app_description: str = Field(
+        default=(
+            "Backend RAG API built by Isfaque AL Kaderi Tuhin, Research Engineer at SNAIC. "
+            "GitHub: https://github.com/iahin | "
+            "Contact: shioktech@gmail.com"
+        )
+    )
     app_host: str = Field(default="0.0.0.0")
     app_port: int = Field(default=8000)
     log_level: str = Field(default="INFO")
+
+    auth_enabled: bool = Field(default=True)
+    auth_jwt_secret: str = Field(default="change-me-immediately")
+    auth_jwt_algorithm: str = Field(default="HS256")
+    auth_access_token_ttl_seconds: int = Field(default=3600)
+    auth_bootstrap_admin_username: str = Field(default="admin")
+    auth_bootstrap_admin_password: str = Field(default="change-me-immediately")
+    auth_require_https: bool = Field(default=False)
 
     postgres_dsn: str | None = Field(default=None)
     postgres_host: str = Field(default="localhost")
@@ -66,9 +137,7 @@ class Settings(BaseSettings):
     openai_api_key: str | None = Field(default=None)
     nim_api_key: str | None = Field(default=None)
     nim_base_url: str = Field(default=NIM_BASE_URL)
-
     gemini_api_key: str | None = Field(default=None)
-
     ollama_base_url: str = Field(default="http://localhost:11434")
     ollama_health_timeout_seconds: float = Field(default=3.0)
 
@@ -103,6 +172,7 @@ class Settings(BaseSettings):
     chat_rate_limit_requests: int = Field(default=20)
     chat_rate_limit_window_seconds: int = Field(default=60)
     chat_daily_limit_requests: int = Field(default=1000)
+    chat_top_k: int = Field(default=5, ge=1, le=25)
     chat_max_message_chars: int = Field(default=4000)
     chat_max_input_tokens: int = Field(default=4000)
     chat_max_history_messages: int = Field(default=8)
@@ -114,13 +184,6 @@ class Settings(BaseSettings):
     chat_thinking_enabled: bool = Field(default=False)
     chat_show_thinking_block: bool = Field(default=False)
     retrieval_cache_ttl_seconds: int = Field(default=120)
-    auth_enabled: bool = Field(default=True)
-    auth_jwt_secret: str = Field(default="change-me-immediately")
-    auth_jwt_algorithm: str = Field(default="HS256")
-    auth_access_token_ttl_seconds: int = Field(default=3600)
-    auth_bootstrap_admin_username: str = Field(default="admin")
-    auth_bootstrap_admin_password: str = Field(default="change-me-immediately")
-    auth_require_https: bool = Field(default=False)
 
     @field_validator("default_generation_provider", mode="before")
     @classmethod
@@ -165,59 +228,6 @@ class Settings(BaseSettings):
             f"@{self.postgres_host}:{self.postgres_port}/{encoded_db}"
         )
         return self
-
-    def phase_one_assumptions(self) -> dict[str, object]:
-        return {
-            "model_selection_source": "database",
-            "default_generation_provider": self.default_generation_provider,
-            "default_generation_model": self.default_generation_model,
-            "default_generation_profile": self.default_generation_profile,
-            "default_embedding_provider": self.default_embedding_provider,
-            "default_embedding_model": self.default_embedding_model,
-            "default_embedding_dimension": self.default_embedding_dimension,
-            "default_embedding_profile": self.default_embedding_profile,
-            "nim_base_url": self.nim_base_url,
-            "rerank_enabled": self.rerank_enabled,
-            "rerank_invoke_url": self.rerank_invoke_url,
-            "rerank_model": self.rerank_model,
-            "rerank_max_candidates": self.rerank_max_candidates,
-            "rerank_min_candidates": self.rerank_min_candidates,
-            "retrieval_multi_query_enabled": self.retrieval_multi_query_enabled,
-            "retrieval_multi_query_max_queries": self.retrieval_multi_query_max_queries,
-            "retrieval_source_diversity_enabled": self.retrieval_source_diversity_enabled,
-            "retrieval_source_diversity_min_sources": self.retrieval_source_diversity_min_sources,
-            "embedding_dimension_strategy": (
-                "Named embedding profiles resolve to one canonical provider/model "
-                "pair each. Request-level overrides are only valid when they map "
-                "to a configured profile whose dimension matches the deployed index."
-            ),
-            "configured_generation_profiles": {
-                name: profile.model_dump() for name, profile in self.generation_profiles.items()
-            },
-            "configured_embedding_profiles": {
-                name: profile.model_dump() for name, profile in self.embedding_profiles.items()
-            },
-            "similarity_threshold": self.similarity_threshold,
-            "chat_rate_limit_requests": self.chat_rate_limit_requests,
-            "chat_rate_limit_window_seconds": self.chat_rate_limit_window_seconds,
-            "chat_daily_limit_requests": self.chat_daily_limit_requests,
-            "chat_max_message_chars": self.chat_max_message_chars,
-            "chat_max_input_tokens": self.chat_max_input_tokens,
-            "chat_max_context_chars": self.chat_max_context_chars,
-            "chat_max_context_tokens": self.chat_max_context_tokens,
-            "chat_max_excerpts_per_document": self.chat_max_excerpts_per_document,
-            "chat_debug_enabled": self.chat_debug_enabled,
-            "chat_max_response_chars": CHAT_MAX_RESPONSE_CHARS,
-            "chat_max_response_tokens": CHAT_MAX_RESPONSE_TOKENS,
-            "chat_temperature": self.chat_temperature,
-            "chat_top_p": CHAT_TOP_P,
-            "chat_frequency_penalty": CHAT_FREQUENCY_PENALTY,
-            "chat_presence_penalty": CHAT_PRESENCE_PENALTY,
-            "chat_thinking_enabled": self.chat_thinking_enabled,
-            "chat_show_thinking_block": self.chat_show_thinking_block,
-            "redis_session_storage_enabled_by_default": SESSION_STORAGE_ENABLED,
-            "authentication_enabled_by_default": self.auth_enabled,
-        }
 
     @property
     def default_generation_profile(self) -> str:

@@ -9,19 +9,9 @@ Implemented generation providers:
 - Ollama
 - NVIDIA NIM via the `nim` provider alias
 
-These are switchable per request on:
+Chat requests only accept `message`. Generation selection is profile-based through:
 
-- `POST /chat`
-- `POST /chat/stream`
-
-Relevant request fields:
-
-- `provider`
-- `model`
-
-Default generation selection can also be profile-based through:
-
-- the selectable catalog is defined in `backend/app/core/defaults.py`
+- the selectable catalog is defined in `backend/app/core/config.py`
 - the active profile is stored in PostgreSQL and managed through the admin model-selection endpoints
 
 Startup defaults come from these env values:
@@ -41,17 +31,14 @@ Implemented embedding providers:
 - Ollama
 - NVIDIA NIM via the `nim` provider alias
 
-Relevant request fields:
-
-- `embedding_provider`
-- `embedding_model`
+Chat and ingestion requests do not accept embedding provider/model fields.
 
 ## Important constraint
 
 Embedding providers are implemented through named profiles. That means:
 
-- generation providers are fully switchable per request
-- embedding provider/model/dimension are selected together through `embedding_profile`
+- generation provider/model are selected by the active generation profile
+- embedding provider/model/dimension are selected by the active embedding profile
 - each embedding dimension is stored in its own Qdrant collection
 - new dimensions are created automatically on first use
 
@@ -67,12 +54,12 @@ Embedding providers are implemented through named profiles. That means:
 
 ## Defaults
 
-- the selectable generation and embedding catalogs are defined in `backend/app/core/defaults.py`
+- the selectable generation and embedding catalogs are defined in `backend/app/core/config.py`
 - the active generation and embedding selections are stored in PostgreSQL
 
 Current repository catalog:
 
-- catalog entries are seeded in code from `backend/app/core/defaults.py`
+- catalog entries are seeded in code from `backend/app/core/config.py`
 - `SIMILARITY_THRESHOLD` uses the code default
 - `RERANK_ENABLED=false`
 

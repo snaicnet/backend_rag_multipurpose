@@ -1,10 +1,9 @@
 from fastapi import Depends, HTTPException, Request, Security, status
-from fastapi.security import APIKeyHeader, HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.models.schemas import AuthenticatedUser
 
 bearer_scheme = HTTPBearer(auto_error=False)
-api_key_scheme = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
 def _resolve_request_scheme(request: Request) -> str:
@@ -26,7 +25,6 @@ def _enforce_https_if_required(request: Request) -> None:
 async def require_authenticated_user(
     request: Request,
     bearer_credentials: HTTPAuthorizationCredentials | None = Security(bearer_scheme),
-    x_api_key: str | None = Security(api_key_scheme),
 ) -> AuthenticatedUser:
     settings = request.app.state.settings
     if not settings.auth_enabled:
@@ -64,19 +62,9 @@ async def require_authenticated_user(
                 headers={"WWW-Authenticate": "Bearer"},
             ) from exc
 
-    api_key = _normalize_secret_value(x_api_key)
-    if api_key is not None:
-        try:
-            return await auth_service.authenticate_api_key(api_key)
-        except ValueError as exc:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=str(exc),
-            ) from exc
-
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Missing bearer token or X-API-Key header",
+        detail="Missing bearer token",
         headers={"WWW-Authenticate": "Bearer"},
     )
 

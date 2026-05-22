@@ -4,12 +4,12 @@ from urllib.parse import urlparse
 
 import httpx
 
-from app.core.config import Settings
-from app.core.defaults import (
+from app.core.config import (
     CHAT_FREQUENCY_PENALTY,
-    CHAT_PRESENCE_PENALTY,
     CHAT_MAX_RESPONSE_TOKENS,
+    CHAT_PRESENCE_PENALTY,
     CHAT_TOP_P,
+    Settings,
 )
 from app.models.schemas import ChatCompletionResult, ChatMessage, ProviderHealth
 from app.providers.base import ProviderAdapter

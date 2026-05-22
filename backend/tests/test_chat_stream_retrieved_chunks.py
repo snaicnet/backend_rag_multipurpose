@@ -62,6 +62,7 @@ class StubSettings:
     auth_bootstrap_admin_username = "admin"
     auth_bootstrap_admin_password = "change-me-immediately"
     chat_max_response_chars = 5000
+    chat_debug_enabled = True
     chat_thinking_enabled = False
     chat_show_thinking_block = False
 
@@ -112,10 +113,6 @@ class FakeAuthService:
             raise ValueError("Invalid bearer token payload")
         return self._user
 
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        raise ValueError("API key auth is not used in this test")
-
-
 class FakeChatService:
     def __init__(self) -> None:
         self._retrieved_chunks = [
@@ -150,7 +147,7 @@ class FakeChatService:
             embedding_provider="openai",
             embedding_model="text-embedding-3-small",
             used_fallback=False,
-            session_id=payload.session_id,
+            session_id=None,
             retrieved_chunks=self._retrieved_chunks,
         )
 
@@ -180,7 +177,7 @@ class FakeChatService:
             stream=stream(),
             used_fallback=False,
             fallback_text="",
-            session_id=payload.session_id,
+            session_id=None,
             user_message="hello there",
         )
 
@@ -227,18 +224,18 @@ def test_chat_stream_exposes_same_retrieved_chunks_as_chat(monkeypatch) -> None:
             chat_response = await client.post(
                 "/chat",
                 headers=headers,
-                json={"message": "hello there", "debug": True, "session_id": "session-abc"},
+                json={"message": "hello there"},
             )
             assert chat_response.status_code == 200, chat_response.text
             chat_payload = chat_response.json()
             assert len(chat_payload["retrieved_chunks"]) == 1
-            assert chat_payload["session_id"] == "session-abc"
+            assert "session_id" not in chat_payload
 
             async with client.stream(
                 "POST",
                 "/chat/stream",
                 headers=headers,
-                json={"message": "hello there", "debug": True, "session_id": "session-abc"},
+                json={"message": "hello there"},
             ) as stream_response:
                 assert stream_response.status_code == 200
                 body = await stream_response.aread()
@@ -252,7 +249,7 @@ def test_chat_stream_exposes_same_retrieved_chunks_as_chat(monkeypatch) -> None:
             assert done_lines, stream_text
             parsed_events = [json.loads(line) for line in done_lines]
             assert parsed_events[-1]["retrieved_chunks"] == chat_payload["retrieved_chunks"]
-            assert parsed_events[0]["session_id"] == "session-abc"
-            assert parsed_events[-1]["session_id"] == "session-abc"
+            assert "session_id" not in parsed_events[0]
+            assert "session_id" not in parsed_events[-1]
 
     asyncio.run(run_flow())

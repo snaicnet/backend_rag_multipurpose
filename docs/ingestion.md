@@ -4,9 +4,7 @@
 
 Implemented:
 
-- Raw text JSON
-- Markdown JSON
-- Unstructured text JSON
+- Text JSON with `title` and `content`
 - `.txt`
 - `.md`
 - `.docx`
@@ -35,6 +33,8 @@ All ingestion sources are converted into a common internal representation before
 - `url`
 - `original_filename`
 - `mime_type`
+- `created_by`
+- `created_at`
 - `sections`
 
 ## Parser behavior
@@ -78,7 +78,8 @@ All ingestion sources are converted into a common internal representation before
 Depending on source type, stored metadata may include:
 
 - `title`
-- `url`
+- `created_by`
+- `source_kind`
 - `source_type`
 - `chunk_index`
 - `original_filename`
@@ -88,7 +89,6 @@ Depending on source type, stored metadata may include:
 - `row_start`
 - `row_end`
 - `column_headers`
-- `tags`
 
 ## Batch behavior
 
@@ -100,27 +100,14 @@ Depending on source type, stored metadata may include:
 - remaining files continue processing
 - exact duplicate uploads are deduplicated by normalized content hash plus embedding profile, so the same knowledge base is not indexed twice for the same embedding setup
 
-Multipart form notes:
+Client payload notes:
 
-- `tags` may be omitted
-- blank `tags` values are treated as empty
-- `tags` accepts JSON array form like `["a","b"]`
-- `tags` also accepts plain strings like `demo` or `demo,portfolio`
-- `metadata` may be omitted or blank
-- `metadata` accepts a JSON object when provided
-- plain metadata strings are stored as `raw_metadata`
-- Swagger placeholder values like `string` on optional form fields are ignored
+- `POST /ingest/text` accepts only `items[].title` and `items[].content`
+- `POST /ingest/files` accepts only uploaded files
+- source type, file name, MIME type, metadata, `created_by`, and `created_at` are populated by the backend
 
 ## Canonical embedding enforcement
 
-The ingestion endpoints expose:
-
-- `embedding_provider`
-- `embedding_model`
-- `embedding_profile`
-
-In the current implementation these values must match a configured embedding profile.
-
-The active profile comes from the model-selection record in PostgreSQL and must match one of the configured entries in `backend/app/core/defaults.py`.
+The active embedding profile comes from the model-selection record in PostgreSQL and must match one of the configured entries in `backend/app/core/config.py`.
 
 If the profile uses a new embedding dimension, the app creates the matching Qdrant collection automatically on first use.

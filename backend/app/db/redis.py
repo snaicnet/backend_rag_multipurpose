@@ -36,6 +36,9 @@ class RedisManager:
             return DependencyHealth(ok=False, detail=f"redis_unreachable: {exc}")
 
     async def delete_by_prefixes(self, prefixes: list[str]) -> int:
+        """
+        Delete keys matching any of the given prefixes. Returns the number of keys deleted.
+        """
         if self._client is None:
             raise RuntimeError("Redis client has not been initialized.")
 

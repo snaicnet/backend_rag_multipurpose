@@ -23,5 +23,4 @@ async def health_check(request: Request) -> HealthCheckResponse:
         redis=redis_status,
         qdrant=qdrant_status,
         providers=provider_status,
-        assumptions=request.app.state.settings.phase_one_assumptions(),
     )

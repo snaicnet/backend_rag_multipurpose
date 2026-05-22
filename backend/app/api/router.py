@@ -1,3 +1,7 @@
+"""
+API router for handling all API endpoints. Mounts sub-routers into main router and applies authentication dependencies where needed.
+"""
+
 from fastapi import APIRouter, Depends
 
 from app.api.admin import router as admin_router
@@ -8,13 +12,14 @@ from app.api.ingest import router as ingest_router
 from app.core.security import require_authenticated_user
 
 api_router = APIRouter()
+
 api_router.include_router(health_router, tags=["health"])
 api_router.include_router(auth_router, prefix="/auth", tags=["auth"])
+
 api_router.include_router(
     ingest_router,
     prefix="/ingest",
     tags=["ingest"],
-    dependencies=[Depends(require_authenticated_user)],
 )
 api_router.include_router(
     chat_router,

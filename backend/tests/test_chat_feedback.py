@@ -98,10 +98,6 @@ class FakeAuthService:
             raise ValueError("Invalid bearer token payload")
         return self._user
 
-    async def authenticate_api_key(self, raw_api_key: str) -> AuthenticatedUser:
-        raise ValueError("API key auth is not used in this test")
-
-
 class FakeFeedbackService:
     def __init__(self) -> None:
         self._next_id = 1
